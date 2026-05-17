@@ -10,30 +10,20 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body data-page="modcontext">
-  <div class="noise" aria-hidden="true"></div>
-  <header class="topbar"><a class="brand" href="index.html"><span>LM</span><strong>LOCLM Modding</strong></a><button class="menu-button" id="menuButton" type="button" aria-label="Open navigation"><span></span><span></span></button><nav class="nav" id="nav"><a href="template.html" data-page-link="template">Template</a><a href="modinfo.html" data-page-link="modinfo">modinfo</a><a href="patching.html" data-page-link="patching">Patching</a><a href="modcontext.html" data-page-link="modcontext">API</a><a href="release.html" data-page-link="release">Release</a><a href="debugging.html" data-page-link="debugging">Debugging</a></nav></header>
-  <main>
-    <section class="page-hero reveal"><p class="eyebrow">ModContext</p><h1>The template helper for common mod tasks.</h1><p class="lead"><code>ModContext</code> wraps asset loading, logging, JSON config, code patching, and resource lookup so your mod code stays readable.</p></section>
-    <section class="section code-panel reveal">
-      <div><h2>Basic setup</h2><p>Create the context after LOCLM calls your <code>Load</code> method.</p></div>
-      <pre><code>ModContext context = ModContext.Create(data);
+  <header class="topbar"><a class="brand" href="index.html"><span>LM</span><strong>LOCLM Modding</strong></a><button class="menu-button" id="menuButton" type="button" aria-label="Open navigation"><span></span><span></span></button><label class="sidebar-search"><input id="sidebarSearch" type="search" placeholder="Search docs"></label><nav class="nav" id="nav"><div class="nav-group"><p class="nav-title">Getting Started</p><a href="index.html" data-page-link="home">Overview</a><a href="template.html" data-page-link="template">Template setup</a></div><div class="nav-group"><p class="nav-title">Mod Basics</p><a href="modinfo.html" data-page-link="modinfo">modinfo.json</a></div><div class="nav-group"><p class="nav-title">Patching</p><a href="patching.html" data-page-link="patching">Patching GML</a></div><div class="nav-group"><p class="nav-title">API</p><a href="modcontext.html" data-page-link="modcontext">ModContext API</a></div><div class="nav-group"><p class="nav-title">Building & Release</p><a href="release.html" data-page-link="release">Release checklist</a></div><div class="nav-group"><p class="nav-title">Debugging</p><a href="debugging.html" data-page-link="debugging">Debugging mods</a></div></nav></header>
+  <main class="docs-shell">
+    <article class="doc-content">
+      <section class="page-hero reveal"><p class="breadcrumb"><a href="index.html">Docs</a> / ModContext API</p><span class="page-meta">API</span><h1>ModContext is the template helper for common mod tasks.</h1><p class="lead"><code>ModContext</code> wraps asset loading, logging, JSON config, code patching, and resource lookup so mod code stays readable.</p></section>
+      <section class="section reveal"><h2>Basic setup</h2><div class="code-block"><div class="code-title"><strong>C#</strong></div><pre><code>ModContext context = ModContext.Create(data);
 ModConfig config = context.LoadJson&lt;ModConfig&gt;("data/mod-config.json", required: false)
     ?? new ModConfig();
 
-context.Log("Loaded config.");</code></pre>
-    </section>
-    <section class="section">
-      <div class="method-grid reveal">
-        <article><h3>Logging</h3><code>Log</code><code>Warn</code></article>
-        <article><h3>Assets</h3><code>LoadJson&lt;T&gt;</code><code>AppendCodeFromFile</code><code>HookCodeFromFile</code></article>
-        <article><h3>Patching</h3><code>FindReplaceCode</code><code>CreateFunctionFromFile</code><code>ReplaceObjectEventFromFile</code></article>
-        <article><h3>Resources</h3><code>RequireObject</code><code>RequireSprite</code><code>RequireRoom</code><code>RequireSound</code></article>
-        <article><h3>Create</h3><code>CreateObject</code><code>PlaceObjectInRoom</code></article>
-        <article><h3>Validation</h3><code>RequireCodeEntry</code><code>RequireFunction</code><code>RequireVariable</code></article>
-      </div>
-    </section>
-  </main>
-  <footer class="footer"><p>Next: package the mod folder correctly.</p><a href="release.html">Release</a></footer>
-  <script src="app.js"></script>
+context.Log("Loaded config.");</code></pre></div></section>
+      <section class="section reveal"><h2>Available helper groups</h2><div class="method-grid"><article><h3>Logging</h3><code>Log</code><code>Warn</code></article><article><h3>Assets</h3><code>LoadJson&lt;T&gt;</code><code>AppendCodeFromFile</code><code>HookCodeFromFile</code></article><article><h3>Patching</h3><code>FindReplaceCode</code><code>CreateFunctionFromFile</code><code>ReplaceObjectEventFromFile</code></article><article><h3>Resources</h3><code>RequireObject</code><code>RequireSprite</code><code>RequireRoom</code><code>RequireSound</code></article><article><h3>Create</h3><code>CreateObject</code><code>PlaceObjectInRoom</code></article><article><h3>Validation</h3><code>RequireCodeEntry</code><code>RequireFunction</code><code>RequireVariable</code></article></div></section>
+      <section class="section reveal"><h2>Usage notes</h2><div class="callout tip"><strong>Prefer helper methods.</strong><p>Use <code>Require*</code> methods when your mod depends on a game resource. Failing early is easier to debug than silently patching the wrong thing.</p></div><ul><li>Keep GML snippets in asset files when they are larger than a few lines.</li><li>Use logging around each major patch.</li><li>Keep config defaults in C# and user-editable values in JSON.</li></ul></section>
+      <section class="section reveal"><h2>Common mistakes</h2><ul><li>Calling helper methods before creating <code>ModContext</code>.</li><li>Assuming a resource exists without requiring it.</li><li>Using hardcoded paths outside <code>assets/</code>.</li><li>Hiding errors instead of logging them.</li></ul></section>
+      <nav class="next-links"><a href="patching.html">Previous: Patching GML</a><a href="release.html">Next: Release checklist</a></nav>
+    </article><aside class="toc" id="pageToc"></aside>
+  </main><footer class="footer"><p>LOCLM Modding Manual</p></footer><script src="app.js"></script>
 </body>
 </html>

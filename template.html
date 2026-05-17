@@ -10,21 +10,52 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body data-page="template">
-  <div class="noise" aria-hidden="true"></div>
-  <header class="topbar"><a class="brand" href="index.html"><span>LM</span><strong>LOCLM Modding</strong></a><button class="menu-button" id="menuButton" type="button" aria-label="Open navigation"><span></span><span></span></button><nav class="nav" id="nav"><a href="template.html" data-page-link="template">Template</a><a href="modinfo.html" data-page-link="modinfo">modinfo</a><a href="patching.html" data-page-link="patching">Patching</a><a href="modcontext.html" data-page-link="modcontext">API</a><a href="release.html" data-page-link="release">Release</a><a href="debugging.html" data-page-link="debugging">Debugging</a></nav></header>
-  <main>
-    <section class="page-hero reveal"><p class="eyebrow">Template setup</p><h1>Start from CreatureProbe, then rename it.</h1><p class="lead">The official template gives you a working C# DLL mod with metadata, assets, config loading, and a sample main-menu tab.</p></section>
-    <section class="section grid-two">
-      <div class="card reveal"><span class="tag">Requirement</span><h2>.NET SDK 10.0</h2><p>Use the SDK for building mods. Players only need the runtime, but mod developers need the full SDK.</p></div>
-      <div class="card reveal"><span class="tag">Source folder</span><h2>mod_template/</h2><p>The template source contains <code>CreatureProbe.csproj</code>, <code>loclmMod.cs</code>, <code>ModContext.cs</code>, assets, and included files.</p></div>
-    </section>
-    <section class="section code-panel reveal">
-      <div><h2>Build command</h2><p>Run this from the loader repository root.</p></div>
-      <pre><code>dotnet build .\mod_template\CreatureProbe.csproj -c Release</code></pre>
-    </section>
-    <section class="section code-panel reveal">
-      <div><h2>Expected output</h2><p>Copy the whole output folder into <code>loclm/mods/</code>. Do not copy only the DLL.</p></div>
-      <pre><code>CreatureProbe/
+  <header class="topbar">
+    <a class="brand" href="index.html"><span>LM</span><strong>LOCLM Modding</strong></a>
+    <button class="menu-button" id="menuButton" type="button" aria-label="Open navigation"><span></span><span></span></button>
+    <label class="sidebar-search"><input id="sidebarSearch" type="search" placeholder="Search docs"></label>
+    <nav class="nav" id="nav">
+      <div class="nav-group"><p class="nav-title">Getting Started</p><a href="index.html" data-page-link="home">Overview</a><a href="template.html" data-page-link="template">Template setup</a></div>
+      <div class="nav-group"><p class="nav-title">Mod Basics</p><a href="modinfo.html" data-page-link="modinfo">modinfo.json</a></div>
+      <div class="nav-group"><p class="nav-title">Patching</p><a href="patching.html" data-page-link="patching">Patching GML</a></div>
+      <div class="nav-group"><p class="nav-title">API</p><a href="modcontext.html" data-page-link="modcontext">ModContext API</a></div>
+      <div class="nav-group"><p class="nav-title">Building & Release</p><a href="release.html" data-page-link="release">Release checklist</a></div>
+      <div class="nav-group"><p class="nav-title">Debugging</p><a href="debugging.html" data-page-link="debugging">Debugging mods</a></div>
+    </nav>
+  </header>
+
+  <main class="docs-shell">
+    <article class="doc-content">
+      <section class="page-hero reveal">
+        <p class="breadcrumb"><a href="index.html">Docs</a> / Template setup</p>
+        <span class="page-meta">Getting Started</span>
+        <h1>Start from CreatureProbe, then rename it.</h1>
+        <p class="lead">The official template gives you a working C# DLL mod with metadata, assets, config loading, and a sample main-menu tab.</p>
+      </section>
+
+      <section class="section reveal">
+        <h2>Requirements</h2>
+        <div class="requirement-grid">
+          <div class="requirement-card"><span class="tag">Requirement</span><h3>.NET SDK 10.0</h3><p>Use the SDK for building mods. Players only need the runtime, but mod developers need the full SDK.</p></div>
+          <div class="requirement-card"><span class="tag">Source folder</span><h3><code>mod_template/</code></h3><p>The template source contains <code>CreatureProbe.csproj</code>, <code>loclmMod.cs</code>, <code>ModContext.cs</code>, assets, and included files.</p></div>
+        </div>
+      </section>
+
+      <section class="section reveal">
+        <h2>Build the template</h2>
+        <p>Run this from the loader repository root.</p>
+        <div class="command-block">
+          <div class="code-title"><strong>PowerShell</strong></div>
+          <pre><code>dotnet build .\mod_template\CreatureProbe.csproj -c Release</code></pre>
+        </div>
+      </section>
+
+      <section class="section reveal">
+        <h2>Expected output</h2>
+        <p>The build output is the mod folder you copy into <code>loclm/mods/</code>.</p>
+        <div class="file-tree">
+          <div class="code-title"><strong>CreatureProbe output</strong></div>
+          <pre><code>CreatureProbe/
 +-- CreatureProbe.dll
 +-- CreatureProbe.deps.json
 +-- modinfo.json
@@ -32,22 +63,43 @@
 +-- GameSpecificData/
 +-- UndertaleModLib.dll
 \-- Underanalyzer.dll</code></pre>
-    </section>
-    <section class="section">
-      <div class="heading reveal"><p class="eyebrow">Rename checklist</p><h2>Change every identity, not just the DLL.</h2></div>
-      <div class="check-grid reveal">
-        <span>Project file: <code>CreatureProbe.csproj</code></span>
-        <span>Output folder in the project file</span>
-        <span>Namespace in C# files</span>
-        <span>Class name in <code>loclmMod.cs</code></span>
-        <span>DLL and mod folder name</span>
-        <span><code>IncludedFiles/modinfo.json</code></span>
-        <span>Text/config in <code>assets/data/mod-config.json</code></span>
-        <span>Button indexes and menu IDs if the mod adds UI</span>
-      </div>
-    </section>
+        </div>
+        <div class="callout warning"><strong>Do not copy only the DLL.</strong><p>Copy the whole output folder. The template also needs metadata, assets/config files, and dependency DLLs.</p></div>
+      </section>
+
+      <section class="section reveal">
+        <h2>Rename checklist</h2>
+        <div class="table-card">
+          <table>
+            <thead><tr><th>Thing to rename</th><th>Why it matters</th></tr></thead>
+            <tbody>
+              <tr><td>Project file</td><td>Rename <code>CreatureProbe.csproj</code> so the project matches the mod.</td></tr>
+              <tr><td>Assembly name</td><td>The output DLL should match the mod folder.</td></tr>
+              <tr><td>Root namespace</td><td>Keeps C# names clean and avoids template leftovers.</td></tr>
+              <tr><td>Main class</td><td>Rename the class in <code>loclmMod.cs</code>.</td></tr>
+              <tr><td>modinfo id/name</td><td>Update the player-facing mod name and author metadata.</td></tr>
+              <tr><td>Output folder</td><td>The folder should match the DLL name.</td></tr>
+              <tr><td>References to CreatureProbe</td><td>Search the project and replace remaining template names.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section reveal">
+        <h2>Next steps</h2>
+        <div class="card-grid">
+          <a class="doc-card" href="modinfo.html"><h3>Define modinfo</h3><p>Metadata, dependencies, and compatibility.</p></a>
+          <a class="doc-card" href="patching.html"><h3>Patch GML</h3><p>Append hooks and targeted patches.</p></a>
+          <a class="doc-card" href="modcontext.html"><h3>Use ModContext</h3><p>Helper methods for common mod tasks.</p></a>
+          <a class="doc-card" href="release.html"><h3>Package release</h3><p>Ship a complete player-ready mod folder.</p></a>
+        </div>
+      </section>
+
+      <nav class="next-links"><a href="index.html">Previous: Overview</a><a href="modinfo.html">Next: modinfo.json</a></nav>
+    </article>
+    <aside class="toc" id="pageToc"></aside>
   </main>
-  <footer class="footer"><p>Next: define your mod metadata.</p><a href="modinfo.html">modinfo.json</a></footer>
+  <footer class="footer"><p>LOCLM Modding Manual</p></footer>
   <script src="app.js"></script>
 </body>
 </html>

@@ -3,94 +3,86 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="LOCLM modding wiki for creating Lake of Creatures mods.">
-  <title>LOCLM Modding Wiki</title>
+  <meta name="description" content="LOCLM modding manual for creating Lake of Creatures mods.">
+  <title>LOCLM Modding Manual</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body data-page="home">
-  <div class="noise" aria-hidden="true"></div>
   <header class="topbar">
     <a class="brand" href="index.html"><span>LM</span><strong>LOCLM Modding</strong></a>
     <button class="menu-button" id="menuButton" type="button" aria-label="Open navigation"><span></span><span></span></button>
+    <label class="sidebar-search"><input id="sidebarSearch" type="search" placeholder="Search docs"></label>
     <nav class="nav" id="nav">
-      <a href="template.html" data-page-link="template">Template</a>
-      <a href="modinfo.html" data-page-link="modinfo">modinfo</a>
-      <a href="patching.html" data-page-link="patching">Patching</a>
-      <a href="modcontext.html" data-page-link="modcontext">API</a>
-      <a href="release.html" data-page-link="release">Release</a>
-      <a href="debugging.html" data-page-link="debugging">Debugging</a>
+      <div class="nav-group"><p class="nav-title">Getting Started</p><a href="index.html" data-page-link="home">Overview</a><a href="template.html" data-page-link="template">Template setup</a></div>
+      <div class="nav-group"><p class="nav-title">Mod Basics</p><a href="modinfo.html" data-page-link="modinfo">modinfo.json</a></div>
+      <div class="nav-group"><p class="nav-title">Patching</p><a href="patching.html" data-page-link="patching">Patching GML</a></div>
+      <div class="nav-group"><p class="nav-title">API</p><a href="modcontext.html" data-page-link="modcontext">ModContext API</a></div>
+      <div class="nav-group"><p class="nav-title">Building & Release</p><a href="release.html" data-page-link="release">Release checklist</a></div>
+      <div class="nav-group"><p class="nav-title">Debugging</p><a href="debugging.html" data-page-link="debugging">Debugging mods</a></div>
     </nav>
   </header>
 
-  <main>
-    <section class="hero doc-intro">
-      <div class="hero-copy reveal">
-        <p class="eyebrow">Lake of Creatures / LOCLM / C# mods</p>
-        <h1>LOCLM Modding Wiki</h1>
-        <p class="lead">This wiki is only for mod creators. It covers the LOCLM template, mod folder structure, C# entry points, GameMaker patching, metadata, conflict-safe workflow, and packaging your mod for players.</p>
-        <div class="actions">
-          <a class="button primary" href="template.html">Start with the template</a>
-          <a class="button" href="patching.html">Learn patching</a>
+  <main class="docs-shell">
+    <article class="doc-content">
+      <section class="page-hero reveal">
+        <p class="breadcrumb"><a href="index.html">Docs</a> / Overview</p>
+        <span class="page-meta">Getting Started</span>
+        <h1>LOCLM Modding Manual</h1>
+        <p class="lead">Documentation for creating LOCLM mods for Lake of Creatures. This manual focuses on C# DLL mods, the official template, GameMaker/GML patching, metadata, release packaging, and debugging.</p>
+      </section>
+
+      <section class="section reveal">
+        <h2>What this wiki helps with</h2>
+        <p>LOCLM mods are C# DLLs. When the game starts, LOCLM reads the original <code>data.win</code>, loads each mod, lets the mod patch GameMaker resources in memory, then writes a generated cache file for the game to run.</p>
+        <div class="callout note"><strong>Scope</strong><p>This site is for making mods. It does not focus on installing the loader as a player.</p></div>
+      </section>
+
+      <section class="section reveal">
+        <h2>Create your first mod</h2>
+        <div class="step-list">
+          <div class="step"><div><h3>Start from the template</h3><p>Build the official <code>CreatureProbe</code> template so you have a working C# DLL mod structure.</p></div></div>
+          <div class="step"><div><h3>Rename the mod</h3><p>Rename the project, namespace, class, output folder, DLL, and metadata so your mod has its own identity.</p></div></div>
+          <div class="step"><div><h3>Add patches</h3><p>Use <code>ModContext</code> helpers to patch scripts, append GML hooks, load config, and locate game resources.</p></div></div>
+          <div class="step"><div><h3>Package the output folder</h3><p>Ship the complete mod folder, not only the DLL.</p></div></div>
         </div>
-      </div>
-      <aside class="terminal reveal">
-        <div class="terminal-bar"><span></span><span></span><span></span><strong>CreatureProbe</strong></div>
-        <pre><code>CreatureProbe/
-+-- CreatureProbe.dll
-+-- CreatureProbe.deps.json
+      </section>
+
+      <section class="section reveal">
+        <h2>Quick links</h2>
+        <div class="card-grid">
+          <a class="doc-card" href="template.html"><h3>Start from template</h3><p>Build and rename <code>CreatureProbe</code>.</p></a>
+          <a class="doc-card" href="modinfo.html"><h3>Setup modinfo</h3><p>Define metadata, compatibility, and load order.</p></a>
+          <a class="doc-card" href="patching.html"><h3>Use patches</h3><p>Patch GML safely and avoid conflicts.</p></a>
+          <a class="doc-card" href="release.html"><h3>Build release</h3><p>Package the full folder for players.</p></a>
+          <a class="doc-card" href="debugging.html"><h3>Debug errors</h3><p>Use LOCLM reports to find broken patches.</p></a>
+        </div>
+      </section>
+
+      <section class="section reveal">
+        <h2>Typical mod folder</h2>
+        <div class="file-tree">
+          <div class="code-title"><strong>File tree</strong></div>
+          <pre><code>MyCoolMod/
++-- MyCoolMod.dll
++-- MyCoolMod.deps.json
 +-- modinfo.json
 +-- assets/
 |   +-- code/
 |   \-- data/
 +-- UndertaleModLib.dll
 \-- Underanalyzer.dll</code></pre>
-      </aside>
-    </section>
+        </div>
+      </section>
 
-    <section class="strip">
-      <article><span>Language</span><strong>C# DLL mods</strong></article>
-      <article><span>Game layer</span><strong>GameMaker / GML patches</strong></article>
-      <article><span>Output</span><strong>One mod folder per release</strong></article>
-    </section>
-
-    <section class="section split">
-      <div class="heading reveal">
-        <p class="eyebrow">How mod loading works</p>
-        <h2>LOCLM gives your DLL access to the game data before launch.</h2>
-      </div>
-      <div class="timeline reveal">
-        <div><span>01</span><p>LOCLM reads the original <code>data.win</code>.</p></div>
-        <div><span>02</span><p>It scans <code>loclm/mods/</code> for mod folders.</p></div>
-        <div><span>03</span><p>It reads <code>modinfo.json</code> and resolves load order.</p></div>
-        <div><span>04</span><p>It loads your DLL and calls <code>Load(int audiogroup, UndertaleData data)</code>.</p></div>
-        <div><span>05</span><p>Your mod patches resources in memory.</p></div>
-        <div><span>06</span><p>LOCLM writes the patched cache and starts the game.</p></div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="heading reveal">
-        <p class="eyebrow">Docs map</p>
-        <h2>Use the right page for the job.</h2>
-      </div>
-      <div class="doc-grid reveal">
-        <a href="template.html"><span>01</span><strong>Template setup</strong><p>Build CreatureProbe, rename it, and understand the output folder.</p></a>
-        <a href="modinfo.html"><span>02</span><strong>modinfo.json</strong><p>Metadata, dependencies, supported versions, and load-order rules.</p></a>
-        <a href="patching.html"><span>03</span><strong>Patching GML</strong><p>Find/replace patches, hooks, menu buttons, and conflict-aware edits.</p></a>
-        <a href="modcontext.html"><span>04</span><strong>ModContext API</strong><p>Common helper methods for assets, JSON, resources, and code patches.</p></a>
-        <a href="release.html"><span>05</span><strong>Release checklist</strong><p>Package only the files players need and avoid broken installs.</p></a>
-        <a href="debugging.html"><span>06</span><strong>Debugging</strong><p>Use LOCLM logs and reports to find broken patches or conflicts.</p></a>
-      </div>
-    </section>
+      <nav class="next-links"><a href="template.html">Next: Template setup</a></nav>
+    </article>
+    <aside class="toc" id="pageToc"></aside>
   </main>
 
-  <footer class="footer">
-    <p>LOCLM modding wiki. Focused on creating mods, not installing the loader.</p>
-    <a href="template.html">Begin</a>
-  </footer>
+  <footer class="footer"><p>LOCLM Modding Manual</p></footer>
   <script src="app.js"></script>
 </body>
 </html>
