@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Release Checklist | LOCLM Modding</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="release">
+  <div class="noise" aria-hidden="true"></div>
+  <header class="topbar"><a class="brand" href="index.html"><span>LM</span><strong>LOCLM Modding</strong></a><button class="menu-button" id="menuButton" type="button" aria-label="Open navigation"><span></span><span></span></button><nav class="nav" id="nav"><a href="template.html" data-page-link="template">Template</a><a href="modinfo.html" data-page-link="modinfo">modinfo</a><a href="patching.html" data-page-link="patching">Patching</a><a href="modcontext.html" data-page-link="modcontext">API</a><a href="release.html" data-page-link="release">Release</a><a href="debugging.html" data-page-link="debugging">Debugging</a></nav></header>
+  <main>
+    <section class="page-hero reveal"><p class="eyebrow">Release checklist</p><h1>Ship a complete mod folder, not a loose DLL.</h1><p class="lead">Most broken installs happen because the release zip is missing metadata, assets, config files, or dependency DLLs.</p></section>
+    <section class="section code-panel reveal">
+      <div><h2>Player install target</h2><p>Players copy your full folder into <code>loclm/mods/</code>.</p></div>
+      <pre><code>loclm/mods/MyCoolMod/
++-- MyCoolMod.dll
++-- MyCoolMod.deps.json
++-- modinfo.json
++-- assets/
++-- UndertaleModLib.dll
+\-- Underanalyzer.dll</code></pre>
+    </section>
+    <section class="section">
+      <div class="check-grid reveal">
+        <span>Main DLL matches folder name.</span>
+        <span><code>modinfo.json</code> is present and valid.</span>
+        <span>Assets/config files are copied to output.</span>
+        <span>Dependency DLLs are included.</span>
+        <span>Debug symbols are removed unless you want them public.</span>
+        <span>Mod was tested alone.</span>
+        <span>Mod was tested with common other mods if possible.</span>
+        <span>Known conflicts are documented.</span>
+      </div>
+    </section>
+  </main>
+  <footer class="footer"><p>Next: debug issues using LOCLM reports.</p><a href="debugging.html">Debugging</a></footer>
+  <script src="app.js"></script>
+</body>
+</html>

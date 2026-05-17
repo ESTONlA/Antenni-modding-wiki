@@ -3,34 +3,56 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>modinfo.json | LOCLM Docs</title>
+  <title>modinfo.json | LOCLM Modding</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
-<body data-page="creating">
-  <div class="grain" aria-hidden="true"></div><div class="progress" id="progress"></div>
-  <header class="site-header"><a class="brand" href="index.html"><span class="brand-mark">L</span><span><strong>LOCLM</strong><small>Lake of Creatures Mod Loader</small></span></a><button class="nav-toggle" id="navToggle" type="button" aria-label="Open navigation"><span></span><span></span></button><nav class="nav" id="nav"><a href="installation.html" data-page-link="installation">Install</a><a href="mods.html" data-page-link="mods">Mods</a><a href="creating-mods.html" data-page-link="creating">Create</a><a href="security.html" data-page-link="security">Security</a><a href="logs.html" data-page-link="logs">Logs</a><a href="troubleshooting.html" data-page-link="troubleshooting">Fixes</a></nav></header>
+<body data-page="modinfo">
+  <div class="noise" aria-hidden="true"></div>
+  <header class="topbar"><a class="brand" href="index.html"><span>LM</span><strong>LOCLM Modding</strong></a><button class="menu-button" id="menuButton" type="button" aria-label="Open navigation"><span></span><span></span></button><nav class="nav" id="nav"><a href="template.html" data-page-link="template">Template</a><a href="modinfo.html" data-page-link="modinfo">modinfo</a><a href="patching.html" data-page-link="patching">Patching</a><a href="modcontext.html" data-page-link="modcontext">API</a><a href="release.html" data-page-link="release">Release</a><a href="debugging.html" data-page-link="debugging">Debugging</a></nav></header>
   <main>
-    <section class="page-hero section reveal"><p class="eyebrow">modinfo.json</p><h1>Compatibility and load order in one file.</h1><p class="lead">Every mod should include <code>modinfo.json</code> in the mod root folder.</p></section>
-    <section class="section"><div class="code-layout reveal"><div><h3>Recommended example</h3><p>Use dependencies and load rules when mods rely on each other.</p></div><pre><code>{
+    <section class="page-hero reveal"><p class="eyebrow">Metadata</p><h1>modinfo.json controls identity, compatibility, and load order.</h1><p class="lead">Every LOCLM mod should include <code>modinfo.json</code> in the root of the mod folder.</p></section>
+    <section class="section code-panel reveal">
+      <div><h2>Recommended example</h2><p>Use dependencies and explicit load rules when your mod expects another mod to run first.</p></div>
+      <pre><code>{
   "modName": "Example Mod",
   "authors": ["Example Author"],
   "description": "Example LOCLM mod.",
   "priority": 100,
   "enabled": true,
   "minLoaderVersion": "0.6.0-beta",
+  "maxLoaderVersion": "",
   "supportedGameVersions": ["*"],
   "dependencies": [],
   "optionalDependencies": [],
   "incompatibleWith": [],
   "loadAfter": [],
   "loadBefore": []
-}</code></pre></div></section>
-    <section class="section"><div class="cards three"><article class="card reveal"><h3>Required</h3><p><code>modName</code>, <code>authors</code>, <code>description</code>, and <code>priority</code>.</p></article><article class="card reveal"><h3>Compatibility</h3><p><code>minLoaderVersion</code>, <code>maxLoaderVersion</code>, and <code>supportedGameVersions</code>.</p></article><article class="card reveal"><h3>Load rules</h3><p><code>dependencies</code>, <code>optionalDependencies</code>, <code>loadAfter</code>, and <code>loadBefore</code>.</p></article></div></section>
+}</code></pre>
+    </section>
+    <section class="section">
+      <div class="table-card reveal">
+        <table>
+          <thead><tr><th>Field</th><th>Use</th></tr></thead>
+          <tbody>
+            <tr><td><code>modName</code></td><td>Display name. Required and should be short.</td></tr>
+            <tr><td><code>authors</code></td><td>At least one author name. Required.</td></tr>
+            <tr><td><code>priority</code></td><td>Base load order. Lower values load earlier unless dependencies change order.</td></tr>
+            <tr><td><code>enabled</code></td><td>Set false to disable the mod without deleting files.</td></tr>
+            <tr><td><code>dependencies</code></td><td>Required mods. Missing dependencies skip the mod.</td></tr>
+            <tr><td><code>optionalDependencies</code></td><td>Soft integrations. The mod can still load without them.</td></tr>
+            <tr><td><code>incompatibleWith</code></td><td>Known-bad mod combinations.</td></tr>
+            <tr><td><code>loadAfter</code></td><td>Load after another mod if it exists.</td></tr>
+            <tr><td><code>loadBefore</code></td><td>Ask LOCLM to load this mod before another mod.</td></tr>
+            <tr><td><code>supportedGameVersions</code></td><td>Use <code>*</code>, <code>any</code>, or hash prefixes for game build checks.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
   </main>
-  <footer class="footer"><div><strong>Reports</strong><p>Mod metadata results appear in mod status logs.</p></div><div class="footer-links"><a href="logs.html">Logs</a><a href="creating-mods.html">Creating Mods</a></div></footer>
+  <footer class="footer"><p>Next: patch game code safely.</p><a href="patching.html">Patching</a></footer>
   <script src="app.js"></script>
 </body>
 </html>

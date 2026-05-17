@@ -1,32 +1,26 @@
-# LOCLM Modding Wiki Website
+# LOCLM Modding Wiki
 
-Static GitHub Pages site for the LOCLM documentation.
+Static GitHub Pages documentation focused only on creating LOCLM mods.
 
-## Files
+## Pages
 
 ```text
 index.html
-installation.html
-mods.html
-creating-mods.html
+template.html
 modinfo.html
-security.html
-logs.html
-troubleshooting.html
-faq.html
+patching.html
+modcontext.html
+release.html
+debugging.html
 styles.css
 app.js
 ```
 
-No build step is required. Push this repository and enable GitHub Pages from the repository settings.
-
-## Local Preview
-
-Open `index.html` in a browser, or run any simple static server from this folder.
+No build step is required.
 
 ## GitHub Pages
 
-Recommended Pages settings:
+Recommended settings:
 
 ```text
 Source: Deploy from a branch

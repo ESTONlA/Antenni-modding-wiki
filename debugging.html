@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Debugging Mods | LOCLM Modding</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="debugging">
+  <div class="noise" aria-hidden="true"></div>
+  <header class="topbar"><a class="brand" href="index.html"><span>LM</span><strong>LOCLM Modding</strong></a><button class="menu-button" id="menuButton" type="button" aria-label="Open navigation"><span></span><span></span></button><nav class="nav" id="nav"><a href="template.html" data-page-link="template">Template</a><a href="modinfo.html" data-page-link="modinfo">modinfo</a><a href="patching.html" data-page-link="patching">Patching</a><a href="modcontext.html" data-page-link="modcontext">API</a><a href="release.html" data-page-link="release">Release</a><a href="debugging.html" data-page-link="debugging">Debugging</a></nav></header>
+  <main>
+    <section class="page-hero reveal"><p class="eyebrow">Debugging</p><h1>Use the loader reports before guessing.</h1><p class="lead">LOCLM writes mod status, failed mod, security, and conflict reports to help you find broken patches quickly.</p></section>
+    <section class="section grid-two">
+      <article class="card reveal"><span class="tag">Main log</span><h2>LOCLM.log</h2><p>Use this for loader flow, warnings, mod load order, and patch failures.</p></article>
+      <article class="card reveal"><span class="tag">Summary</span><h2>LOCLM_summary.txt</h2><p>Use this when a tester sends you logs. It includes version, paths, hashes, warnings, and errors.</p></article>
+    </section>
+    <section class="section">
+      <div class="table-card reveal">
+        <table>
+          <thead><tr><th>File</th><th>Use</th></tr></thead>
+          <tbody>
+            <tr><td><code>mod_status.json</code></td><td>Full per-mod compatibility, load, security, and resource report.</td></tr>
+            <tr><td><code>failed_mods.json</code></td><td>Mods that failed metadata, dependency, or runtime loading.</td></tr>
+            <tr><td><code>security_report.json</code></td><td>Hash and scan result if the mod was blocked.</td></tr>
+            <tr><td><code>mod_conflicts.json</code></td><td>Resources touched by more than one mod.</td></tr>
+            <tr><td><code>LOCLM_runtime.log</code></td><td>Runtime messages written by in-game hooks.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+    <section class="section">
+      <div class="heading reveal"><p class="eyebrow">Workflow</p><h2>Debug in the smallest possible setup.</h2></div>
+      <div class="check-grid reveal">
+        <span>Test your mod alone.</span>
+        <span>Delete stale cache only if you suspect old output.</span>
+        <span>Check that your find/replace search string still exists.</span>
+        <span>Check generated conflict report.</span>
+        <span>Check button indexes and menu IDs.</span>
+        <span>Ask testers for the whole <code>loclm/Logs/</code> folder.</span>
+      </div>
+    </section>
+  </main>
+  <footer class="footer"><p>Back to template setup.</p><a href="template.html">Template</a></footer>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Patching GML | LOCLM Modding</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="patching">
+  <div class="noise" aria-hidden="true"></div>
+  <header class="topbar"><a class="brand" href="index.html"><span>LM</span><strong>LOCLM Modding</strong></a><button class="menu-button" id="menuButton" type="button" aria-label="Open navigation"><span></span><span></span></button><nav class="nav" id="nav"><a href="template.html" data-page-link="template">Template</a><a href="modinfo.html" data-page-link="modinfo">modinfo</a><a href="patching.html" data-page-link="patching">Patching</a><a href="modcontext.html" data-page-link="modcontext">API</a><a href="release.html" data-page-link="release">Release</a><a href="debugging.html" data-page-link="debugging">Debugging</a></nav></header>
+  <main>
+    <section class="page-hero reveal"><p class="eyebrow">Patching</p><h1>Prefer small targeted patches over replacing whole scripts.</h1><p class="lead">Most LOCLM mods patch GameMaker code entries. Smaller patches survive game updates better and conflict less with other mods.</p></section>
+    <section class="section grid-three">
+      <article class="card reveal"><span class="tag">Best</span><h2>Append hooks</h2><p>Add code at the end of an event or script when you only need to observe or add behavior.</p></article>
+      <article class="card reveal"><span class="tag">Careful</span><h2>Find and replace</h2><p>Use exact small search strings. If the game updates and the string changes, the patch can fail.</p></article>
+      <article class="card reveal"><span class="tag">Risky</span><h2>Full replace</h2><p>Replacing entire scripts is more likely to conflict with other mods and future game versions.</p></article>
+    </section>
+    <section class="section code-panel reveal">
+      <div><h2>Find/replace example</h2><p>This style is useful for small menu or variable patches.</p></div>
+      <pre><code>context.FindReplaceCode(
+    "gml_GlobalScript_main_menu_spawn_buttons",
+    "btn_yy = 4;",
+    "btn_yy = 4;\n    global.button_unlock[68] = 1;");</code></pre>
+    </section>
+    <section class="section code-panel reveal">
+      <div><h2>Append GML from a file</h2><p>Keep bigger GML snippets in <code>assets/code/</code>, not inside C# strings.</p></div>
+      <pre><code>context.AppendCodeFromFile(
+    "hooks/obj_ctrl_main_menu_Draw_0.gml",
+    "gml_Object_obj_ctrl_main_menu_Draw_0");</code></pre>
+    </section>
+    <section class="section">
+      <div class="heading reveal"><p class="eyebrow">Conflict-safe habits</p><h2>Make your patch easy to debug.</h2></div>
+      <div class="check-grid reveal">
+        <span>Use unique global variable names.</span>
+        <span>Use unique button indexes and menu IDs.</span>
+        <span>Log what your mod changes.</span>
+        <span>Patch the smallest stable code snippet possible.</span>
+        <span>Test with no other mods first.</span>
+        <span>Document every game resource you touch.</span>
+      </div>
+    </section>
+  </main>
+  <footer class="footer"><p>Next: use the helper API.</p><a href="modcontext.html">ModContext</a></footer>
+  <script src="app.js"></script>
+</body>
+</html>

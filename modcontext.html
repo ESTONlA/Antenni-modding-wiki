@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ModContext API | LOCLM Modding</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="modcontext">
+  <div class="noise" aria-hidden="true"></div>
+  <header class="topbar"><a class="brand" href="index.html"><span>LM</span><strong>LOCLM Modding</strong></a><button class="menu-button" id="menuButton" type="button" aria-label="Open navigation"><span></span><span></span></button><nav class="nav" id="nav"><a href="template.html" data-page-link="template">Template</a><a href="modinfo.html" data-page-link="modinfo">modinfo</a><a href="patching.html" data-page-link="patching">Patching</a><a href="modcontext.html" data-page-link="modcontext">API</a><a href="release.html" data-page-link="release">Release</a><a href="debugging.html" data-page-link="debugging">Debugging</a></nav></header>
+  <main>
+    <section class="page-hero reveal"><p class="eyebrow">ModContext</p><h1>The template helper for common mod tasks.</h1><p class="lead"><code>ModContext</code> wraps asset loading, logging, JSON config, code patching, and resource lookup so your mod code stays readable.</p></section>
+    <section class="section code-panel reveal">
+      <div><h2>Basic setup</h2><p>Create the context after LOCLM calls your <code>Load</code> method.</p></div>
+      <pre><code>ModContext context = ModContext.Create(data);
+ModConfig config = context.LoadJson&lt;ModConfig&gt;("data/mod-config.json", required: false)
+    ?? new ModConfig();
+
+context.Log("Loaded config.");</code></pre>
+    </section>
+    <section class="section">
+      <div class="method-grid reveal">
+        <article><h3>Logging</h3><code>Log</code><code>Warn</code></article>
+        <article><h3>Assets</h3><code>LoadJson&lt;T&gt;</code><code>AppendCodeFromFile</code><code>HookCodeFromFile</code></article>
+        <article><h3>Patching</h3><code>FindReplaceCode</code><code>CreateFunctionFromFile</code><code>ReplaceObjectEventFromFile</code></article>
+        <article><h3>Resources</h3><code>RequireObject</code><code>RequireSprite</code><code>RequireRoom</code><code>RequireSound</code></article>
+        <article><h3>Create</h3><code>CreateObject</code><code>PlaceObjectInRoom</code></article>
+        <article><h3>Validation</h3><code>RequireCodeEntry</code><code>RequireFunction</code><code>RequireVariable</code></article>
+      </div>
+    </section>
+  </main>
+  <footer class="footer"><p>Next: package the mod folder correctly.</p><a href="release.html">Release</a></footer>
+  <script src="app.js"></script>
+</body>
+</html>

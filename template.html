@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Template Setup | LOCLM Modding</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="template">
+  <div class="noise" aria-hidden="true"></div>
+  <header class="topbar"><a class="brand" href="index.html"><span>LM</span><strong>LOCLM Modding</strong></a><button class="menu-button" id="menuButton" type="button" aria-label="Open navigation"><span></span><span></span></button><nav class="nav" id="nav"><a href="template.html" data-page-link="template">Template</a><a href="modinfo.html" data-page-link="modinfo">modinfo</a><a href="patching.html" data-page-link="patching">Patching</a><a href="modcontext.html" data-page-link="modcontext">API</a><a href="release.html" data-page-link="release">Release</a><a href="debugging.html" data-page-link="debugging">Debugging</a></nav></header>
+  <main>
+    <section class="page-hero reveal"><p class="eyebrow">Template setup</p><h1>Start from CreatureProbe, then rename it.</h1><p class="lead">The official template gives you a working C# DLL mod with metadata, assets, config loading, and a sample main-menu tab.</p></section>
+    <section class="section grid-two">
+      <div class="card reveal"><span class="tag">Requirement</span><h2>.NET SDK 10.0</h2><p>Use the SDK for building mods. Players only need the runtime, but mod developers need the full SDK.</p></div>
+      <div class="card reveal"><span class="tag">Source folder</span><h2>mod_template/</h2><p>The template source contains <code>CreatureProbe.csproj</code>, <code>loclmMod.cs</code>, <code>ModContext.cs</code>, assets, and included files.</p></div>
+    </section>
+    <section class="section code-panel reveal">
+      <div><h2>Build command</h2><p>Run this from the loader repository root.</p></div>
+      <pre><code>dotnet build .\mod_template\CreatureProbe.csproj -c Release</code></pre>
+    </section>
+    <section class="section code-panel reveal">
+      <div><h2>Expected output</h2><p>Copy the whole output folder into <code>loclm/mods/</code>. Do not copy only the DLL.</p></div>
+      <pre><code>CreatureProbe/
++-- CreatureProbe.dll
++-- CreatureProbe.deps.json
++-- modinfo.json
++-- assets/
++-- GameSpecificData/
++-- UndertaleModLib.dll
+\-- Underanalyzer.dll</code></pre>
+    </section>
+    <section class="section">
+      <div class="heading reveal"><p class="eyebrow">Rename checklist</p><h2>Change every identity, not just the DLL.</h2></div>
+      <div class="check-grid reveal">
+        <span>Project file: <code>CreatureProbe.csproj</code></span>
+        <span>Output folder in the project file</span>
+        <span>Namespace in C# files</span>
+        <span>Class name in <code>loclmMod.cs</code></span>
+        <span>DLL and mod folder name</span>
+        <span><code>IncludedFiles/modinfo.json</code></span>
+        <span>Text/config in <code>assets/data/mod-config.json</code></span>
+        <span>Button indexes and menu IDs if the mod adds UI</span>
+      </div>
+    </section>
+  </main>
+  <footer class="footer"><p>Next: define your mod metadata.</p><a href="modinfo.html">modinfo.json</a></footer>
+  <script src="app.js"></script>
+</body>
+</html>
