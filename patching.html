@@ -22,9 +22,21 @@
       <section class="section reveal"><h2>Append GML from a file</h2><p>Keep larger GML snippets in <code>assets/code/</code>, not inside giant C# strings.</p><div class="code-block"><div class="code-title"><strong>C#</strong></div><pre><code>context.AppendCodeFromFile(
     "hooks/obj_ctrl_main_menu_Draw_0.gml",
     "gml_Object_obj_ctrl_main_menu_Draw_0");</code></pre></div></section>
+      <section class="section reveal"><h2>CreatureProbe hook files</h2><p>The sample main-menu tab uses small hook files under <code>assets/code/hooks/</code>. This keeps the C# entry point readable and makes each patch easier to review.</p><div class="file-tree"><div class="code-title"><strong>assets/code/hooks</strong></div><pre><code>hooks/
++-- main_menu_spawn_buttons.gml
++-- obj_button_menu_Alarm_0.gml
++-- obj_button_menu_Alarm_2.gml
++-- obj_ctrl_main_menu_Draw_0.gml
++-- obj_ctrl_main_menu_Step_0.gml
+\-- obj_ctrl_main_menu_Alarm_2.gml</code></pre></div><div class="callout note"><strong>Use clear file names.</strong><p>Name hook files after the game code entry or event they patch. Future you will know what each file touches.</p></div></section>
+      <section class="section reveal"><h2>Token replacement</h2><p>Use replacement tokens for text that comes from config. The template uses tokens like <code>__MENU_TAB_TITLE__</code> and replaces them before appending the GML.</p><div class="code-block"><div class="code-title"><strong>C#</strong></div><pre><code>context.AppendCodeFromFile(
+    "hooks/obj_ctrl_main_menu_Draw_0.gml",
+    "gml_Object_obj_ctrl_main_menu_Draw_0",
+    ("__MENU_TAB_TITLE__", QuoteGmlString(config.MenuTabTitle)),
+    ("__MENU_TAB_BODY__", QuoteGmlString(config.MenuTabBody)));</code></pre></div></section>
       <section class="section reveal"><h2>Conflict-safe habits</h2><div class="check-grid"><span>Use unique global variable names.</span><span>Use unique button indexes and menu IDs.</span><span>Patch the smallest stable code snippet possible.</span><span>Document every game resource you touch.</span><span>Test your mod alone first.</span><span>Check <code>mod_conflicts.json</code> when testing with other mods.</span></div></section>
       <section class="section reveal"><h2>Common mistakes</h2><ul><li>Searching for text that appears more than once in a script.</li><li>Replacing a huge block when one line would be enough.</li><li>Hardcoding shared button indexes without documenting them.</li><li>Keeping GML patch text inside C# instead of asset files.</li></ul></section>
-      <nav class="next-links"><a href="modinfo.html">Previous: modinfo.json</a><a href="modcontext.html">Next: ModContext API</a></nav>
+      <nav class="next-links"><a href="folder-layout.html">Previous: Folder layout</a><a href="menu-tabs.html">Next: Menu tabs</a></nav>
     </article><aside class="toc" id="pageToc"></aside>
   </main><footer class="footer"><p>LOCLM Modding Manual</p></footer><script src="app.js"></script>
 </body>

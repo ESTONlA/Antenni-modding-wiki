@@ -31,7 +31,7 @@
         <p class="breadcrumb"><a href="index.html">Docs</a> / Overview</p>
         <span class="page-meta">Getting Started</span>
         <h1>LOCLM Modding Manual</h1>
-        <p class="lead">Documentation for creating LOCLM mods for Lake of Creatures. This manual focuses on C# DLL mods, the official template, GameMaker/GML patching, metadata, release packaging, and debugging.</p>
+        <p class="lead">A practical manual for building Lake of Creatures mods with LOCLM. Start from the official C# template, patch GameMaker resources safely, package a complete mod folder, and debug failures from loader reports.</p>
       </section>
 
       <section class="section reveal">
@@ -51,13 +51,34 @@
       </section>
 
       <section class="section reveal">
-        <h2>Quick links</h2>
-        <div class="card-grid">
-          <a class="doc-card" href="template.html"><h3>Start from template</h3><p>Build and rename <code>CreatureProbe</code>.</p></a>
-          <a class="doc-card" href="modinfo.html"><h3>Setup modinfo</h3><p>Define metadata, compatibility, and load order.</p></a>
-          <a class="doc-card" href="patching.html"><h3>Use patches</h3><p>Patch GML safely and avoid conflicts.</p></a>
-          <a class="doc-card" href="release.html"><h3>Build release</h3><p>Package the full folder for players.</p></a>
-          <a class="doc-card" href="debugging.html"><h3>Debug errors</h3><p>Use LOCLM reports to find broken patches.</p></a>
+        <h2>Manual map</h2>
+        <div class="doc-index">
+          <div class="doc-index-group">
+            <h3>Getting Started</h3>
+            <a href="template.html"><strong>Template setup</strong><span>Build and rename <code>CreatureProbe</code>.</span></a>
+            <a href="workflow.html"><strong>First mod workflow</strong><span>The safest edit, build, install, test loop.</span></a>
+            <a href="load-method.html"><strong>Load method</strong><span>Understand the public entry point LOCLM calls.</span></a>
+          </div>
+          <div class="doc-index-group">
+            <h3>Mod Basics</h3>
+            <a href="modinfo.html"><strong>modinfo.json</strong><span>Metadata, compatibility, dependencies, and load order.</span></a>
+            <a href="config.html"><strong>Config files</strong><span>Move labels, toggles, and indexes into JSON.</span></a>
+            <a href="folder-layout.html"><strong>Folder layout</strong><span>Install-ready output folder structure.</span></a>
+          </div>
+          <div class="doc-index-group">
+            <h3>Patching and Assets</h3>
+            <a href="patching.html"><strong>Patching GML</strong><span>Append hooks and targeted find/replace patches.</span></a>
+            <a href="menu-tabs.html"><strong>Menu tabs</strong><span>How the sample main-menu tab works.</span></a>
+            <a href="assets.html"><strong>Asset pipeline</strong><span>How assets are copied and loaded.</span></a>
+            <a href="sprites-sounds.html"><strong>Sprites & sounds</strong><span>Use the template helpers for PNG, WAV, and OGG assets.</span></a>
+          </div>
+          <div class="doc-index-group">
+            <h3>Ship and Debug</h3>
+            <a href="modcontext.html"><strong>ModContext API</strong><span>The actual helper methods available in the template.</span></a>
+            <a href="release.html"><strong>Release checklist</strong><span>Package a complete player-ready mod folder.</span></a>
+            <a href="debugging.html"><strong>Debugging mods</strong><span>Use logs and reports instead of guessing.</span></a>
+            <a href="security.html"><strong>Security scan</strong><span>Understand blocked mods, hashes, and allowlisting.</span></a>
+          </div>
         </div>
       </section>
 

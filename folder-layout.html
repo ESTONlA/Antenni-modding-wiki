@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Folder Layout | LOCLM Modding</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="folder-layout">
+  <header class="topbar"><a class="brand" href="index.html"><span>LM</span><strong>LOCLM Modding</strong></a><button class="menu-button" id="menuButton" type="button" aria-label="Open navigation"><span></span><span></span></button><label class="sidebar-search"><input id="sidebarSearch" type="search" placeholder="Search docs"></label><nav class="nav" id="nav"></nav></header>
+  <main class="docs-shell">
+    <article class="doc-content">
+      <section class="page-hero reveal"><p class="breadcrumb"><a href="index.html">Docs</a> / Folder layout</p><span class="page-meta">Mod Basics</span><h1>A clean folder layout prevents most install mistakes.</h1><p class="lead">LOCLM mods should be installed as their own folder inside <code>loclm/mods/</code>. The DLL, manifest, assets, and dependency DLLs belong together.</p></section>
+      <section class="section reveal"><h2>Installed mod layout</h2><div class="file-tree"><div class="code-title"><strong>loclm/mods</strong></div><pre><code>loclm/
+\-- mods/
+    \-- MyCoolMod/
+        +-- MyCoolMod.dll
+        +-- MyCoolMod.deps.json
+        +-- modinfo.json
+        +-- assets/
+        |   +-- code/
+        |   +-- data/
+        |   +-- included/
+        |   +-- sounds/
+        |   \-- sprites/
+        +-- UndertaleModLib.dll
+        \-- Underanalyzer.dll</code></pre></div></section>
+      <section class="section reveal"><h2>Source vs output</h2><div class="table-card"><table><thead><tr><th>Source folder</th><th>Output folder</th></tr></thead><tbody><tr><td><code>IncludedFiles/modinfo.json</code></td><td><code>MyCoolMod/modinfo.json</code></td></tr><tr><td><code>assets/code/</code></td><td><code>MyCoolMod/assets/code/</code></td></tr><tr><td><code>assets/data/</code></td><td><code>MyCoolMod/assets/data/</code></td></tr><tr><td><code>assets/sprites/</code></td><td><code>MyCoolMod/assets/sprites/</code></td></tr><tr><td><code>assets/sounds/</code></td><td><code>MyCoolMod/assets/sounds/</code></td></tr><tr><td><code>assets/included/</code></td><td><code>MyCoolMod/assets/included/</code></td></tr></tbody></table></div></section>
+      <section class="section reveal"><h2>Folder rules</h2><div class="check-grid"><span>Do not put loose DLLs directly in <code>mods/</code>.</span><span>Keep the folder name and main DLL name matched.</span><span>Keep metadata beside the DLL.</span><span>Keep GML assets under <code>assets/code/</code>.</span><span>Keep user config under <code>assets/data/</code>.</span><span>Do not edit the original game <code>data.win</code>.</span></div></section>
+      <section class="section reveal"><h2>Common mistakes</h2><ul><li>Uploading <code>bin/Release</code> instead of the configured output folder.</li><li>Nested folders such as <code>MyCoolMod/MyCoolMod/MyCoolMod.dll</code>.</li><li>Missing <code>modinfo.json</code> because it was left in <code>IncludedFiles/</code>.</li><li>Missing assets because the project file was renamed without preserving the copy targets.</li></ul></section>
+      <nav class="next-links"><a href="config.html">Previous: Config files</a><a href="patching.html">Next: Patching GML</a></nav>
+    </article><aside class="toc" id="pageToc"></aside>
+  </main><footer class="footer"><p>LOCLM Modding Manual</p></footer><script src="app.js"></script>
+</body>
+</html>

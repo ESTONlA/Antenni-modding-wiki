@@ -3,6 +3,69 @@ const nav = document.querySelector("#nav");
 const menuButton = document.querySelector("#menuButton");
 const currentPage = document.body.dataset.page ?? "";
 
+const docsNavigation = [
+  {
+    title: "Getting Started",
+    links: [
+      ["home", "Overview", "index.html"],
+      ["template", "Template setup", "template.html"],
+      ["workflow", "First mod workflow", "workflow.html"],
+      ["load-method", "Load method", "load-method.html"],
+    ],
+  },
+  {
+    title: "Mod Basics",
+    links: [
+      ["modinfo", "modinfo.json", "modinfo.html"],
+      ["config", "Config files", "config.html"],
+      ["folder-layout", "Folder layout", "folder-layout.html"],
+    ],
+  },
+  {
+    title: "Patching",
+    links: [
+      ["patching", "Patching GML", "patching.html"],
+      ["menu-tabs", "Menu tabs", "menu-tabs.html"],
+      ["strings", "Strings & text", "strings.html"],
+      ["conflicts", "Conflict safety", "conflicts.html"],
+    ],
+  },
+  {
+    title: "Assets",
+    links: [
+      ["assets", "Asset pipeline", "assets.html"],
+      ["sprites-sounds", "Sprites & sounds", "sprites-sounds.html"],
+      ["included-files", "Included files", "included-files.html"],
+    ],
+  },
+  {
+    title: "API",
+    links: [["modcontext", "ModContext API", "modcontext.html"]],
+  },
+  {
+    title: "Building & Release",
+    links: [["release", "Release checklist", "release.html"]],
+  },
+  {
+    title: "Debugging",
+    links: [
+      ["debugging", "Debugging mods", "debugging.html"],
+      ["security", "Security scan", "security.html"],
+    ],
+  },
+];
+
+if (nav) {
+  nav.innerHTML = docsNavigation
+    .map((group) => {
+      const links = group.links
+        .map(([page, label, href]) => `<a href="${href}" data-page-link="${page}">${label}</a>`)
+        .join("");
+      return `<div class="nav-group"><p class="nav-title">${group.title}</p>${links}</div>`;
+    })
+    .join("");
+}
+
 menuButton?.addEventListener("click", () => {
   sidebar?.classList.toggle("open");
 });

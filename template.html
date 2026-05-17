@@ -42,6 +42,39 @@
       </section>
 
       <section class="section reveal">
+        <h2>What the template contains</h2>
+        <p><code>CreatureProbe</code> is intentionally small, but it is a real working mod. It shows the folder layout, metadata, config loading, GML hooks, and the safe pattern for patching only audiogroup <code>0</code>.</p>
+        <div class="file-tree">
+          <div class="code-title"><strong>Template source</strong></div>
+          <pre><code>mod_template/
++-- CreatureProbe.csproj
++-- loclmMod.cs
++-- ModContext.cs
++-- ModConfig.cs
++-- IncludedFiles/
+|   \-- modinfo.json
+\-- assets/
+    +-- code/
+    |   \-- hooks/
+    +-- data/
+    |   \-- mod-config.json
+    +-- included/
+    +-- sounds/
+    \-- sprites/</code></pre>
+        </div>
+      </section>
+
+      <section class="section reveal">
+        <h2>First edit pass</h2>
+        <ol class="step-list">
+          <li><strong>Update metadata.</strong><span>Edit <code>IncludedFiles/modinfo.json</code> first so the loader shows the correct mod name, author, and compatibility data.</span></li>
+          <li><strong>Edit config defaults.</strong><span>Change values in <code>assets/data/mod-config.json</code>, including button label, menu title, body text, button index, and back button index.</span></li>
+          <li><strong>Move patch logic.</strong><span>Keep small setup in <code>loclmMod.cs</code>. Put larger GML into <code>assets/code/</code> and load it with <code>ModContext</code>.</span></li>
+          <li><strong>Build Release.</strong><span>Use Release builds before testing installs or publishing a zip.</span></li>
+        </ol>
+      </section>
+
+      <section class="section reveal">
         <h2>Build the template</h2>
         <p>Run this from the loader repository root.</p>
         <div class="command-block">
@@ -52,7 +85,7 @@
 
       <section class="section reveal">
         <h2>Expected output</h2>
-        <p>The build output is the mod folder you copy into <code>loclm/mods/</code>.</p>
+        <p>The project is configured to write directly into <code>mod_template/CreatureProbe/</code>. That output folder is the folder you copy into <code>loclm/mods/</code>.</p>
         <div class="file-tree">
           <div class="code-title"><strong>CreatureProbe output</strong></div>
           <pre><code>CreatureProbe/
@@ -65,6 +98,22 @@
 \-- Underanalyzer.dll</code></pre>
         </div>
         <div class="callout warning"><strong>Do not copy only the DLL.</strong><p>Copy the whole output folder. The template also needs metadata, assets/config files, and dependency DLLs.</p></div>
+      </section>
+
+      <section class="section reveal">
+        <h2>How the build copies files</h2>
+        <p><code>CreatureProbe.csproj</code> has custom copy steps so the final mod folder is ready to install.</p>
+        <div class="table-card">
+          <table>
+            <thead><tr><th>Build behavior</th><th>Result</th></tr></thead>
+            <tbody>
+              <tr><td><code>OutputPath</code> is <code>CreatureProbe\</code></td><td>The compiled mod lands in a ready-to-copy folder.</td></tr>
+              <tr><td><code>assets/**/*.*</code> is copied</td><td>GML hooks, config, sprites, sounds, and included files stay with the mod.</td></tr>
+              <tr><td><code>IncludedFiles/**/*.*</code> is copied</td><td><code>modinfo.json</code> appears at the output folder root.</td></tr>
+              <tr><td>Duplicate asset roots are cleaned</td><td>Extra accidental <code>code/</code>, <code>data/</code>, <code>sprites/</code>, <code>sounds/</code>, and <code>included/</code> folders are removed from the output root.</td></tr>
+            </tbody>
+          </table>
+        </div>
       </section>
 
       <section class="section reveal">
@@ -86,6 +135,59 @@
       </section>
 
       <section class="section reveal">
+        <h2>Main entry point</h2>
+        <p>LOCLM finds the public <code>Load</code> method and passes the current audiogroup plus the loaded game data. The template only patches audiogroup <code>0</code>.</p>
+        <div class="code-block">
+          <div class="code-title"><strong>loclmMod.cs</strong></div>
+          <pre><code>public void Load(int audiogroup, UndertaleData data)
+{
+    if (audiogroup != 0)
+    {
+        return;
+    }
+
+    ModContext context = ModContext.Create(data);
+    ModConfig config = context.LoadJson&lt;ModConfig&gt;("data/mod-config.json", required: false)
+        ?? new ModConfig();
+
+    InstallMainMenuTab(context, config);
+}</code></pre>
+        </div>
+      </section>
+
+      <section class="section reveal">
+        <h2>Config keys used by CreatureProbe</h2>
+        <p>The sample reads <code>assets/data/mod-config.json</code> into <code>ModConfig.cs</code>. Missing values fall back to the C# defaults.</p>
+        <div class="table-card">
+          <table>
+            <thead><tr><th>Key</th><th>What it changes</th></tr></thead>
+            <tbody>
+              <tr><td><code>verboseLogging</code></td><td>Prints extra template messages while loading.</td></tr>
+              <tr><td><code>enableMenuTab</code></td><td>Turns the sample main-menu tab on or off.</td></tr>
+              <tr><td><code>mainMenuButtonLabel</code></td><td>Text shown on the added main-menu button.</td></tr>
+              <tr><td><code>mainMenuButtonIndex</code></td><td>Button index used by the new menu button.</td></tr>
+              <tr><td><code>menuTabTitle</code></td><td>Title text drawn inside the sample tab.</td></tr>
+              <tr><td><code>menuTabBody</code></td><td>Body text drawn inside the sample tab.</td></tr>
+              <tr><td><code>backButtonIndex</code></td><td>Button index used by the sample back button.</td></tr>
+              <tr><td><code>backButtonLabel</code></td><td>Text shown on the sample back button.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section reveal">
+        <h2>How the sample menu tab works</h2>
+        <p>The sample adds a new button to the existing main menu, gives it text, maps it to a custom menu state, then draws and controls that state from main-menu hooks.</p>
+        <ol class="step-list">
+          <li><strong>Unlock a button slot.</strong><span>The template patches <code>gml_GlobalScript_main_menu_spawn_buttons</code> so the game knows the new button exists.</span></li>
+          <li><strong>Set button behavior.</strong><span>It patches <code>gml_Object_obj_button_menu_Alarm_0</code> and <code>gml_Object_obj_button_menu_Alarm_2</code> so the button has text and opens the sample tab.</span></li>
+          <li><strong>Draw the tab.</strong><span><code>obj_ctrl_main_menu_Draw_0.gml</code> draws the title and body text.</span></li>
+          <li><strong>Handle input.</strong><span><code>obj_ctrl_main_menu_Step_0.gml</code> and <code>obj_ctrl_main_menu_Alarm_2.gml</code> keep the tab interactive and allow leaving it.</span></li>
+        </ol>
+        <div class="callout tip"><strong>Change indexes before adding more menu mods.</strong><p>If two mods use the same button index or menu ID, they can conflict. Pick unique values and document them in your release notes.</p></div>
+      </section>
+
+      <section class="section reveal">
         <h2>Next steps</h2>
         <div class="card-grid">
           <a class="doc-card" href="modinfo.html"><h3>Define modinfo</h3><p>Metadata, dependencies, and compatibility.</p></a>
@@ -95,7 +197,7 @@
         </div>
       </section>
 
-      <nav class="next-links"><a href="index.html">Previous: Overview</a><a href="modinfo.html">Next: modinfo.json</a></nav>
+      <nav class="next-links"><a href="index.html">Previous: Overview</a><a href="workflow.html">Next: First mod workflow</a></nav>
     </article>
     <aside class="toc" id="pageToc"></aside>
   </main>

@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sprites & Sounds | LOCLM Modding</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="sprites-sounds">
+  <header class="topbar"><a class="brand" href="index.html"><span>LM</span><strong>LOCLM Modding</strong></a><button class="menu-button" id="menuButton" type="button" aria-label="Open navigation"><span></span><span></span></button><label class="sidebar-search"><input id="sidebarSearch" type="search" placeholder="Search docs"></label><nav class="nav" id="nav"></nav></header>
+  <main class="docs-shell">
+    <article class="doc-content">
+      <section class="page-hero reveal"><p class="breadcrumb"><a href="index.html">Docs</a> / Sprites & sounds</p><span class="page-meta">Assets</span><h1>Add or replace simple game assets from the template.</h1><p class="lead">The current template includes helpers for PNG sprites and embedded WAV/OGG sounds. Keep the source files under <code>assets/sprites/</code> and <code>assets/sounds/</code>.</p></section>
+      <section class="section reveal"><h2>Add a new sprite</h2><div class="code-block"><div class="code-title"><strong>C#</strong></div><pre><code>UndertaleSprite icon = context.AddSpriteFromPng(
+    "spr_my_mod_icon",
+    "sprites/probe_icon.png",
+    originX: 8,
+    originY: 8);</code></pre></div></section>
+      <section class="section reveal"><h2>Replace a sprite texture</h2><div class="code-block"><div class="code-title"><strong>C#</strong></div><pre><code>context.ReplaceSpriteTextureFromPng(
+    "spr_existing_game_sprite",
+    "sprites/replacement.png");</code></pre></div><div class="callout warning"><strong>Use the same size when replacing.</strong><p>The helper fits the replacement into the existing texture page item. Matching the original sprite size avoids broken visuals.</p></div></section>
+      <section class="section reveal"><h2>Add or replace sounds</h2><div class="code-block"><div class="code-title"><strong>C#</strong></div><pre><code>UndertaleSound click = context.AddSoundFromFile(
+    "snd_my_mod_click",
+    "sounds/click.ogg");
+
+context.ReplaceSoundFromFile(
+    "snd_existing_game_sound",
+    "sounds/replacement.wav");</code></pre></div><p>Sound helpers currently target embedded <code>.wav</code> and <code>.ogg</code> files in the built-in audio group.</p></section>
+      <section class="section reveal"><h2>Common mistakes</h2><ul><li>Trying to load JPG or other image formats through PNG helpers.</li><li>Replacing a sprite with a different size and expecting it to fit automatically.</li><li>Using generic resource names like <code>spr_icon</code> instead of a mod-prefixed name.</li><li>Forgetting to ship the source asset inside the built <code>assets/</code> folder.</li></ul></section>
+      <nav class="next-links"><a href="assets.html">Previous: Asset pipeline</a><a href="included-files.html">Next: Included files</a></nav>
+    </article><aside class="toc" id="pageToc"></aside>
+  </main><footer class="footer"><p>LOCLM Modding Manual</p></footer><script src="app.js"></script>
+</body>
+</html>

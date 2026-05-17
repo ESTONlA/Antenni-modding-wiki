@@ -21,7 +21,17 @@
 +-- assets/
 +-- UndertaleModLib.dll
 \-- Underanalyzer.dll</code></pre></div><div class="callout warning"><strong>Do not ship only <code>MyCoolMod.dll</code>.</strong><p>Config files, GML assets, metadata, and dependencies are part of the mod.</p></div></section>
+      <section class="section reveal"><h2>Build from the project root</h2><p>Use a Release build when preparing a public upload.</p><div class="command-block"><div class="code-title"><strong>PowerShell</strong></div><pre><code>dotnet build .\mod_template\CreatureProbe.csproj -c Release</code></pre></div><p>The template project copies <code>assets/</code> into the output folder and copies <code>IncludedFiles/modinfo.json</code> to the output root. If you renamed the mod, use your renamed project path instead.</p></section>
+      <section class="section reveal"><h2>What to keep and remove</h2><div class="table-card"><table><thead><tr><th>File or folder</th><th>Release decision</th></tr></thead><tbody><tr><td>Main mod DLL</td><td>Required.</td></tr><tr><td><code>modinfo.json</code></td><td>Required.</td></tr><tr><td><code>assets/</code></td><td>Required if your mod uses config, GML hooks, sprites, sounds, or included files.</td></tr><tr><td><code>UndertaleModLib.dll</code> and <code>Underanalyzer.dll</code></td><td>Required unless your loader release explicitly provides them elsewhere.</td></tr><tr><td><code>.deps.json</code></td><td>Keep it. It helps .NET resolve dependencies.</td></tr><tr><td><code>.pdb</code></td><td>Optional. Useful for debugging, usually removed for smaller public releases.</td></tr><tr><td>Language folders</td><td>Usually remove if your mod does not need localized dependency resources.</td></tr></tbody></table></div></section>
       <section class="section reveal"><h2>Release checklist</h2><div class="check-grid"><span>Main DLL matches folder name.</span><span><code>modinfo.json</code> is present and valid.</span><span>Assets/config files are copied to output.</span><span>Dependency DLLs are included.</span><span>Debug symbols are removed unless needed.</span><span>Mod was tested alone.</span><span>Known conflicts are documented.</span><span>Install instructions mention copying the whole folder.</span></div></section>
+      <section class="section reveal"><h2>Suggested zip structure</h2><p>Zip the mod folder itself or zip a folder that clearly contains the mod folder. Players should be able to drag <code>MyCoolMod/</code> into <code>loclm/mods/</code>.</p><div class="file-tree"><div class="code-title"><strong>Zip contents</strong></div><pre><code>MyCoolMod.zip
+\-- MyCoolMod/
+    +-- MyCoolMod.dll
+    +-- MyCoolMod.deps.json
+    +-- modinfo.json
+    +-- assets/
+    +-- UndertaleModLib.dll
+    \-- Underanalyzer.dll</code></pre></div></section>
       <section class="section reveal"><h2>Common mistakes</h2><ul><li>Uploading the build DLL without the output folder.</li><li>Leaving template author/name values in <code>modinfo.json</code>.</li><li>Forgetting <code>assets/data/mod-config.json</code>.</li><li>Testing only in a dirty mods folder with other mods enabled.</li></ul></section>
       <nav class="next-links"><a href="modcontext.html">Previous: ModContext API</a><a href="debugging.html">Next: Debugging mods</a></nav>
     </article><aside class="toc" id="pageToc"></aside>

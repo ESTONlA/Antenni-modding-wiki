@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Config Files | LOCLM Modding</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="config">
+  <header class="topbar"><a class="brand" href="index.html"><span>LM</span><strong>LOCLM Modding</strong></a><button class="menu-button" id="menuButton" type="button" aria-label="Open navigation"><span></span><span></span></button><label class="sidebar-search"><input id="sidebarSearch" type="search" placeholder="Search docs"></label><nav class="nav" id="nav"></nav></header>
+  <main class="docs-shell">
+    <article class="doc-content">
+      <section class="page-hero reveal"><p class="breadcrumb"><a href="index.html">Docs</a> / Config files</p><span class="page-meta">Mod Basics</span><h1>Put user-editable values in config, not hardcoded patches.</h1><p class="lead">The template reads <code>assets/data/mod-config.json</code> into <code>ModConfig.cs</code>. This lets players or mod authors tweak labels and indexes without touching C#.</p></section>
+      <section class="section reveal"><h2>Current template config</h2><div class="code-block"><div class="code-title"><strong>assets/data/mod-config.json</strong></div><pre><code>{
+  "verboseLogging": true,
+  "enableMenuTab": true,
+  "mainMenuButtonIndex": 68,
+  "backButtonIndex": 69
+}</code></pre></div><p>The JSON can omit fields. Missing values use defaults from <code>ModConfig.cs</code>.</p></section>
+      <section class="section reveal"><h2>Config model defaults</h2><div class="table-card"><table><thead><tr><th>Property</th><th>Default</th><th>Purpose</th></tr></thead><tbody><tr><td><code>VerboseLogging</code></td><td><code>true</code></td><td>Extra loader messages while testing.</td></tr><tr><td><code>EnableMenuTab</code></td><td><code>true</code></td><td>Enables the sample menu feature.</td></tr><tr><td><code>MainMenuButtonLabel</code></td><td><code>Test Mod - Estonia</code></td><td>Button label.</td></tr><tr><td><code>MainMenuButtonIndex</code></td><td><code>68</code></td><td>Menu button index.</td></tr><tr><td><code>MenuTabTitle</code></td><td><code>Test Mod - Estonia</code></td><td>Title drawn on the custom tab.</td></tr><tr><td><code>MenuTabBody</code></td><td>Template text</td><td>Body text drawn on the custom tab.</td></tr><tr><td><code>BackButtonIndex</code></td><td><code>69</code></td><td>Back button index.</td></tr><tr><td><code>BackButtonLabel</code></td><td><code>Back</code></td><td>Back button label.</td></tr></tbody></table></div></section>
+      <section class="section reveal"><h2>Loading config</h2><div class="code-block"><div class="code-title"><strong>C#</strong></div><pre><code>ModConfig config = context.LoadJson&lt;ModConfig&gt;("data/mod-config.json", required: false)
+    ?? new ModConfig();</code></pre></div><div class="callout tip"><strong>Use defaults in C#.</strong><p>Keep the mod usable even when the JSON file is missing or only has a few fields.</p></div></section>
+      <section class="section reveal"><h2>Good config values</h2><div class="check-grid"><span>Button indexes.</span><span>Menu IDs.</span><span>Feature toggles.</span><span>Text labels.</span><span>Debug logging toggles.</span><span>Patch behavior that players may need to disable.</span></div></section>
+      <section class="section reveal"><h2>Common mistakes</h2><ul><li>Putting invalid JSON comments in <code>mod-config.json</code>.</li><li>Letting two mods use the same default button index.</li><li>Making config required when the mod can safely use defaults.</li><li>Changing config file paths without updating the C# loader path.</li></ul></section>
+      <nav class="next-links"><a href="modinfo.html">Previous: modinfo.json</a><a href="folder-layout.html">Next: Folder layout</a></nav>
+    </article><aside class="toc" id="pageToc"></aside>
+  </main><footer class="footer"><p>LOCLM Modding Manual</p></footer><script src="app.js"></script>
+</body>
+</html>
