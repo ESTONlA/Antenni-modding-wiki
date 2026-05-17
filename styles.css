@@ -457,11 +457,13 @@ h3:hover .heading-anchor { opacity: 1; }
 .step h3,
 .step-list > li strong {
   display: block;
+  grid-column: 2;
   margin-top: 0;
 }
 .step p:last-child,
 .step-list > li span {
   display: block;
+  grid-column: 2;
   color: var(--text-muted);
   margin-top: 0.35rem;
   margin-bottom: 0;
@@ -662,6 +664,8 @@ blockquote {
   }
   .step,
   .step-list > li { grid-template-columns: 1fr; }
+  .step-list > li strong,
+  .step-list > li span { grid-column: 1; }
   .doc-index-group a,
   .split-panel {
     grid-template-columns: 1fr;
