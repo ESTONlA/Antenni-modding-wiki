@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Creating Mods | LOCLM Docs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="creating">
+  <div class="grain" aria-hidden="true"></div><div class="progress" id="progress"></div>
+  <header class="site-header"><a class="brand" href="index.html"><span class="brand-mark">L</span><span><strong>LOCLM</strong><small>Lake of Creatures Mod Loader</small></span></a><button class="nav-toggle" id="navToggle" type="button" aria-label="Open navigation"><span></span><span></span></button><nav class="nav" id="nav"><a href="installation.html" data-page-link="installation">Install</a><a href="mods.html" data-page-link="mods">Mods</a><a href="creating-mods.html" data-page-link="creating">Create</a><a href="security.html" data-page-link="security">Security</a><a href="logs.html" data-page-link="logs">Logs</a><a href="troubleshooting.html" data-page-link="troubleshooting">Fixes</a></nav></header>
+  <main>
+    <section class="page-hero section reveal"><p class="eyebrow">Creating mods</p><h1>C# DLL mods with GameMaker patch hooks.</h1><p class="lead">The official template is <code>CreatureProbe</code>. It demonstrates metadata, config loading, GML patches, and a main menu tab.</p></section>
+    <section class="section split">
+      <div class="section-heading reveal"><p class="eyebrow">Template</p><h2>Build, copy, test.</h2><p>Developers need the .NET SDK 10.0. Players only need the runtime.</p></div>
+      <div class="feature-list reveal">
+        <article><h3>Build command</h3><pre><code>dotnet build .\mod_template\CreatureProbe.csproj -c Release</code></pre></article>
+        <article><h3>Output</h3><pre><code>CreatureProbe/
++-- CreatureProbe.dll
++-- CreatureProbe.deps.json
++-- modinfo.json
++-- assets/
++-- UndertaleModLib.dll
+\-- Underanalyzer.dll</code></pre></article>
+      </div>
+    </section>
+    <section class="section">
+      <div class="cards three">
+        <article class="card reveal"><h3>Entry point</h3><p>LOCLM searches for a public <code>Load(int audiogroup, UndertaleData data)</code> method.</p></article>
+        <article class="card reveal"><h3>Assets</h3><p>Put GML files in <code>assets/code/</code> and config/data files in <code>assets/data/</code>.</p></article>
+        <article class="card reveal"><h3>Test alone</h3><p>Test your mod by itself before testing with other mods. Most conflicts are easier to find that way.</p></article>
+      </div>
+    </section>
+  </main>
+  <footer class="footer"><div><strong>Next</strong><p>Document your mod metadata clearly.</p></div><div class="footer-links"><a href="modinfo.html">modinfo.json</a><a href="logs.html">Logs</a></div></footer>
+  <script src="app.js"></script>
+</body>
+</html>

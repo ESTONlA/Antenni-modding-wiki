@@ -2,6 +2,7 @@ const nav = document.querySelector("#nav");
 const navToggle = document.querySelector("#navToggle");
 const progress = document.querySelector("#progress");
 const navLinks = Array.from(document.querySelectorAll(".nav a"));
+const currentPage = document.body.dataset.page ?? "";
 const sections = navLinks
   .map((link) => document.querySelector(link.getAttribute("href")))
   .filter(Boolean);
@@ -12,6 +13,7 @@ navToggle?.addEventListener("click", () => {
 
 navLinks.forEach((link) => {
   link.addEventListener("click", () => nav?.classList.remove("open"));
+  link.classList.toggle("active", link.dataset.pageLink === currentPage);
 });
 
 const revealObserver = new IntersectionObserver(
@@ -35,17 +37,19 @@ const updateProgress = () => {
   const amount = scrollable <= 0 ? 0 : (window.scrollY / scrollable) * 100;
   progress.style.width = `${amount}%`;
 
-  let active = "";
-  sections.forEach((section) => {
-    const box = section.getBoundingClientRect();
-    if (box.top <= 140 && box.bottom > 140) {
-      active = `#${section.id}`;
-    }
-  });
+  if (sections.length > 0) {
+    let active = "";
+    sections.forEach((section) => {
+      const box = section.getBoundingClientRect();
+      if (box.top <= 140 && box.bottom > 140) {
+        active = `#${section.id}`;
+      }
+    });
 
-  navLinks.forEach((link) => {
-    link.classList.toggle("active", link.getAttribute("href") === active);
-  });
+    navLinks.forEach((link) => {
+      link.classList.toggle("active", link.getAttribute("href") === active);
+    });
+  }
 };
 
 document.addEventListener("scroll", updateProgress, { passive: true });

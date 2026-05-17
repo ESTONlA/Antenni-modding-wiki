@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>modinfo.json | LOCLM Docs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="creating">
+  <div class="grain" aria-hidden="true"></div><div class="progress" id="progress"></div>
+  <header class="site-header"><a class="brand" href="index.html"><span class="brand-mark">L</span><span><strong>LOCLM</strong><small>Lake of Creatures Mod Loader</small></span></a><button class="nav-toggle" id="navToggle" type="button" aria-label="Open navigation"><span></span><span></span></button><nav class="nav" id="nav"><a href="installation.html" data-page-link="installation">Install</a><a href="mods.html" data-page-link="mods">Mods</a><a href="creating-mods.html" data-page-link="creating">Create</a><a href="security.html" data-page-link="security">Security</a><a href="logs.html" data-page-link="logs">Logs</a><a href="troubleshooting.html" data-page-link="troubleshooting">Fixes</a></nav></header>
+  <main>
+    <section class="page-hero section reveal"><p class="eyebrow">modinfo.json</p><h1>Compatibility and load order in one file.</h1><p class="lead">Every mod should include <code>modinfo.json</code> in the mod root folder.</p></section>
+    <section class="section"><div class="code-layout reveal"><div><h3>Recommended example</h3><p>Use dependencies and load rules when mods rely on each other.</p></div><pre><code>{
+  "modName": "Example Mod",
+  "authors": ["Example Author"],
+  "description": "Example LOCLM mod.",
+  "priority": 100,
+  "enabled": true,
+  "minLoaderVersion": "0.6.0-beta",
+  "supportedGameVersions": ["*"],
+  "dependencies": [],
+  "optionalDependencies": [],
+  "incompatibleWith": [],
+  "loadAfter": [],
+  "loadBefore": []
+}</code></pre></div></section>
+    <section class="section"><div class="cards three"><article class="card reveal"><h3>Required</h3><p><code>modName</code>, <code>authors</code>, <code>description</code>, and <code>priority</code>.</p></article><article class="card reveal"><h3>Compatibility</h3><p><code>minLoaderVersion</code>, <code>maxLoaderVersion</code>, and <code>supportedGameVersions</code>.</p></article><article class="card reveal"><h3>Load rules</h3><p><code>dependencies</code>, <code>optionalDependencies</code>, <code>loadAfter</code>, and <code>loadBefore</code>.</p></article></div></section>
+  </main>
+  <footer class="footer"><div><strong>Reports</strong><p>Mod metadata results appear in mod status logs.</p></div><div class="footer-links"><a href="logs.html">Logs</a><a href="creating-mods.html">Creating Mods</a></div></footer>
+  <script src="app.js"></script>
+</body>
+</html>

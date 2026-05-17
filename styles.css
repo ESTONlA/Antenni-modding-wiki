@@ -190,6 +190,25 @@ pre code {
   padding-top: 4rem;
 }
 
+.page-hero {
+  min-height: 48vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-top: 6rem;
+  padding-bottom: 3rem;
+}
+
+.page-hero h1 {
+  max-width: 980px;
+  margin-bottom: 1.35rem;
+  font-size: clamp(3rem, 8vw, 7.6rem);
+}
+
+.page-hero .lead {
+  max-width: 760px;
+}
+
 .eyebrow {
   margin: 0 0 1rem;
   color: var(--accent-2);

@@ -6,6 +6,14 @@ Static GitHub Pages site for the LOCLM documentation.
 
 ```text
 index.html
+installation.html
+mods.html
+creating-mods.html
+modinfo.html
+security.html
+logs.html
+troubleshooting.html
+faq.html
 styles.css
 app.js
 ```
