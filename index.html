@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="LOCLM documentation for installing, using, troubleshooting, and creating Lake of Creatures mods.">
+  <title>LOCLM Docs | Lake of Creatures Mod Loader</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="progress" id="progress"></div>
+
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="LOCLM home">
+      <span class="brand-mark">L</span>
+      <span>
+        <strong>LOCLM</strong>
+        <small>Lake of Creatures Mod Loader</small>
+      </span>
+    </a>
+
+    <button class="nav-toggle" id="navToggle" type="button" aria-label="Open navigation">
+      <span></span>
+      <span></span>
+    </button>
+
+    <nav class="nav" id="nav">
+      <a href="#install">Install</a>
+      <a href="#mods">Mods</a>
+      <a href="#create">Create</a>
+      <a href="#security">Security</a>
+      <a href="#logs">Logs</a>
+      <a href="#troubleshooting">Fixes</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero section">
+      <div class="hero-copy reveal">
+        <p class="eyebrow">Community tool / Windows x64 / 0.6.0-beta</p>
+        <h1>Mod Lake of Creatures without touching the original game files.</h1>
+        <p class="lead">
+          LOCLM loads C# mods from a dedicated folder, builds a patched cache of <code>data.win</code>,
+          and keeps the original game data clean.
+        </p>
+        <div class="hero-actions">
+          <a class="button primary" href="#install">Start installing</a>
+          <a class="button ghost" href="#create">Make a mod</a>
+        </div>
+      </div>
+
+      <aside class="hero-panel reveal" aria-label="LOCLM file layout">
+        <div class="panel-top">
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <strong>runtime layout</strong>
+        </div>
+        <pre><code>Lake of Creatures/
++-- LakeOfCreatures.exe
++-- data.win
++-- version.dll
++-- LOCLM_CACHE_data.win
+\-- loclm/
+    +-- mods/
+    +-- Logs/
+    +-- disabled_mods/
+    \-- quarantine/</code></pre>
+      </aside>
+    </section>
+
+    <section class="quick-strip" aria-label="Important facts">
+      <article>
+        <span>Cache safe</span>
+        <strong>Original data.win stays untouched</strong>
+      </article>
+      <article>
+        <span>Support</span>
+        <strong>Zip loclm/Logs for help</strong>
+      </article>
+      <article>
+        <span>Runtime</span>
+        <strong>.NET Desktop Runtime 10 x64</strong>
+      </article>
+    </section>
+
+    <section class="section split" id="what">
+      <div class="section-heading reveal">
+        <p class="eyebrow">What it does</p>
+        <h2>Simple loader flow, clear files.</h2>
+      </div>
+      <div class="timeline reveal">
+        <div><span>01</span><p>Steam starts <code>LakeOfCreatures.exe</code>.</p></div>
+        <div><span>02</span><p>Windows loads LOCLM's <code>version.dll</code> proxy.</p></div>
+        <div><span>03</span><p>The proxy starts <code>loclm/loclm-csharp.exe</code>.</p></div>
+        <div><span>04</span><p>LOCLM scans mods, security, metadata, conflicts, and dependencies.</p></div>
+        <div><span>05</span><p>LOCLM writes <code>LOCLM_CACHE_data.win</code> and relaunches the game.</p></div>
+      </div>
+    </section>
+
+    <section class="section" id="install">
+      <div class="section-heading reveal">
+        <p class="eyebrow">Installation</p>
+        <h2>Drop the loader beside the game executable.</h2>
+        <p>Install LOCLM into the same folder that contains <code>LakeOfCreatures.exe</code> and <code>data.win</code>.</p>
+      </div>
+
+      <div class="steps">
+        <article class="step-card reveal">
+          <span>1</span>
+          <h3>Open the game folder</h3>
+          <p>In Steam, right-click Lake of Creatures, open Manage, then Browse local files.</p>
+        </article>
+        <article class="step-card reveal">
+          <span>2</span>
+          <h3>Copy the release files</h3>
+          <p>Put <code>version.dll</code> and the full <code>loclm/</code> folder beside the game executable.</p>
+        </article>
+        <article class="step-card reveal">
+          <span>3</span>
+          <h3>Launch normally</h3>
+          <p>Start the game through Steam. LOCLM opens first, prepares the cache, then relaunches the game.</p>
+        </article>
+      </div>
+
+      <div class="notice reveal">
+        <strong>Do not replace <code>data.win</code>.</strong>
+        <span>LOCLM creates its own cache file and automatically regenerates it when loader files, mods, config files, or game files change.</span>
+      </div>
+    </section>
+
+    <section class="section" id="mods">
+      <div class="section-heading reveal">
+        <p class="eyebrow">Installing mods</p>
+        <h2>Each mod gets its own folder.</h2>
+      </div>
+
+      <div class="code-layout reveal">
+        <div>
+          <h3>Correct structure</h3>
+          <p>The folder name and main DLL name should match.</p>
+        </div>
+        <pre><code>loclm/mods/MyCoolMod/
++-- MyCoolMod.dll
++-- modinfo.json
++-- assets/
+\-- dependency files...</code></pre>
+      </div>
+
+      <div class="cards three">
+        <article class="card reveal">
+          <h3>Disable safely</h3>
+          <p>Move a mod to <code>disabled_mods/</code>, set <code>enabled: false</code>, or add a <code>.disabled</code> marker.</p>
+        </article>
+        <article class="card reveal">
+          <h3>Conflict reports</h3>
+          <p>LOCLM tracks touched code, sprites, sounds, objects, rooms, button indexes, menu IDs, and global variables.</p>
+        </article>
+        <article class="card reveal">
+          <h3>Blocked mods</h3>
+          <p>Suspicious mods are skipped and reported in <code>Logs/security_report.json</code>.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section split" id="create">
+      <div class="section-heading reveal">
+        <p class="eyebrow">Creating mods</p>
+        <h2>C# DLL mods with GameMaker patch hooks.</h2>
+        <p>The official template is called <code>CreatureProbe</code>. It adds a main menu button and a custom menu tab.</p>
+      </div>
+
+      <div class="feature-list reveal">
+        <article>
+          <h3>Template output</h3>
+          <pre><code>CreatureProbe/
++-- CreatureProbe.dll
++-- CreatureProbe.deps.json
++-- modinfo.json
++-- assets/
++-- UndertaleModLib.dll
+\-- Underanalyzer.dll</code></pre>
+        </article>
+        <article>
+          <h3>Build command</h3>
+          <pre><code>dotnet build .\mod_template\CreatureProbe.csproj -c Release</code></pre>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="metadata">
+      <div class="section-heading reveal">
+        <p class="eyebrow">modinfo.json</p>
+        <h2>Metadata controls compatibility and load order.</h2>
+      </div>
+      <div class="code-layout reveal">
+        <div>
+          <h3>Recommended fields</h3>
+          <p>Use dependencies and load rules instead of relying only on priority.</p>
+        </div>
+        <pre><code>{
+  "modName": "Example Mod",
+  "authors": ["Example Author"],
+  "description": "Example LOCLM mod.",
+  "priority": 100,
+  "enabled": true,
+  "minLoaderVersion": "0.6.0-beta",
+  "supportedGameVersions": ["*"],
+  "dependencies": [],
+  "optionalDependencies": [],
+  "incompatibleWith": [],
+  "loadAfter": [],
+  "loadBefore": []
+}</code></pre>
+      </div>
+    </section>
+
+    <section class="section" id="security">
+      <div class="section-heading reveal">
+        <p class="eyebrow">Security scan</p>
+        <h2>Basic protection before a mod DLL loads.</h2>
+        <p>LOCLM scans mod DLLs for suspicious behavior. A warning can be a false positive, but it is not always false.</p>
+      </div>
+
+      <div class="cards two">
+        <article class="card reveal">
+          <h3>Reports</h3>
+          <p>Security results are written to <code>loclm/Logs/security_report.json</code> and blocked mods appear in <code>blocked_mods.json</code>.</p>
+        </article>
+        <article class="card reveal">
+          <h3>Allowlist</h3>
+          <p>Only add a hash to <code>security_allowlist.json</code> if you trust the mod author and understand the risk.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="logs">
+      <div class="section-heading reveal">
+        <p class="eyebrow">Logs and diagnostics</p>
+        <h2>One folder for support.</h2>
+        <p>If something breaks, zip the whole <code>loclm/Logs/</code> folder.</p>
+      </div>
+
+      <div class="log-grid reveal" id="logGrid">
+        <button data-copy="loclm/Logs/LOCLM.log"><strong>LOCLM.log</strong><span>Main loader log</span></button>
+        <button data-copy="loclm/Logs/LOCLM_proxy.log"><strong>LOCLM_proxy.log</strong><span>Native proxy log</span></button>
+        <button data-copy="loclm/Logs/LOCLM_runtime.log"><strong>LOCLM_runtime.log</strong><span>In-game runtime hook log</span></button>
+        <button data-copy="loclm/Logs/LOCLM_summary.txt"><strong>LOCLM_summary.txt</strong><span>Human readable final summary</span></button>
+        <button data-copy="loclm/Logs/mod_status.json"><strong>mod_status.json</strong><span>Full mod loading report</span></button>
+        <button data-copy="loclm/Logs/mod_conflicts.json"><strong>mod_conflicts.json</strong><span>Possible mod conflicts</span></button>
+      </div>
+    </section>
+
+    <section class="section" id="troubleshooting">
+      <div class="section-heading reveal">
+        <p class="eyebrow">Troubleshooting</p>
+        <h2>Common issues, direct fixes.</h2>
+      </div>
+
+      <div class="accordion reveal" id="accordion">
+        <article>
+          <button type="button">Game does not start</button>
+          <div>
+            <p>Check that <code>version.dll</code> is beside <code>LakeOfCreatures.exe</code>. If <code>loclm/Logs/LOCLM_proxy.log</code> does not exist, the proxy DLL probably did not load.</p>
+          </div>
+        </article>
+        <article>
+          <button type="button">Loader opens but the game does not relaunch</button>
+          <div>
+            <p>Install .NET Desktop Runtime 10.0 x64, remove broken mods, and check <code>LOCLM_summary.txt</code>.</p>
+          </div>
+        </article>
+        <article>
+          <button type="button">Mods do not load</button>
+          <div>
+            <p>Make sure each mod has its own folder with a matching DLL and <code>modinfo.json</code>. Check <code>failed_mods.json</code>.</p>
+          </div>
+        </article>
+        <article>
+          <button type="button">Mods conflict</button>
+          <div>
+            <p>Open <code>mod_conflicts.json</code>, test mods one at a time, then adjust priority, <code>loadAfter</code>, or <code>loadBefore</code>.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section docs" id="docs">
+      <div class="section-heading reveal">
+        <p class="eyebrow">Docs index</p>
+        <h2>Find the right page fast.</h2>
+      </div>
+
+      <label class="search reveal">
+        <span>Search docs</span>
+        <input id="docSearch" type="search" placeholder="Try install, security, logs, template...">
+      </label>
+
+      <div class="doc-grid reveal" id="docGrid">
+        <a href="#install" data-keywords="install setup version dll runtime game folder">Installation</a>
+        <a href="#mods" data-keywords="mods install folder disabled load order conflicts">Installing Mods</a>
+        <a href="#create" data-keywords="creating mods template csharp gml creatureprobe">Creating Mods</a>
+        <a href="#metadata" data-keywords="modinfo dependencies priority loadAfter loadBefore compatibility">modinfo.json</a>
+        <a href="#security" data-keywords="security scan allowlist hash blocked quarantine">Security Scan</a>
+        <a href="#logs" data-keywords="logs diagnostics summary proxy runtime report">Logs and Diagnostics</a>
+        <a href="#troubleshooting" data-keywords="troubleshooting crash start launch fix">Troubleshooting</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div>
+      <strong>LOCLM</strong>
+      <p>Created and maintained by Estonia. Made by the community, for the community.</p>
+    </div>
+    <div class="footer-links">
+      <a href="https://github.com/ESTONlA/Lake-of-Creatures-Mod-Loader">GitHub</a>
+      <a href="https://github.com/ESTONlA/Lake-of-Creatures-Mod-Loader/wiki">Old Wiki</a>
+      <a href="#top">Back to top</a>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
