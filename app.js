@@ -10,6 +10,8 @@ const docsNavigation = [
       ["home", "Overview", "index.html"],
       ["template", "Template setup", "template.html"],
       ["workflow", "First mod workflow", "workflow.html"],
+      ["how-loader-works", "How loading works", "how-loader-works.html"],
+      ["rename-template", "Rename CreatureProbe", "rename-template.html"],
       ["load-method", "Load method", "load-method.html"],
     ],
   },
@@ -25,6 +27,7 @@ const docsNavigation = [
     title: "Patching",
     links: [
       ["patching", "Patching GML", "patching.html"],
+      ["code-assets", "Code assets & hooks", "code-assets.html"],
       ["menu-tabs", "Menu tabs", "menu-tabs.html"],
       ["strings", "Strings & text", "strings.html"],
       ["conflicts", "Conflict safety", "conflicts.html"],
@@ -41,6 +44,17 @@ const docsNavigation = [
   {
     title: "API",
     links: [["modcontext", "ModContext API", "modcontext.html"]],
+  },
+  {
+    title: "Recipes",
+    links: [
+      ["recipe-menu-button", "Add a menu button", "recipe-menu-button.html"],
+      ["recipe-text", "Replace text safely", "recipe-text.html"],
+      ["recipe-sprite", "Add or replace sprite", "recipe-sprite.html"],
+      ["recipe-sound", "Add or replace sound", "recipe-sound.html"],
+      ["recipe-included-file", "Use included data", "recipe-included-file.html"],
+      ["recipe-object", "Create an object", "recipe-object.html"],
+    ],
   },
   {
     title: "Building & Release",

@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Add or Replace Sound | LOCLM Modding</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="recipe-sound">
+  <header class="topbar"><a class="brand" href="index.html"><span>LM</span><strong>LOCLM Modding</strong></a><button class="menu-button" id="menuButton" type="button" aria-label="Open navigation"><span></span><span></span></button><label class="sidebar-search"><input id="sidebarSearch" type="search" placeholder="Search docs"></label><nav class="nav" id="nav"></nav></header>
+  <main class="docs-shell">
+    <article class="doc-content">
+      <section class="page-hero reveal"><p class="breadcrumb"><a href="index.html">Docs</a> / Add or replace sound</p><span class="page-meta">Recipe</span><h1>Recipe: add or replace embedded WAV/OGG sounds.</h1><p class="lead">The template supports embedded <code>.wav</code> and <code>.ogg</code> files in the built-in audio group. Keep sound files under <code>assets/sounds/</code>.</p></section>
+      <section class="section reveal"><h2>Add a new sound</h2><div class="file-tree"><div class="code-title"><strong>File</strong></div><pre><code>assets/sounds/click.ogg</code></pre></div><div class="code-block"><div class="code-title"><strong>C#</strong></div><pre><code>UndertaleSound click = context.AddSoundFromFile(
+    "snd_my_mod_click",
+    "sounds/click.ogg");</code></pre></div><p>The helper creates an embedded audio entry and a new <code>UndertaleSound</code> resource.</p></section>
+      <section class="section reveal"><h2>Replace an existing sound</h2><div class="code-block"><div class="code-title"><strong>C#</strong></div><pre><code>context.ReplaceSoundFromFile(
+    "snd_existing_game_sound",
+    "sounds/replacement.wav");</code></pre></div><div class="callout warning"><strong>Only built-in embedded sounds are supported by this helper.</strong><p>If the target sound is in another audio group, the helper throws instead of creating a broken replacement.</p></div></section>
+      <section class="section reveal"><h2>Format behavior</h2><div class="table-card"><table><thead><tr><th>Format</th><th>Behavior</th></tr></thead><tbody><tr><td><code>.wav</code></td><td>Stored as regular embedded audio.</td></tr><tr><td><code>.ogg</code></td><td>Can be stored compressed and optionally decompressed on load.</td></tr><tr><td>Other formats</td><td>Rejected by the helper.</td></tr></tbody></table></div></section>
+      <section class="section reveal"><h2>Common mistakes</h2><ul><li>Using MP3 or another unsupported format.</li><li>Replacing a sound from a non-built-in audio group.</li><li>Using a duplicate sound resource name.</li><li>Forgetting to include <code>assets/sounds/</code> in the shipped output folder.</li></ul></section>
+      <nav class="next-links"><a href="recipe-sprite.html">Previous: Add or replace sprite</a><a href="recipe-included-file.html">Next: Use included data</a></nav>
+    </article><aside class="toc" id="pageToc"></aside>
+  </main><footer class="footer"><p>LOCLM Modding Manual</p></footer><script src="app.js"></script>
+</body>
+</html>

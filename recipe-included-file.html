@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Use Included Data | LOCLM Modding</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="recipe-included-file">
+  <header class="topbar"><a class="brand" href="index.html"><span>LM</span><strong>LOCLM Modding</strong></a><button class="menu-button" id="menuButton" type="button" aria-label="Open navigation"><span></span><span></span></button><label class="sidebar-search"><input id="sidebarSearch" type="search" placeholder="Search docs"></label><nav class="nav" id="nav"></nav></header>
+  <main class="docs-shell">
+    <article class="doc-content">
+      <section class="page-hero reveal"><p class="breadcrumb"><a href="index.html">Docs</a> / Use included data</p><span class="page-meta">Recipe</span><h1>Recipe: ship a data file and reference it from GML.</h1><p class="lead">Use <code>assets/included/</code> for files that your mod needs at runtime. The file stays beside the mod and is not injected into <code>data.win</code>.</p></section>
+      <section class="section reveal"><h2>Step 1: add the file</h2><div class="file-tree"><div class="code-title"><strong>Source</strong></div><pre><code>assets/
+\-- included/
+    \-- my_data.json</code></pre></div></section>
+      <section class="section reveal"><h2>Step 2: get the game path</h2><div class="code-block"><div class="code-title"><strong>C#</strong></div><pre><code>string gmlPath = context.GetIncludedFileGamePath("included/my_data.json");</code></pre></div><p>The helper returns a relative path like <code>loclm/mods/MyCoolMod/assets/included/my_data.json</code>.</p></section>
+      <section class="section reveal"><h2>Step 3: inject the path into GML</h2><div class="split-panel"><div class="code-block"><div class="code-title"><strong>GML asset</strong></div><pre><code>var path = "__DATA_PATH__";
+if (file_exists(path)) {
+    var text = file_text_open_read(path);
+}</code></pre></div><div class="code-block"><div class="code-title"><strong>C#</strong></div><pre><code>context.AppendCodeFromFile(
+    "hooks/read_data.gml",
+    "gml_Object_obj_example_Create_0",
+    ("__DATA_PATH__", QuoteGmlString(gmlPath)));</code></pre></div></div></section>
+      <section class="section reveal"><h2>Rules</h2><div class="check-grid"><span>Do not use absolute PC paths.</span><span>Keep files under <code>assets/included/</code>.</span><span>Use token replacement for paths.</span><span>Ship the whole output folder.</span><span>Handle missing files in GML if optional.</span><span>Use <code>RequireIncludedFile</code> if required.</span></div></section>
+      <nav class="next-links"><a href="recipe-sound.html">Previous: Add or replace sound</a><a href="recipe-object.html">Next: Create an object</a></nav>
+    </article><aside class="toc" id="pageToc"></aside>
+  </main><footer class="footer"><p>LOCLM Modding Manual</p></footer><script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>How Loading Works | LOCLM Modding</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="how-loader-works">
+  <header class="topbar"><a class="brand" href="index.html"><span>LM</span><strong>LOCLM Modding</strong></a><button class="menu-button" id="menuButton" type="button" aria-label="Open navigation"><span></span><span></span></button><label class="sidebar-search"><input id="sidebarSearch" type="search" placeholder="Search docs"></label><nav class="nav" id="nav"></nav></header>
+  <main class="docs-shell">
+    <article class="doc-content">
+      <section class="page-hero reveal"><p class="breadcrumb"><a href="index.html">Docs</a> / How loading works</p><span class="page-meta">Getting Started</span><h1>LOCLM gives your DLL a chance to edit the game before launch.</h1><p class="lead">A mod is not running inside the game loop by default. It is loaded by LOCLM while the loader is building the patched cache file.</p></section>
+      <section class="section reveal"><h2>The full flow</h2><ol class="step-list"><li><strong>LOCLM reads the original game data.</strong><span>The original <code>data.win</code> is the input. Mods should not edit it manually.</span></li><li><strong>LOCLM scans <code>loclm/mods/</code>.</strong><span>Each mod should have its own folder with a matching DLL and <code>modinfo.json</code>.</span></li><li><strong>The loader validates metadata and dependencies.</strong><span>Disabled, blocked, incompatible, or missing-dependency mods can be skipped before patching.</span></li><li><strong>The mod DLL is loaded.</strong><span>LOCLM finds the public <code>Load(int audiogroup, UndertaleData data)</code> method.</span></li><li><strong>Your mod patches <code>UndertaleData</code>.</strong><span>You can change strings, code entries, sprites, sounds, objects, and rooms through UndertaleModLib data structures.</span></li><li><strong>LOCLM writes the cache file.</strong><span>The game starts from the generated cache, not from a manually edited original file.</span></li></ol></section>
+      <section class="section reveal"><h2>What your mod controls</h2><div class="table-card"><table><thead><tr><th>Area</th><th>What you can do</th><th>Template helper</th></tr></thead><tbody><tr><td>GML code</td><td>Append hooks, find/replace, or replace events.</td><td><code>AppendCodeFromFile</code>, <code>FindReplaceCode</code></td></tr><tr><td>Text</td><td>Replace exact game strings or contained text.</td><td><code>ReplaceGameString</code></td></tr><tr><td>Sprites</td><td>Add a PNG sprite or replace an existing texture.</td><td><code>AddSpriteFromPng</code></td></tr><tr><td>Sounds</td><td>Add or replace embedded WAV/OGG sounds.</td><td><code>AddSoundFromFile</code></td></tr><tr><td>Objects</td><td>Create GameMaker objects and add event code.</td><td><code>CreateObject</code>, <code>CreateObjectCodeFromFile</code></td></tr><tr><td>Rooms</td><td>Place created objects into existing room layers.</td><td><code>PlaceObjectInRoom</code></td></tr></tbody></table></div></section>
+      <section class="section reveal"><h2>What your mod should not assume</h2><div class="callout warning"><strong>Game resources can change after updates.</strong><p>A code name, script body, sprite name, or room layer can be changed by a game update. That is why <code>Require*</code> helpers fail loudly instead of silently doing nothing.</p></div><ul><li>Do not assume a find/replace search string will last forever.</li><li>Do not assume your install path matches another user's Steam path.</li><li>Do not assume another mod has not patched the same code entry.</li><li>Do not assume a runtime file exists unless you ship it in <code>assets/</code>.</li></ul></section>
+      <section class="section reveal"><h2>Mental model for beginners</h2><p>Think of a LOCLM mod as a patch script for <code>data.win</code>. Your DLL runs, changes the loaded data, then exits. The result is saved into the generated cache file and the game starts from that patched data.</p><div class="callout note"><strong>If you want behavior while the game is running, patch GML.</strong><p>C# runs during the loader patch phase. GML hooks run later inside the game.</p></div></section>
+      <nav class="next-links"><a href="workflow.html">Previous: First mod workflow</a><a href="rename-template.html">Next: Rename CreatureProbe</a></nav>
+    </article><aside class="toc" id="pageToc"></aside>
+  </main><footer class="footer"><p>LOCLM Modding Manual</p></footer><script src="app.js"></script>
+</body>
+</html>

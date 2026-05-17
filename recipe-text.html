@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Replace Text Safely | LOCLM Modding</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="recipe-text">
+  <header class="topbar"><a class="brand" href="index.html"><span>LM</span><strong>LOCLM Modding</strong></a><button class="menu-button" id="menuButton" type="button" aria-label="Open navigation"><span></span><span></span></button><label class="sidebar-search"><input id="sidebarSearch" type="search" placeholder="Search docs"></label><nav class="nav" id="nav"></nav></header>
+  <main class="docs-shell">
+    <article class="doc-content">
+      <section class="page-hero reveal"><p class="breadcrumb"><a href="index.html">Docs</a> / Replace text safely</p><span class="page-meta">Recipe</span><h1>Recipe: replace one piece of game text without wrecking everything.</h1><p class="lead">Text changes should be exact and counted. If the loader finds zero matches or too many matches, the mod should fail instead of patching random text.</p></section>
+      <section class="section reveal"><h2>Exact string replacement</h2><p>Use this when you know the full text.</p><div class="code-block"><div class="code-title"><strong>C#</strong></div><pre><code>context.ReplaceGameString(
+    "Original Text",
+    "Replacement Text",
+    expectedMatches: 1);</code></pre></div></section>
+      <section class="section reveal"><h2>Contained text replacement</h2><p>Use this only when the full string has dynamic content or formatting that makes exact matching painful.</p><div class="code-block"><div class="code-title"><strong>C#</strong></div><pre><code>context.ReplaceGameStringContains(
+    "Original",
+    "Replacement",
+    expectedMatches: 1);</code></pre></div><div class="callout warning"><strong>Do not search for tiny words.</strong><p>Searching for <code>the</code>, <code>new</code>, or <code>yes</code> can match many strings. Use the most unique text you can.</p></div></section>
+      <section class="section reveal"><h2>Patch text inside a generated GML file</h2><p>For GML templates, use tokens. This avoids hardcoding config values inside the GML asset.</p><div class="split-panel"><div class="code-block"><div class="code-title"><strong>GML</strong></div><pre><code>draw_text(x, y, __MY_LABEL__);</code></pre></div><div class="code-block"><div class="code-title"><strong>C#</strong></div><pre><code>context.AppendCodeFromFile(
+    "hooks/my_draw.gml",
+    "gml_Object_obj_example_Draw_0",
+    ("__MY_LABEL__", QuoteGmlString("Hello")));</code></pre></div></div></section>
+      <section class="section reveal"><h2>Test plan</h2><ol class="step-list"><li><strong>Run the mod alone.</strong><span>Confirm the expected text changed.</span></li><li><strong>Search logs for replacement count.</strong><span>The helper logs successful replacement counts.</span></li><li><strong>Try a wrong search string once.</strong><span>Make sure the mod fails clearly when the expected string is missing.</span></li><li><strong>Restore the correct search string.</strong><span>Never ship intentionally loose text replacement.</span></li></ol></section>
+      <nav class="next-links"><a href="recipe-menu-button.html">Previous: Add a menu button</a><a href="recipe-sprite.html">Next: Add or replace sprite</a></nav>
+    </article><aside class="toc" id="pageToc"></aside>
+  </main><footer class="footer"><p>LOCLM Modding Manual</p></footer><script src="app.js"></script>
+</body>
+</html>

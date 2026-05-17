@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Code Assets & Hooks | LOCLM Modding</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="code-assets">
+  <header class="topbar"><a class="brand" href="index.html"><span>LM</span><strong>LOCLM Modding</strong></a><button class="menu-button" id="menuButton" type="button" aria-label="Open navigation"><span></span><span></span></button><label class="sidebar-search"><input id="sidebarSearch" type="search" placeholder="Search docs"></label><nav class="nav" id="nav"></nav></header>
+  <main class="docs-shell">
+    <article class="doc-content">
+      <section class="page-hero reveal"><p class="breadcrumb"><a href="index.html">Docs</a> / Code assets & hooks</p><span class="page-meta">Patching</span><h1>Keep GML in files, not giant C# strings.</h1><p class="lead">The template indexes every <code>.gml</code> file under <code>assets/code/</code>. You reference those files by path when appending, replacing, or creating code.</p></section>
+      <section class="section reveal"><h2>How files are indexed</h2><p><code>ModContext.Create(data)</code> calls <code>ReloadCodeFiles()</code>. That scans <code>assets/code/</code> recursively and stores each GML file by relative path.</p><div class="file-tree"><div class="code-title"><strong>Example</strong></div><pre><code>assets/code/
+\-- hooks/
+    \-- obj_ctrl_main_menu_Draw_0.gml</code></pre></div><p>The relative path used by helpers is <code>hooks/obj_ctrl_main_menu_Draw_0.gml</code>.</p></section>
+      <section class="section reveal"><h2>Append vs replace</h2><div class="table-card"><table><thead><tr><th>Method</th><th>Meaning</th><th>Risk</th></tr></thead><tbody><tr><td><code>AppendCodeFromFile</code></td><td>Add GML to the end of an existing code entry.</td><td>Lower risk when you only need extra behavior.</td></tr><tr><td><code>FindReplaceCode</code></td><td>Search inside an existing code entry and replace text.</td><td>Medium risk. Search text can change after game updates.</td></tr><tr><td><code>HookCodeFromFile</code></td><td>Replace an entire code entry.</td><td>High risk. Conflicts with other full replacements.</td></tr><tr><td><code>ReplaceObjectEventFromFile</code></td><td>Replace an object's event handler.</td><td>High risk unless you own the object.</td></tr></tbody></table></div></section>
+      <section class="section reveal"><h2>Token replacement</h2><p>Tokens let C# inject config values into GML before the patch is imported.</p><div class="split-panel"><div class="code-block"><div class="code-title"><strong>GML asset</strong></div><pre><code>draw_text(32, 32, __MENU_TAB_TITLE__);
+draw_text(32, 64, __MENU_TAB_BODY__);</code></pre></div><div class="code-block"><div class="code-title"><strong>C# patch</strong></div><pre><code>context.AppendCodeFromFile(
+    "hooks/obj_ctrl_main_menu_Draw_0.gml",
+    "gml_Object_obj_ctrl_main_menu_Draw_0",
+    ("__MENU_TAB_TITLE__", QuoteGmlString(config.MenuTabTitle)),
+    ("__MENU_TAB_BODY__", QuoteGmlString(config.MenuTabBody)));</code></pre></div></div><div class="callout important"><strong>Missing tokens fail intentionally.</strong><p><code>ReplaceTokens</code> uses exact single-match replacement. If the token is missing or duplicated, fix the GML file.</p></div></section>
+      <section class="section reveal"><h2>Hook file naming</h2><p>Use file names that tell you exactly what they patch.</p><div class="table-card"><table><thead><tr><th>Good</th><th>Bad</th></tr></thead><tbody><tr><td><code>obj_ctrl_main_menu_Draw_0.gml</code></td><td><code>draw.gml</code></td></tr><tr><td><code>main_menu_spawn_buttons.gml</code></td><td><code>patch1.gml</code></td></tr><tr><td><code>obj_player_Step_0_append.gml</code></td><td><code>stuff.gml</code></td></tr></tbody></table></div></section>
+      <section class="section reveal"><h2>Debug checklist</h2><div class="check-grid"><span>Did the file end in <code>.gml</code>?</span><span>Is it under <code>assets/code/</code>?</span><span>Does the relative path match the helper call?</span><span>Did the build copy <code>assets/</code> into output?</span><span>Does the target code entry exist?</span><span>Did token replacement find exactly one token?</span></div></section>
+      <nav class="next-links"><a href="patching.html">Previous: Patching GML</a><a href="menu-tabs.html">Next: Menu tabs</a></nav>
+    </article><aside class="toc" id="pageToc"></aside>
+  </main><footer class="footer"><p>LOCLM Modding Manual</p></footer><script src="app.js"></script>
+</body>
+</html>
