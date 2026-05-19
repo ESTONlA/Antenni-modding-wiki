@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Menu Tabs | LOCLM Modding</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/styles.css">
+</head>
+<body data-root="../../" data-page="menu-tabs">
+  <header class="topbar"><a class="brand" href="../../index.html"><span>LM</span><strong>LOCLM Modding</strong></a><button class="menu-button" id="menuButton" type="button" aria-label="Open navigation"><span></span><span></span></button><label class="sidebar-search"><input id="sidebarSearch" type="search" placeholder="Search docs"></label><nav class="nav" id="nav"></nav></header>
+  <main class="docs-shell">
+    <article class="doc-content">
+      <section class="page-hero reveal"><p class="breadcrumb"><a href="../../index.html">Docs</a> / Menu tabs</p><span class="page-meta">Patching</span><h1>Use CreatureProbe as the menu-tab example.</h1><p class="lead">The template adds a main-menu button and opens a custom tab. Treat it as a small working pattern, not as the only possible UI system.</p></section>
+      <section class="section reveal"><h2>What the sample patches</h2><div class="table-card"><table><thead><tr><th>Target</th><th>Why</th></tr></thead><tbody><tr><td><code>gml_GlobalScript_main_menu_spawn_buttons</code></td><td>Unlocks or creates the button slot.</td></tr><tr><td><code>gml_Object_obj_button_menu_Alarm_0</code></td><td>Sets menu button text.</td></tr><tr><td><code>gml_Object_obj_button_menu_Alarm_2</code></td><td>Maps button click behavior.</td></tr><tr><td><code>gml_Object_obj_ctrl_main_menu_Draw_0</code></td><td>Draws the custom tab text.</td></tr><tr><td><code>gml_Object_obj_ctrl_main_menu_Step_0</code></td><td>Handles tab state and input.</td></tr><tr><td><code>gml_Object_obj_ctrl_main_menu_Alarm_2</code></td><td>Handles delayed menu button behavior.</td></tr></tbody></table></div></section>
+      <section class="section reveal"><h2>Pick safe indexes</h2><p>The template defaults to button index <code>68</code> and back button index <code>69</code>. Change these if another mod uses them.</p><div class="callout warning"><strong>Indexes are a conflict point.</strong><p>If two mods claim the same button index or menu ID, one can overwrite the other. Document your indexes in your mod README.</p></div></section>
+      <section class="section reveal"><h2>Keep menu text configurable</h2><div class="code-block"><div class="code-title"><strong>mod-config.json</strong></div><pre><code>{
+  "enableMenuTab": true,
+  "mainMenuButtonIndex": 68,
+  "backButtonIndex": 69
+}</code></pre></div><p>The label, title, body, and back label can also be defined in <code>ModConfig.cs</code> defaults or added to JSON.</p></section>
+      <section class="section reveal"><h2>Polish checklist</h2><div class="check-grid"><span>Use the game's existing font and draw style.</span><span>Use a back button that matches other menu buttons.</span><span>Do not open your tab from every button click.</span><span>Reset menu state when leaving the tab.</span><span>Test with a controller if the game supports it.</span><span>Test with another menu mod enabled.</span></div></section>
+      <nav class="next-links"><a href="patching.html">Previous: Patching GML</a><a href="strings.html">Next: Strings & text</a></nav>
+    </article><aside class="toc" id="pageToc"></aside>
+  </main><footer class="footer"><p>LOCLM Modding Manual</p></footer><script src="../../assets/js/app.js"></script>
+</body>
+</html>

@@ -6,14 +6,19 @@ Static GitHub Pages documentation focused only on creating LOCLM mods.
 
 ```text
 index.html
-template.html
-modinfo.html
-patching.html
-modcontext.html
-release.html
-debugging.html
-styles.css
-app.js
+docs/
+  getting-started/
+  basics/
+  patching/
+  assets/
+  api/
+  recipes/
+  release/
+  debugging/
+assets/
+  css/styles.css
+  js/app.js
+  images/image.webp
 ```
 
 No build step is required.

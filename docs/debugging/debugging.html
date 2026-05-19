@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Debugging Mods | LOCLM Modding</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/styles.css">
+</head>
+<body data-root="../../" data-page="debugging">
+  <header class="topbar"><a class="brand" href="../../index.html"><span>LM</span><strong>LOCLM Modding</strong></a><button class="menu-button" id="menuButton" type="button" aria-label="Open navigation"><span></span><span></span></button><label class="sidebar-search"><input id="sidebarSearch" type="search" placeholder="Search docs"></label><nav class="nav" id="nav"><div class="nav-group"><p class="nav-title">Getting Started</p><a href="../../index.html" data-page-link="home">Overview</a><a href="../getting-started/template.html" data-page-link="template">Template setup</a></div><div class="nav-group"><p class="nav-title">Mod Basics</p><a href="../basics/modinfo.html" data-page-link="modinfo">modinfo.json</a></div><div class="nav-group"><p class="nav-title">Patching</p><a href="../patching/patching.html" data-page-link="patching">Patching GML</a></div><div class="nav-group"><p class="nav-title">API</p><a href="../api/modcontext.html" data-page-link="modcontext">ModContext API</a></div><div class="nav-group"><p class="nav-title">Building & Release</p><a href="../release/release.html" data-page-link="release">Release checklist</a></div><div class="nav-group"><p class="nav-title">Debugging</p><a href="debugging.html" data-page-link="debugging">Debugging mods</a></div></nav></header>
+  <main class="docs-shell">
+    <article class="doc-content">
+      <section class="page-hero reveal"><p class="breadcrumb"><a href="../../index.html">Docs</a> / Debugging mods</p><span class="page-meta">Debugging</span><h1>Use loader reports before guessing.</h1><p class="lead">LOCLM writes mod status, failed mod, security, and conflict reports to help find broken patches quickly.</p></section>
+      <section class="section reveal"><h2>Important report files</h2><div class="table-card"><table><thead><tr><th>File</th><th>Use</th></tr></thead><tbody><tr><td><code>LOCLM.log</code></td><td>Loader flow, warnings, mod load order, and patch failures.</td></tr><tr><td><code>LOCLM_summary.txt</code></td><td>Version, paths, hashes, warnings, and errors from a tester.</td></tr><tr><td><code>mod_status.json</code></td><td>Full per-mod compatibility, load, security, and resource report.</td></tr><tr><td><code>failed_mods.json</code></td><td>Mods that failed metadata, dependency, or runtime loading.</td></tr><tr><td><code>mod_conflicts.json</code></td><td>Resources touched by more than one mod.</td></tr><tr><td><code>LOCLM_runtime.log</code></td><td>Runtime messages written by in-game hooks.</td></tr></tbody></table></div></section>
+      <section class="section reveal"><h2>Debug workflow</h2><div class="step-list"><div class="step"><div><h3>Test alone</h3><p>Run only your mod first. This removes conflict noise.</p></div></div><div class="step"><div><h3>Check the search strings</h3><p>If a find/replace patch fails, confirm the searched GML still exists in the current game build.</p></div></div><div class="step"><div><h3>Read conflict output</h3><p>When testing with other mods, inspect <code>mod_conflicts.json</code>.</p></div></div><div class="step"><div><h3>Ask for the full Logs folder</h3><p>For tester reports, ask for <code>loclm/Logs/</code>, not screenshots only.</p></div></div></div></section>
+      <section class="section reveal"><h2>Common mistakes</h2><ul><li>Debugging with many unrelated mods enabled.</li><li>Ignoring a failed dependency warning.</li><li>Assuming the cache is fresh after changing mod files outside the expected folder.</li><li>Using the same button index or menu ID as another mod.</li></ul></section>
+      <nav class="next-links"><a href="../release/release.html">Previous: Release checklist</a><a href="../getting-started/template.html">Back to template setup</a></nav>
+    </article><aside class="toc" id="pageToc"></aside>
+  </main><footer class="footer"><p>LOCLM Modding Manual</p></footer><script src="../../assets/js/app.js"></script>
+</body>
+</html>

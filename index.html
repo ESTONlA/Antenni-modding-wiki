@@ -8,20 +8,20 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="assets/css/styles.css">
 </head>
-<body data-page="home">
+<body data-root="" data-page="home">
   <header class="topbar">
     <a class="brand" href="index.html"><span>LM</span><strong>LOCLM Modding</strong></a>
     <button class="menu-button" id="menuButton" type="button" aria-label="Open navigation"><span></span><span></span></button>
     <label class="sidebar-search"><input id="sidebarSearch" type="search" placeholder="Search docs"></label>
     <nav class="nav" id="nav">
-      <div class="nav-group"><p class="nav-title">Getting Started</p><a href="index.html" data-page-link="home">Overview</a><a href="template.html" data-page-link="template">Template setup</a></div>
-      <div class="nav-group"><p class="nav-title">Mod Basics</p><a href="modinfo.html" data-page-link="modinfo">modinfo.json</a></div>
-      <div class="nav-group"><p class="nav-title">Patching</p><a href="patching.html" data-page-link="patching">Patching GML</a></div>
-      <div class="nav-group"><p class="nav-title">API</p><a href="modcontext.html" data-page-link="modcontext">ModContext API</a></div>
-      <div class="nav-group"><p class="nav-title">Building & Release</p><a href="release.html" data-page-link="release">Release checklist</a></div>
-      <div class="nav-group"><p class="nav-title">Debugging</p><a href="debugging.html" data-page-link="debugging">Debugging mods</a></div>
+      <div class="nav-group"><p class="nav-title">Getting Started</p><a href="index.html" data-page-link="home">Overview</a><a href="docs/getting-started/template.html" data-page-link="template">Template setup</a></div>
+      <div class="nav-group"><p class="nav-title">Mod Basics</p><a href="docs/basics/modinfo.html" data-page-link="modinfo">modinfo.json</a></div>
+      <div class="nav-group"><p class="nav-title">Patching</p><a href="docs/patching/patching.html" data-page-link="patching">Patching GML</a></div>
+      <div class="nav-group"><p class="nav-title">API</p><a href="docs/api/modcontext.html" data-page-link="modcontext">ModContext API</a></div>
+      <div class="nav-group"><p class="nav-title">Building & Release</p><a href="docs/release/release.html" data-page-link="release">Release checklist</a></div>
+      <div class="nav-group"><p class="nav-title">Debugging</p><a href="docs/debugging/debugging.html" data-page-link="debugging">Debugging mods</a></div>
     </nav>
   </header>
 
@@ -55,41 +55,41 @@
         <div class="doc-index">
           <div class="doc-index-group">
             <h3>Getting Started</h3>
-            <a href="template.html"><strong>Template setup</strong><span>Build and rename <code>CreatureProbe</code>.</span></a>
-            <a href="workflow.html"><strong>First mod workflow</strong><span>The safest edit, build, install, test loop.</span></a>
-            <a href="how-loader-works.html"><strong>How loading works</strong><span>The complete path from DLL loading to generated cache.</span></a>
-            <a href="rename-template.html"><strong>Rename CreatureProbe</strong><span>Every source, output, class, namespace, and metadata rename step.</span></a>
-            <a href="load-method.html"><strong>Load method</strong><span>Understand the public entry point LOCLM calls.</span></a>
+            <a href="docs/getting-started/template.html"><strong>Template setup</strong><span>Build and rename <code>CreatureProbe</code>.</span></a>
+            <a href="docs/getting-started/workflow.html"><strong>First mod workflow</strong><span>The safest edit, build, install, test loop.</span></a>
+            <a href="docs/getting-started/how-loader-works.html"><strong>How loading works</strong><span>The complete path from DLL loading to generated cache.</span></a>
+            <a href="docs/getting-started/rename-template.html"><strong>Rename CreatureProbe</strong><span>Every source, output, class, namespace, and metadata rename step.</span></a>
+            <a href="docs/getting-started/load-method.html"><strong>Load method</strong><span>Understand the public entry point LOCLM calls.</span></a>
           </div>
           <div class="doc-index-group">
             <h3>Mod Basics</h3>
-            <a href="modinfo.html"><strong>modinfo.json</strong><span>Metadata, compatibility, dependencies, and load order.</span></a>
-            <a href="config.html"><strong>Config files</strong><span>Move labels, toggles, and indexes into JSON.</span></a>
-            <a href="folder-layout.html"><strong>Folder layout</strong><span>Install-ready output folder structure.</span></a>
+            <a href="docs/basics/modinfo.html"><strong>modinfo.json</strong><span>Metadata, compatibility, dependencies, and load order.</span></a>
+            <a href="docs/basics/config.html"><strong>Config files</strong><span>Move labels, toggles, and indexes into JSON.</span></a>
+            <a href="docs/basics/folder-layout.html"><strong>Folder layout</strong><span>Install-ready output folder structure.</span></a>
           </div>
           <div class="doc-index-group">
             <h3>Patching and Assets</h3>
-            <a href="patching.html"><strong>Patching GML</strong><span>Append hooks and targeted find/replace patches.</span></a>
-            <a href="code-assets.html"><strong>Code assets & hooks</strong><span>How <code>assets/code/</code> indexing and token replacement work.</span></a>
-            <a href="menu-tabs.html"><strong>Menu tabs</strong><span>How the sample main-menu tab works.</span></a>
-            <a href="assets.html"><strong>Asset pipeline</strong><span>How assets are copied and loaded.</span></a>
-            <a href="sprites-sounds.html"><strong>Sprites & sounds</strong><span>Use the template helpers for PNG, WAV, and OGG assets.</span></a>
+            <a href="docs/patching/patching.html"><strong>Patching GML</strong><span>Append hooks and targeted find/replace patches.</span></a>
+            <a href="docs/patching/code-assets.html"><strong>Code assets & hooks</strong><span>How <code>assets/code/</code> indexing and token replacement work.</span></a>
+            <a href="docs/patching/menu-tabs.html"><strong>Menu tabs</strong><span>How the sample main-menu tab works.</span></a>
+            <a href="docs/assets/assets.html"><strong>Asset pipeline</strong><span>How assets are copied and loaded.</span></a>
+            <a href="docs/assets/sprites-sounds.html"><strong>Sprites & sounds</strong><span>Use the template helpers for PNG, WAV, and OGG assets.</span></a>
           </div>
           <div class="doc-index-group">
             <h3>Ship and Debug</h3>
-            <a href="modcontext.html"><strong>ModContext API</strong><span>The actual helper methods available in the template.</span></a>
-            <a href="release.html"><strong>Release checklist</strong><span>Package a complete player-ready mod folder.</span></a>
-            <a href="debugging.html"><strong>Debugging mods</strong><span>Use logs and reports instead of guessing.</span></a>
-            <a href="security.html"><strong>Security scan</strong><span>Understand blocked mods, hashes, and allowlisting.</span></a>
+            <a href="docs/api/modcontext.html"><strong>ModContext API</strong><span>The actual helper methods available in the template.</span></a>
+            <a href="docs/release/release.html"><strong>Release checklist</strong><span>Package a complete player-ready mod folder.</span></a>
+            <a href="docs/debugging/debugging.html"><strong>Debugging mods</strong><span>Use logs and reports instead of guessing.</span></a>
+            <a href="docs/debugging/security.html"><strong>Security scan</strong><span>Understand blocked mods, hashes, and allowlisting.</span></a>
           </div>
           <div class="doc-index-group">
             <h3>Recipes</h3>
-            <a href="recipe-menu-button.html"><strong>Add a menu button</strong><span>Build a main-menu button and custom tab from the template pattern.</span></a>
-            <a href="recipe-text.html"><strong>Replace text safely</strong><span>Exact and counted text replacements.</span></a>
-            <a href="recipe-sprite.html"><strong>Add or replace sprite</strong><span>Use PNG sprite helper methods correctly.</span></a>
-            <a href="recipe-sound.html"><strong>Add or replace sound</strong><span>Use embedded WAV/OGG helpers.</span></a>
-            <a href="recipe-included-file.html"><strong>Use included data</strong><span>Ship JSON or text files and reference them from GML.</span></a>
-            <a href="recipe-object.html"><strong>Create an object</strong><span>Add a GameMaker object, event code, and room instance.</span></a>
+            <a href="docs/recipes/recipe-menu-button.html"><strong>Add a menu button</strong><span>Build a main-menu button and custom tab from the template pattern.</span></a>
+            <a href="docs/recipes/recipe-text.html"><strong>Replace text safely</strong><span>Exact and counted text replacements.</span></a>
+            <a href="docs/recipes/recipe-sprite.html"><strong>Add or replace sprite</strong><span>Use PNG sprite helper methods correctly.</span></a>
+            <a href="docs/recipes/recipe-sound.html"><strong>Add or replace sound</strong><span>Use embedded WAV/OGG helpers.</span></a>
+            <a href="docs/recipes/recipe-included-file.html"><strong>Use included data</strong><span>Ship JSON or text files and reference them from GML.</span></a>
+            <a href="docs/recipes/recipe-object.html"><strong>Create an object</strong><span>Add a GameMaker object, event code, and room instance.</span></a>
           </div>
         </div>
       </section>
@@ -110,12 +110,12 @@
         </div>
       </section>
 
-      <nav class="next-links"><a href="template.html">Next: Template setup</a></nav>
+      <nav class="next-links"><a href="docs/getting-started/template.html">Next: Template setup</a></nav>
     </article>
     <aside class="toc" id="pageToc"></aside>
   </main>
 
   <footer class="footer"><p>LOCLM Modding Manual</p></footer>
-  <script src="app.js"></script>
+  <script src="assets/js/app.js"></script>
 </body>
 </html>
