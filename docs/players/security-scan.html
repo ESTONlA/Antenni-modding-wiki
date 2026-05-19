@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Security Scan | LOCLM Wiki</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/styles.css">
+</head>
+<body data-root="../../" data-page="player-security">
+  <header class="topbar"><a class="brand" href="../../index.html"><span>LM</span><strong>LOCLM Wiki</strong></a><button class="menu-button" id="menuButton" type="button" aria-label="Open navigation"><span></span><span></span></button><label class="sidebar-search"><input id="sidebarSearch" type="search" placeholder="Search docs"></label><nav class="nav" id="nav"></nav></header>
+  <main class="docs-shell">
+    <article class="doc-content">
+      <section class="page-hero reveal"><p class="breadcrumb"><a href="../../index.html">Docs</a> / Players / Security scan</p><span class="page-meta">For Players</span><h1>Security scanning is a safety layer, not antivirus.</h1><p class="lead">LOCLM scans mod DLLs for suspicious behavior before loading them, logs the mod hash, and blocks mods that trip the scan.</p></section>
+      <section class="section reveal"><h2>What happens</h2><ol class="step-list"><li><strong>LOCLM finds the mod DLL.</strong><span>Each mod should be in its own folder.</span></li><li><strong>LOCLM calculates the hash.</strong><span>The hash identifies the exact file that was scanned.</span></li><li><strong>The security scan runs.</strong><span>Newer versions scan planned mods in parallel and skip very large files instead of reading them fully into memory.</span></li><li><strong>Suspicious mods are blocked.</strong><span>Blocked mod reports are written to <code>loclm/Logs/</code>, and marker files are written to <code>loclm/quarantine/</code>.</span></li></ol></section>
+      <section class="section reveal"><h2>Reports</h2><div class="file-tree"><div class="code-title"><strong>Security files</strong></div><pre><code>loclm/Logs/security_report.json
+loclm/Logs/blocked_mods.json
+loclm/Logs/mod_status.json
+loclm/quarantine/
+loclm/security_allowlist.json</code></pre></div></section>
+      <section class="section reveal"><h2>Allowlist</h2><p>The allowlist is for trusted false positives. Only add hashes for mods you trust.</p><div class="code-block"><div class="code-title"><strong>security_allowlist.json</strong></div><pre><code>{
+  "allowedModHashes": [
+    "PUT_TRUSTED_MOD_SHA256_HASH_HERE"
+  ]
+}</code></pre></div><div class="callout warning"><strong>A warning can be real.</strong><p>Do not allowlist a mod just because you want it to load. Ask the mod author to explain the warning if you are unsure.</p></div></section>
+      <section class="section reveal"><h2>Best practice</h2><ul><li>Download mods from trusted sources.</li><li>Do not run random DLL files from unknown people.</li><li>Keep mods in their own folders.</li><li>Remove blocked mods unless you know exactly why they were blocked.</li><li>Send <code>security_report.json</code> to the mod author when asking about a blocked mod.</li></ul></section>
+      <nav class="next-links"><a href="logs-diagnostics.html">Previous: Logs & diagnostics</a><a href="faq.html">Next: FAQ</a></nav>
+    </article><aside class="toc" id="pageToc"></aside>
+  </main><footer class="footer"><p>LOCLM Wiki</p></footer><script src="../../assets/js/app.js"></script>
+</body>
+</html>

@@ -7,7 +7,18 @@ const siteHref = (path) => `${siteRoot}${path}`;
 
 const docsNavigation = [
   {
-    title: "Getting Started",
+    title: "For Players",
+    links: [
+      ["player-installation", "Installation", "docs/players/installation.html"],
+      ["installing-mods", "Installing mods", "docs/players/installing-mods.html"],
+      ["player-troubleshooting", "Troubleshooting", "docs/players/troubleshooting.html"],
+      ["logs-diagnostics", "Logs & diagnostics", "docs/players/logs-diagnostics.html"],
+      ["player-security", "Security scan", "docs/players/security-scan.html"],
+      ["faq", "FAQ", "docs/players/faq.html"],
+    ],
+  },
+  {
+    title: "Modders: Start",
     links: [
       ["home", "Overview", "index.html"],
       ["template", "Template setup", "docs/getting-started/template.html"],
@@ -18,7 +29,7 @@ const docsNavigation = [
     ],
   },
   {
-    title: "Mod Basics",
+    title: "Modders: Basics",
     links: [
       ["modinfo", "modinfo.json", "docs/basics/modinfo.html"],
       ["config", "Config files", "docs/basics/config.html"],
@@ -44,7 +55,7 @@ const docsNavigation = [
     ],
   },
   {
-    title: "API",
+    title: "Modders: API",
     links: [["modcontext", "ModContext API", "docs/api/modcontext.html"]],
   },
   {
@@ -67,6 +78,7 @@ const docsNavigation = [
     links: [
       ["debugging", "Debugging mods", "docs/debugging/debugging.html"],
       ["security", "Security scan", "docs/debugging/security.html"],
+      ["release-notes", "Release notes", "docs/reference/release-notes.html"],
     ],
   },
 ];

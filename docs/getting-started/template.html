@@ -42,6 +42,21 @@
       </section>
 
       <section class="section reveal">
+        <h2>Install the template command</h2>
+        <p>The upstream repository now ships <code>mod_template/</code> as a local <code>dotnet new</code> template.</p>
+        <div class="command-block">
+          <div class="code-title"><strong>PowerShell</strong></div>
+          <pre><code>dotnet new install .\mod_template
+dotnet new loclm</code></pre>
+        </div>
+        <p>For the easier sample configuration path, create the project with:</p>
+        <div class="command-block">
+          <div class="code-title"><strong>PowerShell</strong></div>
+          <pre><code>dotnet new loclm -e</code></pre>
+        </div>
+      </section>
+
+      <section class="section reveal">
         <h2>What the template contains</h2>
         <p><code>CreatureProbe</code> is intentionally small, but it is a real working mod. It shows the folder layout, metadata, config loading, GML hooks, and the safe pattern for patching only audiogroup <code>0</code>.</p>
         <div class="file-tree">
@@ -51,6 +66,9 @@
 +-- loclmMod.cs
 +-- ModContext.cs
 +-- ModConfig.cs
++-- ModManifest.cs
++-- hooker/
++|   \-- src/
 +-- IncludedFiles/
 |   \-- modinfo.json
 \-- assets/
@@ -62,13 +80,14 @@
     +-- sounds/
     \-- sprites/</code></pre>
         </div>
+        <p>The <code>hooker/src</code> helper layer contains lower-level creation, hook, cursor, and safe-GML extension helpers. Most new mods can start with <code>ModContext</code>, then reach for the hooker helpers when a patch needs more control.</p>
       </section>
 
       <section class="section reveal">
         <h2>First edit pass</h2>
         <ol class="step-list">
           <li><strong>Update metadata.</strong><span>Edit <code>IncludedFiles/modinfo.json</code> first so the loader shows the correct mod name, author, and compatibility data.</span></li>
-          <li><strong>Edit config defaults.</strong><span>Change values in <code>assets/data/mod-config.json</code>, including button label, menu title, body text, button index, and back button index.</span></li>
+          <li><strong>Edit config defaults.</strong><span>Change values in <code>assets/data/mod-config.json</code>. The easy template exposes menu labels and indexes; missing JSON values fall back to <code>ModConfig.cs</code>.</span></li>
           <li><strong>Move patch logic.</strong><span>Keep small setup in <code>loclmMod.cs</code>. Put larger GML into <code>assets/code/</code> and load it with <code>ModContext</code>.</span></li>
           <li><strong>Build Release.</strong><span>Use Release builds before testing installs or publishing a zip.</span></li>
         </ol>
@@ -98,6 +117,12 @@
 \-- Underanalyzer.dll</code></pre>
         </div>
         <div class="callout warning"><strong>Do not copy only the DLL.</strong><p>Copy the whole output folder. The template also needs metadata, assets/config files, and dependency DLLs.</p></div>
+      </section>
+
+      <section class="section reveal">
+        <h2>Template release asset</h2>
+        <p>Recent LOCLM releases include a separate <code>mod_template.zip</code> asset. Use that when you only want the mod template and do not need to clone the whole loader repository.</p>
+        <div class="callout note"><strong>Keep the template and loader versions close.</strong><p>The template depends on the current helper API and UndertaleModLib behavior. If a mod acts strangely, update both the loader and template before debugging deeper.</p></div>
       </section>
 
       <section class="section reveal">

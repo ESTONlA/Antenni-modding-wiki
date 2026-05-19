@@ -1,12 +1,13 @@
-# LOCLM Modding Wiki
+# LOCLM Wiki
 
-Static GitHub Pages documentation focused only on creating LOCLM mods.
+Static GitHub Pages documentation for LOCLM players and mod creators.
 
 ## Pages
 
 ```text
 index.html
 docs/
+  players/
   getting-started/
   basics/
   patching/
@@ -15,6 +16,7 @@ docs/
   recipes/
   release/
   debugging/
+  reference/
 assets/
   css/styles.css
   js/app.js
