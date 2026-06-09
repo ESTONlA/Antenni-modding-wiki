@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Install Antenni for Ogre | Antenni Wiki</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/styles.css">
+</head>
+<body data-root="../../" data-game="ogre" data-page="ogre-install">
+  <header id="siteHeader"></header>
+  <main class="docs-shell"><article class="doc-content">
+    <div class="page-hero">
+      <div class="breadcrumb"><a href="index.html">Ogre</a> / Installation</div>
+      <span class="page-meta">Getting started</span>
+      <h1>Install Antenni for Ogre Chambers 2222</h1>
+      <p class="lead">Install the same Antenni runtime layout beside Ogre's supported executable, then verify the detected game profile in the logs.</p>
+    </div>
+
+    <h2>Requirements</h2>
+    <div class="facts">
+      <div class="fact"><span>Platform</span><strong>Windows x64</strong></div>
+      <div class="fact"><span>Runtime</span><strong>.NET 10 Desktop Runtime x64</strong></div>
+      <div class="fact"><span>Executable</span><strong>ogre chambers 2.exe</strong></div>
+    </div>
+
+    <h2>Expected installation</h2>
+    <pre><code>Ogre Chambers 2222/
+|-- ogre chambers 2.exe
+|-- data.win
+|-- version.dll
+`-- antenni/
+    |-- antenni-loader.exe
+    |-- mods/
+    |-- disabled_mods/
+    |-- quarantine/
+    `-- Logs/</code></pre>
+    <p>Use Steam's Browse local files action rather than guessing the path. The proxy must be beside the exact executable recognized by Antenni.</p>
+
+    <h2>First launch</h2>
+    <ol class="step-list">
+      <li><strong>Copy all release files</strong><span>Install <code>version.dll</code> and the complete <code>antenni/</code> folder.</span></li>
+      <li><strong>Start through Steam</strong><span>Launch Ogre normally.</span></li>
+      <li><strong>Check the profile</strong><span>Read <code>antenni/Logs/ANTENNI.log</code> and confirm Ogre Chambers 2222 was detected.</span></li>
+      <li><strong>Check the cache</strong><span>Confirm <code>ANTENNI_CACHE_data.win</code> is generated when active compatible mods require patching.</span></li>
+    </ol>
+
+    <div class="callout">
+      <strong>No in-game Antenni button is expected</strong>
+      <p>The current Ogre profile has <code>SupportsInGameMenu</code> disabled. Core loading can work correctly without the Lake-specific menu.</p>
+    </div>
+
+    <h2>Install an Ogre mod</h2>
+    <pre><code>Ogre Chambers 2222/
+`-- antenni/
+    `-- mods/
+        `-- OgreExample/
+            |-- OgreExample.dll
+            |-- modinfo.json
+            `-- assets/</code></pre>
+    <p>The mod manifest must declare <code>ogre-chambers-2222</code>. A Lake-only mod should be skipped rather than patched into Ogre.</p>
+    <div class="next-links"><a href="index.html"><- Ogre overview</a><a href="first-mod.html">Next: Build your first mod -></a></div>
+  </article><aside class="toc" id="pageToc"></aside></main>
+  <footer class="footer"><p>Antenni Loader 1.0.0 modding documentation</p></footer>
+  <script src="../../assets/js/app.js"></script>
+</body>
+</html>

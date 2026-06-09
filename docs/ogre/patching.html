@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Patching Ogre | Antenni Wiki</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/styles.css">
+</head>
+<body data-root="../../" data-game="ogre" data-page="ogre-patching">
+  <header id="siteHeader"></header>
+  <main class="docs-shell"><article class="doc-content">
+    <div class="page-hero">
+      <div class="breadcrumb"><a href="index.html">Ogre</a> / Patching</div>
+      <span class="page-meta">Patching</span>
+      <h1>Patch verified Ogre targets only</h1>
+      <p class="lead">Use the same Antenni helper layer as Lake, but keep separate GML files, target names, and compatibility checks for Ogre.</p>
+    </div>
+
+    <h2>Separate game-specific patch code</h2>
+    <pre><code>assets/
+`-- code/
+    `-- ogre/
+        |-- shop_price_patch.gml
+        `-- controller_step_patch.gml</code></pre>
+    <p>Do not put Lake and Ogre patch bodies in one ambiguous file. Clear separation makes reviews, conflicts, and update fixes easier.</p>
+
+    <h2>Require and patch</h2>
+    <pre><code>const string target =
+    "REPLACE_WITH_VERIFIED_OGRE_CODE_ENTRY";
+
+context.RequireCodeEntry(target);
+context.AppendCodeFromFile(
+    "code/ogre/controller_step_patch.gml",
+    target);</code></pre>
+    <p>Use the placeholder only as structure. The real value must come from resource inspection of the current Ogre build.</p>
+
+    <h2>Prefer narrow anchors</h2>
+    <p>If you use <code>FindReplaceCode</code>, select an anchor that is unique but does not copy an entire decompiled function. Verify expected matches and stop the feature when the anchor changes.</p>
+
+    <h2>Isolate new systems</h2>
+    <p>When possible, create a uniquely named object and place it in a verified persistent room or attach it through one small existing hook. This is usually easier to maintain than replacing a central controller event.</p>
+
+    <h2>Use unique names</h2>
+    <pre><code>obj_yourmod_controller
+scr_yourmod_apply_patch
+spr_yourmod_icon
+snd_yourmod_alert
+global.yourmod_enabled</code></pre>
+    <p>Do not use Antenni's prefix for your own globals. Choose a stable prefix owned by your mod.</p>
+
+    <h2>Failure policy</h2>
+    <ul>
+      <li>Missing required target: fail the mod with the resource name.</li>
+      <li>Missing optional target: log a warning and disable only that feature.</li>
+      <li>Unexpected replacement count: stop rather than applying a partial patch.</li>
+      <li>Unknown Ogre build: warn users and run your own compatibility checks.</li>
+    </ul>
+
+    <div class="callout warning">
+      <strong>Never fall back to a Lake target</strong>
+      <p>A fallback strategy should try another verified Ogre anchor, not a similarly named resource from a different game.</p>
+    </div>
+    <div class="next-links"><a href="resources.html"><- Resource discovery</a><a href="api.html">Next: ModContext API -></a></div>
+  </article><aside class="toc" id="pageToc"></aside></main>
+  <footer class="footer"><p>Antenni Loader 1.0.0 modding documentation</p></footer>
+  <script src="../../assets/js/app.js"></script>
+</body>
+</html>

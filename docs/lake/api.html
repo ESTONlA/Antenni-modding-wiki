@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lake ModContext API | Antenni Wiki</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/styles.css">
+</head>
+<body data-root="../../" data-game="lake" data-page="lake-api">
+  <header id="siteHeader"></header>
+  <main class="docs-shell"><article class="doc-content">
+    <div class="page-hero">
+      <div class="breadcrumb"><a href="index.html">Lake</a> / API</div>
+      <span class="page-meta">API reference</span>
+      <h1>ModContext helpers in the current template</h1>
+      <p class="lead">This page documents helper families that exist in <code>mod_template/ModContext.cs</code>. Check the source for complete overload signatures.</p>
+    </div>
+
+    <h2>Context and files</h2>
+    <pre><code>ModContext context = ModContext.Create(data);
+
+context.Log("Patch started.");
+context.Warn("Optional resource was not found.");
+
+string path = context.GetAssetPath("data/mod-config.json");
+string required = context.RequireAssetPath("sprites/icon.png");
+string text = context.LoadTextAsset("code/hooks/example.gml");
+byte[] bytes = context.LoadBinaryAsset("sounds/alert.wav");</code></pre>
+    <p>Use <code>LoadJson&lt;T&gt;</code> for typed data. <code>AssetRoot</code>, <code>CodeRoot</code>, and <code>DataRoot</code> expose resolved source directories.</p>
+
+    <h2>Resource requirements</h2>
+    <pre><code>context.RequireObject("obj_example");
+context.RequireSprite("spr_example");
+context.RequireRoom("rm_example");
+context.RequireCodeEntry("gml_Object_obj_example_Step_0");
+context.RequireFunction("example_function");
+context.RequireScript("scr_example");
+context.RequireSound("snd_example");
+context.RequireVariable("example_variable");</code></pre>
+    <p>These helpers return typed Undertale resources and throw a clear error when the named resource is missing.</p>
+
+    <h2>Objects and rooms</h2>
+    <pre><code>UndertaleGameObject controller = context.CreateObject(
+    "obj_betterboats_controller");
+
+context.PlaceObjectInRoom(
+    "rm_main",
+    controller,
+    "Instances");</code></pre>
+    <p>The template also provides <code>NewObject</code>, <code>AddObjectToRoom</code>, and file-backed object event creation helpers.</p>
+
+    <h2>GML code helpers</h2>
+    <pre><code>context.AppendCodeFromFile(relativePath, codeName);
+context.HookCodeFromFile(relativePath, codeName);
+context.HookFunctionFromFile(relativePath, functionName);
+context.CreateFunctionFromFile(relativePath, functionName);
+context.FindReplaceCode(codeName, search, replacement);
+context.ReplaceObjectEventFromFile(relativePath, objectName, eventType);</code></pre>
+    <p><code>ReplaceObjectEventFromFile</code> and <code>CreateObjectCodeFromFile</code> have overloads for draw, key, mouse, other, step, and numeric event subtypes.</p>
+
+    <h2>Sprites and sounds</h2>
+    <pre><code>UndertaleSprite sprite = context.AddSpriteFromPng(
+    "spr_betterboats_icon",
+    "sprites/icon.png");
+
+context.ReplaceSpriteTextureFromPng(
+    "spr_existing",
+    "sprites/replacement.png",
+    frame: 0);
+
+UndertaleSound sound = context.AddSoundFromFile(
+    "snd_betterboats_alert",
+    "sounds/alert.wav",
+    audioGroupId: 0);
+
+context.ReplaceSoundFromFile(
+    "snd_existing",
+    "sounds/replacement.wav");</code></pre>
+    <div class="callout">
+      <strong>Confirm signatures in source</strong>
+      <p>Sprite origin, frame, sound type, and audio group parameters have overload-specific details. Use editor completion or open <code>ModContext.cs</code> before copying an abbreviated example.</p>
+    </div>
+
+    <h2>Included files</h2>
+    <pre><code>string gamePath = context.AddIncludedFile(
+    "included/defaults.json");
+
+string existing = context.RequireIncludedFile(
+    "included/defaults.json");
+
+string expectedPath = context.GetIncludedFileGamePath(
+    "included/defaults.json");</code></pre>
+
+    <h2>Safe replacement helpers</h2>
+    <pre><code>string once = context.ReplaceTextOnce(
+    source, search, replacement, "boat price patch");
+
+string exact = context.ReplaceTextExact(
+    source, search, replacement, expectedMatches: 2, "shop labels");
+
+int changed = context.ReplaceGameString(
+    "Old text", "New text", expectedMatches: 1);
+
+int contains = context.ReplaceGameStringContains(
+    "Old fragment", "New text", expectedMatches: 1);</code></pre>
+    <p>Expected match counts turn an upstream game change into a controlled mod failure instead of an unnoticed partial patch.</p>
+
+    <h2>Token replacement</h2>
+    <p><code>ReplaceTokens</code> and the replacement overload of <code>AppendCodeFromFile</code> substitute explicit tokens before compiling GML. Use uncommon tokens such as <code>__BETTERBOATS_PRICE__</code>.</p>
+    <div class="next-links"><a href="patching.html"><- Patching</a><a href="menu-modding.html">Next: Main-menu mods -></a></div>
+  </article><aside class="toc" id="pageToc"></aside></main>
+  <footer class="footer"><p>Antenni Loader 1.0.0 modding documentation</p></footer>
+  <script src="../../assets/js/app.js"></script>
+</body>
+</html>

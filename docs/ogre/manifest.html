@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ogre modinfo.json | Antenni Wiki</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/styles.css">
+</head>
+<body data-root="../../" data-game="ogre" data-page="ogre-manifest">
+  <header id="siteHeader"></header>
+  <main class="docs-shell"><article class="doc-content">
+    <div class="page-hero">
+      <div class="breadcrumb"><a href="index.html">Ogre</a> / Manifest</div>
+      <span class="page-meta">Mod basics</span>
+      <h1>Mark Ogre compatibility explicitly</h1>
+      <p class="lead">The manifest is the boundary that prevents a Lake patch from being applied to Ogre Chambers 2222.</p>
+    </div>
+
+    <h2>Minimal Ogre manifest</h2>
+    <pre><code>{
+  "modName": "Ogre Example",
+  "authors": ["Your Name"],
+  "description": "An Ogre Chambers 2222 mod.",
+  "enabled": true,
+  "supportedGames": ["ogre-chambers-2222"],
+  "priority": 100
+}</code></pre>
+
+    <h2>Cross-game manifest</h2>
+    <p>Only declare both IDs if the same DLL branches by game and every patch has been tested in both data files.</p>
+    <pre><code>{
+  "modName": "Shared Utility",
+  "authors": ["Your Name"],
+  "description": "A deliberately cross-game Antenni mod.",
+  "supportedGames": [
+    "lake-of-creatures",
+    "ogre-chambers-2222"
+  ],
+  "priority": 100
+}</code></pre>
+    <div class="callout important">
+      <strong>A shared DLL does not make shared resources</strong>
+      <p>Game IDs can share C# utility code while still requiring separate resource names, patch files, and compatibility tests.</p>
+    </div>
+
+    <h2>Ordering and compatibility fields</h2>
+    <p>The current loader also reads <code>minLoaderVersion</code>, <code>maxLoaderVersion</code>, <code>supportedGameVersions</code>, <code>testedOn</code>, <code>dependencies</code>, <code>optionalDependencies</code>, <code>incompatibleWith</code>, <code>loadAfter</code>, and <code>loadBefore</code>.</p>
+
+    <h2>Legacy manifests</h2>
+    <p>Do not rely on an old manifest with no <code>supportedGames</code> field for Ogre. New Ogre mods should always state the game ID so the loader can make a deterministic compatibility decision.</p>
+
+    <h2>Common mistakes</h2>
+    <ul>
+      <li>Using the display title instead of the exact ID <code>ogre-chambers-2222</code>.</li>
+      <li>Copying the Lake manifest unchanged.</li>
+      <li>Claiming both games because the project builds, without testing both patches.</li>
+      <li>Using load order to mask an incompatible resource replacement.</li>
+    </ul>
+    <div class="next-links"><a href="first-mod.html"><- First mod</a><a href="resources.html">Next: Discover resources -></a></div>
+  </article><aside class="toc" id="pageToc"></aside></main>
+  <footer class="footer"><p>Antenni Loader 1.0.0 modding documentation</p></footer>
+  <script src="../../assets/js/app.js"></script>
+</body>
+</html>

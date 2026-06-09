@@ -1,36 +1,20 @@
-# LOCLM Wiki
+# Antenni Modding Wiki
 
-Static GitHub Pages documentation for LOCLM players and mod creators.
+Static GitHub Pages documentation for Antenni Loader 1.0.0.
 
-## Pages
+## Structure
 
 ```text
 index.html
 docs/
-  players/
-  getting-started/
-  basics/
-  patching/
-  assets/
-  api/
-  recipes/
-  release/
-  debugging/
-  reference/
+  lake/
+  ogre/
+  shared/
 assets/
-  css/styles.css
-  js/app.js
-  images/image.webp
+  css/
+  js/
 ```
 
-No build step is required.
+The root page selects a game. Each game has separate navigation because GameMaker resources and safe patch targets are game-specific.
 
-## GitHub Pages
-
-Recommended settings:
-
-```text
-Source: Deploy from a branch
-Branch: main
-Folder: /root
-```
+No build step is required. Serve the folder with any static HTTP server or publish it directly with GitHub Pages.

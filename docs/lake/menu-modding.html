@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lake Main-Menu Mods | Antenni Wiki</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/styles.css">
+</head>
+<body data-root="../../" data-game="lake" data-page="lake-menu">
+  <header id="siteHeader"></header>
+  <main class="docs-shell"><article class="doc-content">
+    <div class="page-hero">
+      <div class="breadcrumb"><a href="index.html">Lake</a> / Menu modding</div>
+      <span class="page-meta">Lake-specific</span>
+      <h1>Add Lake menu features without owning the menu</h1>
+      <p class="lead">CreatureProbe demonstrates a button and tab, but published mods must isolate their state and avoid indexes already used by Antenni or another mod.</p>
+    </div>
+
+    <h2>How the sample works</h2>
+    <ol class="step-list">
+      <li><strong>Unlock an index</strong><span>The template edits <code>main_menu_spawn_buttons</code> to enable button index 68.</span></li>
+      <li><strong>Create a button</strong><span>It creates an <code>obj_button_menu</code> instance and assigns the index.</span></li>
+      <li><strong>Assign text</strong><span>It adds a case to the menu button alarm that resolves the visible label.</span></li>
+      <li><strong>Change menu state</strong><span>The click handler selects a custom menu state.</span></li>
+      <li><strong>Draw and close</strong><span>File-backed Draw, Step, and Alarm patches render the tab and return to the main menu.</span></li>
+    </ol>
+
+    <h2>What you must rename</h2>
+    <ul>
+      <li>Button index and any back-button index.</li>
+      <li>Menu state ID.</li>
+      <li>Every global variable used by the panel.</li>
+      <li>Created object, script, sprite, and sound names.</li>
+      <li>Token names inside GML files.</li>
+    </ul>
+
+    <h2>Do not assume index 68 is free</h2>
+    <p>The sample uses 68 because it is a demonstration. A release should coordinate indexes, detect conflicts where possible, and expose them in config only if users understand the compatibility impact.</p>
+    <div class="callout warning">
+      <strong>Two menu mods can both load and still break the menu</strong>
+      <p>Load order cannot fix duplicate button indexes, duplicate menu IDs, or two full replacements of the same event.</p>
+    </div>
+
+    <h2>Prefer isolated drawing and input</h2>
+    <p>Keep custom panel state under uniquely prefixed globals. Gate every Draw and Step block behind the exact menu state. A missing guard is why custom content can appear over Settings, New Game, or unrelated screens.</p>
+    <pre><code>if (global.current_menu == my_mod_menu_id) {
+    // Draw only this mod's panel.
+}</code></pre>
+
+    <h2>Test matrix</h2>
+    <ul>
+      <li>Open and close the custom panel repeatedly.</li>
+      <li>Open every original menu after closing it.</li>
+      <li>Test keyboard, controller, and mouse input.</li>
+      <li>Test with Antenni's own in-game menu.</li>
+      <li>Test with another menu mod and inspect conflicts.</li>
+      <li>Regenerate the cache after changing injected GML.</li>
+    </ul>
+    <div class="next-links"><a href="api.html"><- ModContext API</a><a href="release.html">Next: Build and release -></a></div>
+  </article><aside class="toc" id="pageToc"></aside></main>
+  <footer class="footer"><p>Antenni Loader 1.0.0 modding documentation</p></footer>
+  <script src="../../assets/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ogre Mod Troubleshooting | Antenni Wiki</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/styles.css">
+</head>
+<body data-root="../../" data-game="ogre" data-page="ogre-debug">
+  <header id="siteHeader"></header>
+  <main class="docs-shell"><article class="doc-content">
+    <div class="page-hero">
+      <div class="breadcrumb"><a href="index.html">Ogre</a> / Troubleshooting</div>
+      <span class="page-meta">Debugging</span>
+      <h1>Debug Ogre as its own target</h1>
+      <p class="lead">Confirm the correct executable and profile first, then check manifest compatibility, resource targets, and generated reports.</p>
+    </div>
+
+    <h2>Loader does not start</h2>
+    <ul>
+      <li><code>version.dll</code> must be beside <code>ogre chambers 2.exe</code>.</li>
+      <li>The proxy and game must both be x64-compatible.</li>
+      <li>The complete <code>antenni/</code> folder must be present.</li>
+      <li>Windows may have blocked downloaded DLLs.</li>
+      <li>.NET 10 Desktop Runtime x64 and the Visual C++ x64 Runtime must be installed.</li>
+    </ul>
+
+    <h2>No Antenni button</h2>
+    <div class="callout">
+      <strong>This is expected on Ogre</strong>
+      <p>Antenni 1.0.0 does not install the Lake-specific in-game loader menu into Ogre Chambers 2222.</p>
+    </div>
+
+    <h2>Mod is skipped</h2>
+    <p>Open <code>antenni/Logs/mod_status.json</code>. Verify <code>enabled</code>, disabled markers, dependencies, loader version limits, and especially <code>supportedGames: ["ogre-chambers-2222"]</code>.</p>
+
+    <h2>Patch target is missing</h2>
+    <p>Confirm you inspected Ogre's original <code>data.win</code> from the same installed build. Lake names and old Ogre names are not valid fallback targets.</p>
+
+    <h2>Game fails after cache generation</h2>
+    <ol class="step-list">
+      <li><strong>Disable other mods</strong><span>Reproduce with one Ogre mod.</span></li>
+      <li><strong>Clear the cache</strong><span>Force a clean patch run.</span></li>
+      <li><strong>Read the patch error</strong><span>Find missing resources, invalid GML, or failed replacement counts.</span></li>
+      <li><strong>Inspect conflicts</strong><span>Check whether multiple mods changed the same code or asset.</span></li>
+      <li><strong>Restore one feature at a time</strong><span>Identify the exact failing patch.</span></li>
+    </ol>
+
+    <h2>Useful reports</h2>
+    <p>Start with <code>ANTENNI.log</code>, <code>mod_status.json</code>, <code>failed_mods.json</code>, <code>mod_conflicts.json</code>, <code>security_report.json</code>, and <code>game_compatibility_report.json</code>. Share the complete Logs folder for support.</p>
+
+    <h2>Unknown game build</h2>
+    <p>An unknown build warning means the installed hash is not in the supported list. It does not prove failure, but the mod author must retest every required target and update compatibility notes.</p>
+    <div class="next-links"><a href="release.html"><- Build and release</a><a href="../shared/how-loader-works.html">Shared: How Antenni works -></a></div>
+  </article><aside class="toc" id="pageToc"></aside></main>
+  <footer class="footer"><p>Antenni Loader 1.0.0 modding documentation</p></footer>
+  <script src="../../assets/js/app.js"></script>
+</body>
+</html>

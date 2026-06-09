@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lake Mod Troubleshooting | Antenni Wiki</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/styles.css">
+</head>
+<body data-root="../../" data-game="lake" data-page="lake-debug">
+  <header id="siteHeader"></header>
+  <main class="docs-shell"><article class="doc-content">
+    <div class="page-hero">
+      <div class="breadcrumb"><a href="index.html">Lake</a> / Troubleshooting</div>
+      <span class="page-meta">Debugging</span>
+      <h1>Debug the loader, then the mod, then the patch</h1>
+      <p class="lead">Separate startup failures from manifest skips, security blocks, C# load failures, and invalid GML patches.</p>
+    </div>
+
+    <h2>Start with the logs folder</h2>
+    <pre><code>Lake of Creatures/
+`-- antenni/
+    `-- Logs/
+        |-- ANTENNI.log
+        |-- mod_status.json
+        |-- loaded_mods.json
+        |-- failed_mods.json
+        |-- blocked_mods.json
+        |-- mod_conflicts.json
+        |-- security_report.json
+        `-- game_compatibility_report.json</code></pre>
+    <p>Available report names can vary by build and execution path. Send the complete <code>Logs/</code> folder when asking for help.</p>
+
+    <h2>No console or log</h2>
+    <ul>
+      <li>Confirm <code>version.dll</code> is beside <code>LakeOfCreatures.exe</code>.</li>
+      <li>Confirm both files are x64-compatible.</li>
+      <li>Check Windows file Properties for an Unblock option.</li>
+      <li>Confirm the complete <code>antenni/</code> directory was installed.</li>
+      <li>Repair .NET 10 Desktop Runtime x64 and Microsoft Visual C++ x64 Runtime.</li>
+    </ul>
+
+    <h2>Mod is skipped</h2>
+    <p>Check <code>mod_status.json</code>. Common causes are <code>enabled: false</code>, a <code>.disabled</code> marker, placement under <code>disabled_mods/</code>, missing dependencies, incompatible mods, loader version limits, or a <code>supportedGames</code> mismatch.</p>
+
+    <h2>Mod is blocked</h2>
+    <p>Read <code>security_report.json</code>. Security findings can be false positives, but are not automatically harmless. Review the source and behavior before adding any hash to <code>security_allowlist.json</code>.</p>
+
+    <h2>Cache build fails</h2>
+    <ul>
+      <li>Test with only the failing mod installed.</li>
+      <li>Clear the generated cache and retry.</li>
+      <li>Read the exact missing resource or GML compile error.</li>
+      <li>Verify all GML tokens were replaced.</li>
+      <li>Check that a full event replacement did not remove required game logic.</li>
+    </ul>
+
+    <h2>Game starts but behavior is wrong</h2>
+    <p>Inspect <code>mod_conflicts.json</code>, disable other mods, and compare the exact release folder with your development output. For menu problems, verify every Draw and Step patch is guarded by the intended menu state.</p>
+
+    <h2>After a Lake update</h2>
+    <p>Regenerate the cache, review <code>game_compatibility_report.json</code>, and confirm each required resource still exists. Unknown builds are warnings, not proof of failure, but every patch should be retested.</p>
+    <div class="callout tip">
+      <strong>Make failures reproducible</strong>
+      <p>Record the Antenni version, game build, mod list, exact mod packages, and the complete logs from the same failed run.</p>
+    </div>
+    <div class="next-links"><a href="release.html"><- Build and release</a><a href="../shared/how-loader-works.html">Shared: How Antenni works -></a></div>
+  </article><aside class="toc" id="pageToc"></aside></main>
+  <footer class="footer"><p>Antenni Loader 1.0.0 modding documentation</p></footer>
+  <script src="../../assets/js/app.js"></script>
+</body>
+</html>

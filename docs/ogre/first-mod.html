@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Build Your First Ogre Mod | Antenni Wiki</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/styles.css">
+</head>
+<body data-root="../../" data-game="ogre" data-page="ogre-first-mod">
+  <header id="siteHeader"></header>
+  <main class="docs-shell"><article class="doc-content">
+    <div class="page-hero">
+      <div class="breadcrumb"><a href="index.html">Ogre</a> / First mod</div>
+      <span class="page-meta">Tutorial</span>
+      <h1>Build an Ogre-safe starter mod</h1>
+      <p class="lead">Reuse the template infrastructure, not its Lake-specific behavior. Your first build should only prove that Ogre loads the DLL and manifest.</p>
+    </div>
+
+    <h2>1. Copy the template source</h2>
+    <p>Copy <code>mod_template/</code>, then rename the project, namespace, class, output folder, and manifest. Keep the library references and <code>ModContext.cs</code>.</p>
+
+    <h2>2. Remove Lake menu code</h2>
+    <p>Delete the call to <code>InstallMainMenuTab</code> and the complete method. Remove Lake hook files from <code>assets/code/hooks/</code> unless you are replacing them with verified Ogre targets.</p>
+    <pre><code>using UndertaleModLib;
+
+namespace OgreExample;
+
+public class OgreExample
+{
+    public void Load(int audiogroup, UndertaleData data)
+    {
+        if (audiogroup != 0)
+        {
+            return;
+        }
+
+        ModContext context = ModContext.Create(data);
+        context.Log("OgreExample loaded for Ogre Chambers 2222.");
+    }
+}</code></pre>
+
+    <h2>3. Declare Ogre compatibility</h2>
+    <pre><code>{
+  "modName": "Ogre Example",
+  "authors": ["Your Name"],
+  "description": "A minimal Ogre Chambers 2222 Antenni mod.",
+  "supportedGames": ["ogre-chambers-2222"],
+  "priority": 100
+}</code></pre>
+
+    <h2>4. Build and verify</h2>
+    <pre><code>dotnet build .\OgreExample.csproj -c Release</code></pre>
+    <p>Copy the complete output folder to <code>Ogre Chambers 2222/antenni/mods/OgreExample/</code>, launch the game, and confirm the log message and loaded status.</p>
+
+    <h2>5. Discover before patching</h2>
+    <p>Open Ogre's current <code>data.win</code> with a compatible inspection tool or use Antenni's generated resource reports. Select one exact resource and require it before changing anything.</p>
+    <pre><code>UndertaleRoom room = context.RequireRoom("REPLACE_WITH_REAL_OGRE_ROOM");
+context.Log($"Found Ogre room: {room.Name.Content}");</code></pre>
+    <div class="callout warning">
+      <strong>Placeholder names are intentionally invalid</strong>
+      <p>This documentation does not invent Ogre resource names. Replace the placeholder only after inspecting the game build you are testing.</p>
+    </div>
+
+    <h2>Common mistakes</h2>
+    <ul>
+      <li>Leaving <code>supportedGames: ["lake-of-creatures"]</code> in the copied manifest.</li>
+      <li>Leaving the CreatureProbe main-menu patch active.</li>
+      <li>Assuming similarly named GameMaker resources have identical code in both games.</li>
+      <li>Publishing a mod before testing a clean Ogre cache.</li>
+    </ul>
+    <div class="next-links"><a href="installation.html"><- Installation</a><a href="manifest.html">Next: modinfo.json -></a></div>
+  </article><aside class="toc" id="pageToc"></aside></main>
+  <footer class="footer"><p>Antenni Loader 1.0.0 modding documentation</p></footer>
+  <script src="../../assets/js/app.js"></script>
+</body>
+</html>

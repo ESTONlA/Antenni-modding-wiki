@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Security Scanning | Antenni Wiki</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/styles.css">
+</head>
+<body data-root="../../" data-game="shared" data-page="security">
+  <header id="siteHeader"></header>
+  <main class="docs-shell"><article class="doc-content">
+    <div class="page-hero">
+      <div class="breadcrumb"><a href="../../index.html">Games</a> / Shared reference</div>
+      <span class="page-meta">Security</span>
+      <h1>Security scanning and allowlisting</h1>
+      <p class="lead">Antenni performs a basic static scan to catch obviously risky mod behavior before loading a DLL. It does not replace antivirus software or source review.</p>
+    </div>
+
+    <h2>What happens</h2>
+    <ol class="step-list">
+      <li><strong>Hash</strong><span>Antenni calculates a deterministic hash for the mod package.</span></li>
+      <li><strong>Scan</strong><span>It checks the DLL and selected files for suspicious API and string patterns.</span></li>
+      <li><strong>Decide</strong><span>Risky mods can be blocked unless the exact hash is trusted.</span></li>
+      <li><strong>Report</strong><span>The loader records findings, blocked status, and skipped oversized files.</span></li>
+    </ol>
+
+    <h2>Current rule categories</h2>
+    <p>The source currently checks patterns related to external process spawning, native code and memory APIs, network access, destructive file operations, Windows registry access, and dynamic code loading.</p>
+    <div class="callout warning">
+      <strong>A warning can be a false positive, but it is not always false</strong>
+      <p>Do not allowlist a mod only because you want it to load. Review the source, author, purpose, and exact finding first.</p>
+    </div>
+
+    <h2>Reports and blocked state</h2>
+    <pre><code>antenni/Logs/security_report.json
+antenni/Logs/blocked_mods.json
+antenni/quarantine/</code></pre>
+    <p>The console also prints the mod hash during loading. Use the report from the same package you reviewed.</p>
+
+    <h2>Allowlist file</h2>
+    <pre><code>// antenni/security_allowlist.json
+{
+  "allowedModHashes": [
+    "PUT_REVIEWED_SHA256_HASH_HERE"
+  ]
+}</code></pre>
+    <p>An allowlist entry trusts one exact hash. A changed mod should produce a different hash and must be reviewed again.</p>
+
+    <h2>Player guidance</h2>
+    <ul>
+      <li>Download mods from known sources and authors.</li>
+      <li>Prefer mods with public source code.</li>
+      <li>Do not run random DLLs or scripts supplied outside the mod package.</li>
+      <li>Send the finding report to the author when behavior appears legitimate.</li>
+      <li>Remove a blocked mod when you cannot explain the flagged behavior.</li>
+    </ul>
+
+    <h2>Developer guidance</h2>
+    <ul>
+      <li>Avoid launching external programs.</li>
+      <li>Avoid network and registry access unless the feature clearly requires it.</li>
+      <li>Do not write outside the game/mod directory without explicit user consent.</li>
+      <li>Explain required risky APIs and keep source available for review.</li>
+      <li>Keep release contents minimal so users can understand what is executed.</li>
+    </ul>
+    <div class="next-links"><a href="how-loader-works.html"><- How Antenni works</a><a href="release-notes.html">Next: Release notes -></a></div>
+  </article><aside class="toc" id="pageToc"></aside></main>
+  <footer class="footer"><p>Antenni Loader 1.0.0 modding documentation</p></footer>
+  <script src="../../assets/js/app.js"></script>
+</body>
+</html>

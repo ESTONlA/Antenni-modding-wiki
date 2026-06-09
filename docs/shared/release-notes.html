@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Antenni 1.0.0 Release Notes | Antenni Wiki</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/styles.css">
+</head>
+<body data-root="../../" data-game="shared" data-page="release-notes">
+  <header id="siteHeader"></header>
+  <main class="docs-shell"><article class="doc-content">
+    <div class="page-hero">
+      <div class="breadcrumb"><a href="../../index.html">Games</a> / Shared reference</div>
+      <span class="page-meta">Current release</span>
+      <h1>Antenni Loader 1.0.0</h1>
+      <p class="lead">The 1.0.0 release turns the former single-game loader into Antenni, a game-profile-based loader for Lake of Creatures and Ogre Chambers 2222.</p>
+    </div>
+
+    <h2>Supported games</h2>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Game</th><th>Profile ID</th><th>Executable</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>Lake of Creatures</td><td><code>lake-of-creatures</code></td><td><code>LakeOfCreatures.exe</code></td><td>Core loading and in-game Antenni menu.</td></tr>
+        <tr><td>Ogre Chambers 2222</td><td><code>ogre-chambers-2222</code></td><td><code>ogre chambers 2.exe</code></td><td>Core loading and patching; no in-game Antenni menu.</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2>Runtime naming</h2>
+    <ul>
+      <li>Loader directory: <code>antenni/</code></li>
+      <li>Managed loader: <code>antenni-loader.exe</code></li>
+      <li>Generated cache: <code>ANTENNI_CACHE_data.win</code></li>
+      <li>Main log: <code>antenni/Logs/ANTENNI.log</code></li>
+      <li>Native proxy: <code>version.dll</code></li>
+    </ul>
+
+    <h2>Game compatibility</h2>
+    <p>Mods can declare <code>supportedGames</code> in <code>modinfo.json</code>. New mods should use the exact profile ID and keep game-specific patches separate.</p>
+
+    <h2>For existing Lake mod authors</h2>
+    <ol class="step-list">
+      <li><strong>Update names</strong><span>Replace old loader folder and cache references in documentation and scripts.</span></li>
+      <li><strong>Declare Lake</strong><span>Add <code>"supportedGames": ["lake-of-creatures"]</code>.</span></li>
+      <li><strong>Rebuild</strong><span>Use the Antenni 1.0.0 template and dependencies.</span></li>
+      <li><strong>Retest</strong><span>Verify cache generation, security scan, conflict reports, and menu behavior.</span></li>
+    </ol>
+
+    <h2>Documentation split</h2>
+    <p>The wiki now has separate Lake and Ogre manuals. Shared loader architecture and security behavior remain in this reference section.</p>
+    <div class="next-links"><a href="security.html"><- Security</a><a href="../../index.html">Choose a game -></a></div>
+  </article><aside class="toc" id="pageToc"></aside></main>
+  <footer class="footer"><p>Antenni Loader 1.0.0 modding documentation</p></footer>
+  <script src="../../assets/js/app.js"></script>
+</body>
+</html>

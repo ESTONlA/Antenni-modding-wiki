@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Release an Ogre Mod | Antenni Wiki</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/styles.css">
+</head>
+<body data-root="../../" data-game="ogre" data-page="ogre-release">
+  <header id="siteHeader"></header>
+  <main class="docs-shell"><article class="doc-content">
+    <div class="page-hero">
+      <div class="breadcrumb"><a href="index.html">Ogre</a> / Release</div>
+      <span class="page-meta">Building and release</span>
+      <h1>Release an Ogre-specific package</h1>
+      <p class="lead">Build Release configuration, test the exact output against Ogre, and ship the complete mod folder with an explicit game manifest.</p>
+    </div>
+
+    <h2>Build</h2>
+    <pre><code>dotnet build .\OgreExample.csproj -c Release</code></pre>
+
+    <h2>Package</h2>
+    <pre><code>OgreExample/
+|-- OgreExample.dll
+|-- OgreExample.deps.json
+|-- modinfo.json
+|-- UndertaleModLib.dll
+|-- Underanalyzer.dll
+|-- GameSpecificData/
+`-- assets/</code></pre>
+    <p>Install this exact folder under <code>antenni/mods/</code>. Remove development-only files only after confirming the release still loads.</p>
+
+    <h2>Ogre release checklist</h2>
+    <ol class="step-list">
+      <li><strong>Game ID</strong><span>Manifest includes <code>ogre-chambers-2222</code>.</span></li>
+      <li><strong>No Lake hooks</strong><span>Package contains no accidental CreatureProbe main-menu patches.</span></li>
+      <li><strong>Verified targets</strong><span>Every Ogre resource requirement resolves against the tested build.</span></li>
+      <li><strong>Clean cache</strong><span>Test after removing the generated cache.</span></li>
+      <li><strong>Complete output</strong><span>Assets and required dependency files are included.</span></li>
+      <li><strong>Known limitations</strong><span>State that the current Antenni in-game menu is not installed for Ogre.</span></li>
+    </ol>
+
+    <h2>Cross-game releases</h2>
+    <p>If one archive supports both games, separate GML under game-specific directories and document how the DLL chooses the correct patch set. Test both games from the same published archive.</p>
+
+    <div class="callout important">
+      <strong>Never include data.win or the generated cache</strong>
+      <p>Distribute only your mod files. Game data belongs to the user's installation and the cache is machine/mod-set specific.</p>
+    </div>
+    <div class="next-links"><a href="api.html"><- ModContext API</a><a href="troubleshooting.html">Next: Troubleshooting -></a></div>
+  </article><aside class="toc" id="pageToc"></aside></main>
+  <footer class="footer"><p>Antenni Loader 1.0.0 modding documentation</p></footer>
+  <script src="../../assets/js/app.js"></script>
+</body>
+</html>

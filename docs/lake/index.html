@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lake of Creatures Modding | Antenni Wiki</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/styles.css">
+</head>
+<body data-root="../../" data-game="lake" data-page="lake-home">
+  <header id="siteHeader"></header>
+  <main class="docs-shell">
+    <article class="doc-content">
+      <div class="page-hero">
+        <div class="breadcrumb"><a href="../../index.html">Games</a> / Lake of Creatures</div>
+        <span class="page-meta">Lake manual</span>
+        <h1>Modding Lake of Creatures With Mod Loader</h1>
+        <p class="lead">Build C# mods that inspect and patch the GameMaker data, add resources, and extend the game without replacing the original <code>data.win</code>.</p>
+      </div>
+
+      <div class="facts">
+        <div class="fact"><span>Game ID</span><strong>lake-of-creatures</strong></div>
+        <div class="fact"><span>Executable</span><strong>LakeOfCreatures.exe</strong></div>
+        <div class="fact"><span>Template</span><strong>CreatureProbe</strong></div>
+      </div>
+
+      <h2>What is supported</h2>
+      <p>Antenni 1.0.0 can load Lake mods, patch code and resources, generate a reusable cache, report conflicts, and install its Lake-specific in-game menu. The official CreatureProbe project is the recommended starting point.</p>
+      <div class="callout">
+        <strong>The original game data stays untouched</strong>
+        <p>Antenni writes <code>ANTENNI_CACHE_data.win</code> beside the original file and launches the game with that generated cache.</p>
+      </div>
+
+      <h2>First mod path</h2>
+      <ol class="step-list">
+        <li><strong>Install the loader</strong><span>Confirm Antenni launches Lake and creates the <code>antenni/Logs</code> folder.</span></li>
+        <li><strong>Copy CreatureProbe</strong><span>Rename the project, namespace, class, manifest, and output folder.</span></li>
+        <li><strong>Write a small patch</strong><span>Start with logging or one guarded code change before adding new resources.</span></li>
+        <li><strong>Build Release</strong><span>Copy the complete output folder into <code>antenni/mods/</code>.</span></li>
+        <li><strong>Read the reports</strong><span>Use <code>mod_status.json</code>, conflict reports, and the loader log to verify the result.</span></li>
+      </ol>
+
+      <h2>Choose a guide</h2>
+      <div class="link-list">
+        <a href="installation.html"><strong>Install and first run</strong><span>Set up Antenni in the Lake game directory.</span></a>
+        <a href="template.html"><strong>CreatureProbe template</strong><span>Understand every important template file.</span></a>
+        <a href="first-mod.html"><strong>Build your first mod</strong><span>Rename, edit, build, install, and verify.</span></a>
+        <a href="patching.html"><strong>Patching Lake</strong><span>Patch GML without making updates unnecessarily fragile.</span></a>
+        <a href="api.html"><strong>ModContext API</strong><span>Use the helpers that exist in the current template.</span></a>
+      </div>
+
+      <h2>Important boundary</h2>
+      <p>Game resources are not a stable public API. Names and code can change after a Lake update. Require every target you depend on, keep patches narrow, and test against a clean cache.</p>
+      <div class="next-links"><span></span><a href="installation.html">Next: Install and first run -></a></div>
+    </article>
+    <aside class="toc" id="pageToc"></aside>
+  </main>
+  <footer class="footer"><p>Antenni Loader 1.0.0 modding documentation</p></footer>
+  <script src="../../assets/js/app.js"></script>
+</body>
+</html>

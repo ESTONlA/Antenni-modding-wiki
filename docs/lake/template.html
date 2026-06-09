@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CreatureProbe Template | Antenni Wiki</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/styles.css">
+</head>
+<body data-root="../../" data-game="lake" data-page="lake-template">
+  <header id="siteHeader"></header>
+  <main class="docs-shell"><article class="doc-content">
+    <div class="page-hero">
+      <div class="breadcrumb"><a href="../../index.html">Games</a> / <a href="index.html">Lake</a> / Template</div>
+      <span class="page-meta">Official starter</span>
+      <h1>Start from CreatureProbe, then rename it.</h1>
+      <p class="lead">The official template is a working .NET 10 C# DLL mod with metadata, asset copying, config loading, patch helpers, and a Lake main-menu example.</p>
+    </div>
+
+    <div class="facts">
+      <div class="fact"><span>SDK</span><strong>.NET SDK 10.0</strong></div>
+      <div class="fact"><span>Source</span><strong>mod_template/</strong></div>
+      <div class="fact"><span>Entry file</span><strong>AntenniMod.cs</strong></div>
+    </div>
+
+    <h2>Template layout</h2>
+    <pre><code>mod_template/
+|-- CreatureProbe.csproj
+|-- AntenniMod.cs
+|-- ModContext.cs
+|-- ModConfig.cs
+|-- ModManifest.cs
+|-- IncludedFiles/
+|   `-- modinfo.json
+`-- assets/
+    |-- code/
+    |   `-- hooks/
+    |-- data/
+    |   `-- mod-config.json
+    |-- included/
+    |-- sounds/
+    `-- sprites/</code></pre>
+
+    <h2>What each file does</h2>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Path</th><th>Purpose</th></tr></thead>
+      <tbody>
+        <tr><td><code>CreatureProbe.csproj</code></td><td>Targets <code>net10.0</code>, references Undertale libraries, copies assets, and defines the output directory.</td></tr>
+        <tr><td><code>AntenniMod.cs</code></td><td>Contains the public mod class and <code>Load(int audiogroup, UndertaleData data)</code> entry point.</td></tr>
+        <tr><td><code>ModContext.cs</code></td><td>Provides logging, resource requirements, GML patching, sprite, sound, included-file, and safe replacement helpers.</td></tr>
+        <tr><td><code>ModConfig.cs</code></td><td>Defines typed defaults for <code>assets/data/mod-config.json</code>.</td></tr>
+        <tr><td><code>IncludedFiles/modinfo.json</code></td><td>Declares metadata and Lake compatibility for the loader.</td></tr>
+        <tr><td><code>assets/code/hooks/</code></td><td>Stores injected GML outside C# so patches are readable and maintainable.</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2>Build the template</h2>
+    <div class="code-title">PowerShell from the repository root</div>
+    <pre><code>dotnet build .\mod_template\CreatureProbe.csproj -c Release</code></pre>
+    <p>The project currently writes the package to <code>mod_template/CreatureProbe/</code>.</p>
+    <pre><code>CreatureProbe/
+|-- CreatureProbe.dll
+|-- CreatureProbe.deps.json
+|-- modinfo.json
+|-- UndertaleModLib.dll
+|-- Underanalyzer.dll
+|-- GameSpecificData/
+`-- assets/
+    |-- code/
+    |-- data/
+    |-- included/
+    |-- sounds/
+    `-- sprites/</code></pre>
+    <div class="callout important">
+      <strong>Do not copy only the DLL</strong>
+      <p>Copy the whole <code>CreatureProbe/</code> output folder. The template uses metadata, dependencies, config, GML files, and game-specific analyzer data.</p>
+    </div>
+
+    <h2>Rename checklist</h2>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Change</th><th>Where</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr><td>Project file</td><td><code>CreatureProbe.csproj</code></td><td><code>BetterBoats.csproj</code></td></tr>
+        <tr><td>Output folder</td><td><code>&lt;OutputPath&gt;</code></td><td><code>BetterBoats\</code></td></tr>
+        <tr><td>Namespace</td><td>All project C# files</td><td><code>namespace BetterBoats;</code></td></tr>
+        <tr><td>Main class</td><td><code>AntenniMod.cs</code></td><td><code>public class BetterBoats</code></td></tr>
+        <tr><td>Manifest</td><td><code>IncludedFiles/modinfo.json</code></td><td>Set name, authors, description, compatibility, and priority.</td></tr>
+        <tr><td>Config defaults</td><td><code>ModConfig.cs</code> and JSON</td><td>Use names and indexes owned by your mod.</td></tr>
+        <tr><td>All old references</td><td>Search the project</td><td>Remove remaining <code>CreatureProbe</code> strings.</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2>Template limitations</h2>
+    <p>The sample menu patch uses Lake-specific code entries and button indexes. It is an example, not a universal menu API. Remove it if your mod does not need a menu, and never use it unchanged for Ogre Chambers 2222.</p>
+
+    <h2>Next steps</h2>
+    <div class="link-list">
+      <a href="first-mod.html"><strong>Build your first mod</strong><span>Perform the rename and make a controlled first edit.</span></a>
+      <a href="manifest.html"><strong>Configure modinfo.json</strong><span>Declare that the package supports Lake.</span></a>
+      <a href="patching.html"><strong>Learn patching</strong><span>Move from the sample to safer targeted changes.</span></a>
+      <a href="api.html"><strong>Browse ModContext</strong><span>Use the actual helpers included in the template.</span></a>
+    </div>
+    <div class="next-links"><a href="installation.html"><- Installation</a><a href="first-mod.html">Next: Build your first mod -></a></div>
+  </article><aside class="toc" id="pageToc"></aside></main>
+  <footer class="footer"><p>Antenni Loader 1.0.0 modding documentation</p></footer>
+  <script src="../../assets/js/app.js"></script>
+</body>
+</html>

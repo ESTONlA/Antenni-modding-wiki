@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ogre ModContext API | Antenni Wiki</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/styles.css">
+</head>
+<body data-root="../../" data-game="ogre" data-page="ogre-api">
+  <header id="siteHeader"></header>
+  <main class="docs-shell"><article class="doc-content">
+    <div class="page-hero">
+      <div class="breadcrumb"><a href="index.html">Ogre</a> / API</div>
+      <span class="page-meta">API reference</span>
+      <h1>Apply ModContext to Ogre resources</h1>
+      <p class="lead">The helper API is shared with Lake. The resource names, GML bodies, room layers, sprite frames, and sound metadata are not.</p>
+    </div>
+
+    <h2>Shared helper families</h2>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Family</th><th>Methods</th></tr></thead>
+      <tbody>
+        <tr><td>Logging and config</td><td><code>Log</code>, <code>Warn</code>, <code>LoadJson&lt;T&gt;</code>, asset path and file loaders.</td></tr>
+        <tr><td>Requirements</td><td><code>RequireObject</code>, <code>RequireSprite</code>, <code>RequireRoom</code>, <code>RequireCodeEntry</code>, <code>RequireFunction</code>, <code>RequireScript</code>, <code>RequireSound</code>, <code>RequireVariable</code>.</td></tr>
+        <tr><td>Code</td><td><code>AppendCodeFromFile</code>, <code>HookCodeFromFile</code>, <code>HookFunctionFromFile</code>, <code>CreateFunctionFromFile</code>, <code>FindReplaceCode</code>.</td></tr>
+        <tr><td>Objects</td><td><code>CreateObject</code>, <code>NewObject</code>, room placement, event replacement, and event creation.</td></tr>
+        <tr><td>Media</td><td>PNG sprite addition/replacement and sound addition/replacement.</td></tr>
+        <tr><td>Included files</td><td><code>AddIncludedFile</code>, <code>RequireIncludedFile</code>, and game-path resolution.</td></tr>
+        <tr><td>Safe strings</td><td><code>ReplaceTextOnce</code>, <code>ReplaceTextExact</code>, <code>ReplaceGameString</code>, and <code>ReplaceGameStringContains</code>.</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2>Typical Ogre entry point</h2>
+    <pre><code>public void Load(int audiogroup, UndertaleData data)
+{
+    if (audiogroup != 0)
+    {
+        return;
+    }
+
+    ModContext context = ModContext.Create(data);
+    ModConfig config =
+        context.LoadJson&lt;ModConfig&gt;("data/mod-config.json", false)
+        ?? new ModConfig();
+
+    InstallOgreFeature(context, config);
+}</code></pre>
+
+    <h2>Guard game-specific setup</h2>
+    <p>Your manifest is the first compatibility boundary. Resource requirements inside <code>InstallOgreFeature</code> are the second. Do not assume the loader's game detection proves your chosen target still has the expected body.</p>
+
+    <h2>Use the source as the signature reference</h2>
+    <p>This site groups the API by task. For exact overload arguments, open <code>mod_template/ModContext.cs</code> from the same Antenni release used to build the mod.</p>
+    <div class="callout tip">
+      <strong>Keep the helper file with the project</strong>
+      <p>That makes the mod's build behavior reproducible and avoids depending on undocumented methods from another template version.</p>
+    </div>
+
+    <h2>Common mistakes</h2>
+    <ul>
+      <li>Using a verified method with an unverified Ogre resource name.</li>
+      <li>Assuming a room has a layer named <code>Instances</code>.</li>
+      <li>Replacing frame zero without checking sprite frame count and origin.</li>
+      <li>Adding a sound to the wrong audio group.</li>
+    </ul>
+    <div class="next-links"><a href="patching.html"><- Patching</a><a href="release.html">Next: Build and release -></a></div>
+  </article><aside class="toc" id="pageToc"></aside></main>
+  <footer class="footer"><p>Antenni Loader 1.0.0 modding documentation</p></footer>
+  <script src="../../assets/js/app.js"></script>
+</body>
+</html>

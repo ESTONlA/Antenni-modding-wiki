@@ -1,217 +1,232 @@
-const sidebar = document.querySelector(".topbar");
-const nav = document.querySelector("#nav");
-const menuButton = document.querySelector("#menuButton");
-const currentPage = document.body.dataset.page ?? "";
-const siteRoot = document.body.dataset.root ?? "";
-const siteHref = (path) => `${siteRoot}${path}`;
+const body = document.body;
+const root = body.dataset.root ?? "";
+const page = body.dataset.page ?? "";
+const requestedGame = body.dataset.game ?? "";
+const storedGame = window.localStorage.getItem("antenni-wiki-game");
+const game = requestedGame === "shared"
+  ? (storedGame === "ogre" ? "ogre" : "lake")
+  : requestedGame;
+const href = (path) => `${root}${path}`;
 
-const docsNavigation = [
-  {
-    title: "For Players",
-    links: [
-      ["player-installation", "Installation", "docs/players/installation.html"],
-      ["installing-mods", "Installing mods", "docs/players/installing-mods.html"],
-      ["player-troubleshooting", "Troubleshooting", "docs/players/troubleshooting.html"],
-      ["logs-diagnostics", "Logs & diagnostics", "docs/players/logs-diagnostics.html"],
-      ["player-security", "Security scan", "docs/players/security-scan.html"],
-      ["faq", "FAQ", "docs/players/faq.html"],
-    ],
-  },
-  {
-    title: "Modders: Start",
-    links: [
-      ["home", "Overview", "index.html"],
-      ["template", "Template setup", "docs/getting-started/template.html"],
-      ["workflow", "First mod workflow", "docs/getting-started/workflow.html"],
-      ["how-loader-works", "How loading works", "docs/getting-started/how-loader-works.html"],
-      ["rename-template", "Rename CreatureProbe", "docs/getting-started/rename-template.html"],
-      ["load-method", "Load method", "docs/getting-started/load-method.html"],
-    ],
-  },
-  {
-    title: "Modders: Basics",
-    links: [
-      ["modinfo", "modinfo.json", "docs/basics/modinfo.html"],
-      ["config", "Config files", "docs/basics/config.html"],
-      ["folder-layout", "Folder layout", "docs/basics/folder-layout.html"],
-    ],
-  },
-  {
-    title: "Patching",
-    links: [
-      ["patching", "Patching GML", "docs/patching/patching.html"],
-      ["code-assets", "Code assets & hooks", "docs/patching/code-assets.html"],
-      ["menu-tabs", "Menu tabs", "docs/patching/menu-tabs.html"],
-      ["strings", "Strings & text", "docs/patching/strings.html"],
-      ["conflicts", "Conflict safety", "docs/patching/conflicts.html"],
-    ],
-  },
-  {
-    title: "Assets",
-    links: [
-      ["assets", "Asset pipeline", "docs/assets/assets.html"],
-      ["sprites-sounds", "Sprites & sounds", "docs/assets/sprites-sounds.html"],
-      ["included-files", "Included files", "docs/assets/included-files.html"],
-    ],
-  },
-  {
-    title: "Modders: API",
-    links: [["modcontext", "ModContext API", "docs/api/modcontext.html"]],
-  },
-  {
-    title: "Recipes",
-    links: [
-      ["recipe-menu-button", "Add a menu button", "docs/recipes/recipe-menu-button.html"],
-      ["recipe-text", "Replace text safely", "docs/recipes/recipe-text.html"],
-      ["recipe-sprite", "Add or replace sprite", "docs/recipes/recipe-sprite.html"],
-      ["recipe-sound", "Add or replace sound", "docs/recipes/recipe-sound.html"],
-      ["recipe-included-file", "Use included data", "docs/recipes/recipe-included-file.html"],
-      ["recipe-object", "Create an object", "docs/recipes/recipe-object.html"],
-    ],
-  },
-  {
-    title: "Building & Release",
-    links: [["release", "Release checklist", "docs/release/release.html"]],
-  },
-  {
-    title: "Debugging",
-    links: [
-      ["debugging", "Debugging mods", "docs/debugging/debugging.html"],
-      ["security", "Security scan", "docs/debugging/security.html"],
-      ["release-notes", "Release notes", "docs/reference/release-notes.html"],
-    ],
-  },
-];
-
-if (nav) {
-  nav.innerHTML = docsNavigation
-    .map((group) => {
-      const links = group.links
-        .map(([page, label, href]) => `<a href="${siteHref(href)}" data-page-link="${page}">${label}</a>`)
-        .join("");
-      return `<div class="nav-group"><p class="nav-title">${group.title}</p>${links}</div>`;
-    })
-    .join("");
+if (requestedGame === "lake" || requestedGame === "ogre") {
+  window.localStorage.setItem("antenni-wiki-game", requestedGame);
 }
 
-menuButton?.addEventListener("click", () => {
-  sidebar?.classList.toggle("open");
-});
+const sharedLinks = [
+  ["loader", "How Antenni works", "docs/shared/how-loader-works.html"],
+  ["security", "Security scanning", "docs/shared/security.html"],
+  ["release-notes", "Release notes", "docs/shared/release-notes.html"],
+];
 
-document.querySelectorAll("[data-page-link]").forEach((link) => {
-  link.classList.toggle("active", link.dataset.pageLink === currentPage);
-  link.addEventListener("click", () => sidebar?.classList.remove("open"));
-});
+const navigation = {
+  lake: {
+    label: "Lake of Creatures",
+    short: "LOC",
+    home: "docs/lake/index.html",
+    groups: [
+      {
+        title: "Getting Started",
+        links: [
+          ["lake-home", "Lake overview", "docs/lake/index.html"],
+          ["lake-install", "Install and first run", "docs/lake/installation.html"],
+          ["lake-template", "CreatureProbe template", "docs/lake/template.html"],
+          ["lake-first-mod", "Build your first mod", "docs/lake/first-mod.html"],
+        ],
+      },
+      {
+        title: "Mod Basics",
+        links: [
+          ["lake-manifest", "modinfo.json", "docs/lake/manifest.html"],
+          ["lake-assets", "Assets and config", "docs/lake/assets.html"],
+        ],
+      },
+      {
+        title: "Patching And API",
+        links: [
+          ["lake-patching", "Patching Lake", "docs/lake/patching.html"],
+          ["lake-api", "ModContext API", "docs/lake/api.html"],
+          ["lake-menu", "Main-menu mods", "docs/lake/menu-modding.html"],
+        ],
+      },
+      {
+        title: "Ship And Fix",
+        links: [
+          ["lake-release", "Build and release", "docs/lake/release.html"],
+          ["lake-debug", "Troubleshooting", "docs/lake/troubleshooting.html"],
+        ],
+      },
+    ],
+  },
+  ogre: {
+    label: "Ogre Chambers 2222",
+    short: "OC",
+    home: "docs/ogre/index.html",
+    groups: [
+      {
+        title: "Getting Started",
+        links: [
+          ["ogre-home", "Ogre overview", "docs/ogre/index.html"],
+          ["ogre-install", "Install and first run", "docs/ogre/installation.html"],
+          ["ogre-first-mod", "Build your first mod", "docs/ogre/first-mod.html"],
+        ],
+      },
+      {
+        title: "Mod Basics",
+        links: [
+          ["ogre-manifest", "modinfo.json", "docs/ogre/manifest.html"],
+          ["ogre-resources", "Discover resources", "docs/ogre/resources.html"],
+        ],
+      },
+      {
+        title: "Patching And API",
+        links: [
+          ["ogre-patching", "Patching Ogre", "docs/ogre/patching.html"],
+          ["ogre-api", "ModContext API", "docs/ogre/api.html"],
+        ],
+      },
+      {
+        title: "Ship And Fix",
+        links: [
+          ["ogre-release", "Build and release", "docs/ogre/release.html"],
+          ["ogre-debug", "Troubleshooting", "docs/ogre/troubleshooting.html"],
+        ],
+      },
+    ],
+  },
+};
 
-const searchInput = document.querySelector("#sidebarSearch");
-searchInput?.addEventListener("input", () => {
-  const query = searchInput.value.trim().toLowerCase();
-  document.querySelectorAll(".nav-group").forEach((group) => {
-    let anyVisible = false;
-    group.querySelectorAll("a").forEach((link) => {
-      const text = link.textContent.trim().toLowerCase();
-      const visible = query.length === 0 || text.includes(query);
-      link.classList.toggle("hidden", !visible);
-      anyVisible = anyVisible || visible;
-    });
-    group.classList.toggle("hidden", !anyVisible);
+const header = document.querySelector("#siteHeader");
+if (header && navigation[game]) {
+  const current = navigation[game];
+  const other = game === "lake" ? navigation.ogre : navigation.lake;
+  const navGroups = [
+    ...current.groups,
+    { title: "Shared Reference", links: sharedLinks },
+  ];
+
+  header.className = "sidebar";
+  header.innerHTML = `
+    <div class="sidebar-head">
+      <a class="brand" href="${href("index.html")}"><span>A</span><strong>Antenni Wiki</strong></a>
+      <button class="menu-button" id="menuButton" type="button" aria-label="Toggle documentation navigation">
+        <span></span><span></span>
+      </button>
+    </div>
+    <a class="game-switch" href="${href(other.home)}">
+      <span>Current manual</span>
+      <strong>${current.label}</strong>
+      <small>Switch to ${other.label}</small>
+    </a>
+    <label class="sidebar-search">
+      <span>Search this manual</span>
+      <input id="sidebarSearch" type="search" placeholder="Filter pages">
+    </label>
+    <nav class="nav" id="nav">
+      ${navGroups.map((group) => `
+        <div class="nav-group">
+          <p class="nav-title">${group.title}</p>
+          ${group.links.map(([id, label, path]) => `
+            <a href="${href(path)}" data-page-link="${id}">${label}</a>
+          `).join("")}
+        </div>
+      `).join("")}
+    </nav>
+    <div class="sidebar-version">Antenni Loader <strong>1.0.0</strong></div>
+  `;
+
+  const menuButton = document.querySelector("#menuButton");
+  menuButton?.addEventListener("click", () => header.classList.toggle("open"));
+
+  document.querySelectorAll("[data-page-link]").forEach((link) => {
+    link.classList.toggle("active", link.dataset.pageLink === page);
+    link.addEventListener("click", () => header.classList.remove("open"));
   });
-});
+
+  const search = document.querySelector("#sidebarSearch");
+  search?.addEventListener("input", () => {
+    const query = search.value.trim().toLowerCase();
+    document.querySelectorAll(".nav-group").forEach((group) => {
+      let visible = false;
+      group.querySelectorAll("a").forEach((link) => {
+        const matches = !query || link.textContent.toLowerCase().includes(query);
+        link.hidden = !matches;
+        visible ||= matches;
+      });
+      group.hidden = !visible;
+    });
+  });
+}
 
 const slugCounts = new Map();
 const slugify = (value) => {
-  const base = value
-    .toLowerCase()
-    .replace(/<[^>]+>/g, "")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "") || "section";
+  const base = value.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "") || "section";
   const count = slugCounts.get(base) ?? 0;
   slugCounts.set(base, count + 1);
-  return count === 0 ? base : `${base}-${count + 1}`;
+  return count ? `${base}-${count + 1}` : base;
 };
 
 const headings = Array.from(document.querySelectorAll(".doc-content h2, .doc-content h3"));
 headings.forEach((heading) => {
-  if (!heading.id) {
-    heading.id = slugify(heading.textContent ?? "");
-  }
+  if (!heading.id) heading.id = slugify(heading.textContent ?? "");
   const anchor = document.createElement("a");
   anchor.className = "heading-anchor";
   anchor.href = `#${heading.id}`;
-  anchor.setAttribute("aria-label", `Link to ${heading.textContent}`);
   anchor.textContent = "#";
+  anchor.setAttribute("aria-label", `Link to ${heading.textContent}`);
   heading.appendChild(anchor);
 });
 
 const toc = document.querySelector("#pageToc");
-if (toc && headings.length > 0) {
-  const title = document.createElement("p");
-  title.className = "toc-title";
-  title.textContent = "On this page";
-  toc.appendChild(title);
-
+if (toc && headings.length) {
+  toc.innerHTML = `<p class="toc-title">On this page</p>`;
   headings.forEach((heading) => {
     const link = document.createElement("a");
     link.href = `#${heading.id}`;
     link.className = heading.tagName === "H3" ? "level-3" : "level-2";
-    link.textContent = heading.textContent?.replace("#", "").trim() ?? "";
+    link.textContent = heading.childNodes[0]?.textContent?.trim() ?? heading.textContent.replace("#", "").trim();
     toc.appendChild(link);
   });
 
   const tocLinks = Array.from(toc.querySelectorAll("a"));
-  const headingObserver = new IntersectionObserver(
-    (entries) => {
-      const visible = entries
-        .filter((entry) => entry.isIntersecting)
-        .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0];
-      if (!visible) return;
-      tocLinks.forEach((link) => {
-        link.classList.toggle("active", link.getAttribute("href") === `#${visible.target.id}`);
-      });
-    },
-    { rootMargin: "-15% 0px -70% 0px", threshold: 0.01 }
-  );
-  headings.forEach((heading) => headingObserver.observe(heading));
+  const observer = new IntersectionObserver((entries) => {
+    const current = entries.filter((entry) => entry.isIntersecting)
+      .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0];
+    if (!current) return;
+    tocLinks.forEach((link) => link.classList.toggle("active", link.hash === `#${current.target.id}`));
+  }, { rootMargin: "-12% 0px -76% 0px", threshold: 0.01 });
+  headings.forEach((heading) => observer.observe(heading));
 }
 
 document.querySelectorAll("pre").forEach((pre) => {
-  if (pre.closest(".no-copy")) return;
-  const wrapper = pre.parentElement;
-  if (!wrapper || wrapper.querySelector(".copy-code")) return;
+  const parent = pre.parentElement;
+  if (!parent) return;
+
+  const wrapper = document.createElement("div");
+  wrapper.className = "code-shell";
+  const title = pre.previousElementSibling?.classList.contains("code-title")
+    ? pre.previousElementSibling
+    : null;
+
+  if (title) {
+    parent.insertBefore(wrapper, title);
+    wrapper.append(title, pre);
+  } else {
+    parent.insertBefore(wrapper, pre);
+    wrapper.append(pre);
+  }
 
   const button = document.createElement("button");
   button.className = "copy-code";
   button.type = "button";
   button.textContent = "Copy";
   button.addEventListener("click", async () => {
-    const text = pre.textContent ?? "";
     try {
-      await navigator.clipboard.writeText(text);
+      await navigator.clipboard.writeText(pre.textContent ?? "");
       button.textContent = "Copied";
-      window.setTimeout(() => (button.textContent = "Copy"), 1100);
     } catch {
       button.textContent = "Failed";
-      window.setTimeout(() => (button.textContent = "Copy"), 1100);
     }
+    window.setTimeout(() => { button.textContent = "Copy"; }, 1200);
   });
-
-  if (!["code-block", "command-block", "file-tree", "terminal"].some((className) => wrapper.classList.contains(className))) {
-    pre.classList.add("standalone-code");
-  } else {
-    wrapper.appendChild(button);
-  }
+  wrapper.appendChild(button);
 });
-
-const revealObserver = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("in");
-        revealObserver.unobserve(entry.target);
-      }
-    });
-  },
-  { threshold: 0.08 }
-);
-
-document.querySelectorAll(".reveal").forEach((element) => revealObserver.observe(element));

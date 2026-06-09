@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Patching Lake | Antenni Wiki</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/styles.css">
+</head>
+<body data-root="../../" data-game="lake" data-page="lake-patching">
+  <header id="siteHeader"></header>
+  <main class="docs-shell"><article class="doc-content">
+    <div class="page-hero">
+      <div class="breadcrumb"><a href="index.html">Lake</a> / Patching</div>
+      <span class="page-meta">Patching</span>
+      <h1>Patch Lake without replacing more than necessary</h1>
+      <p class="lead">Treat each GameMaker resource as shared state. Require the target, make the smallest change that works, and fail clearly when the expected code changes.</p>
+    </div>
+
+    <h2>Choose the least invasive operation</h2>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Operation</th><th>Use it when</th><th>Risk</th></tr></thead>
+      <tbody>
+        <tr><td><code>AppendCodeFromFile</code></td><td>Your logic can safely run after an existing event.</td><td>Low to medium; event ordering still matters.</td></tr>
+        <tr><td><code>HookCodeFromFile</code></td><td>You need the template hook mechanism for a code entry.</td><td>Medium; understand the hook behavior first.</td></tr>
+        <tr><td><code>FindReplaceCode</code></td><td>You need a precise edit inside decompiled GML.</td><td>Medium to high; source text changes after updates.</td></tr>
+        <tr><td><code>ReplaceObjectEventFromFile</code></td><td>You intentionally own the whole event implementation.</td><td>High; conflicts with every other full replacement.</td></tr>
+        <tr><td><code>CreateObject</code> plus placement</td><td>Your feature can be isolated in a new object.</td><td>Often safer than editing a large shared controller.</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2>Require targets before changing them</h2>
+    <pre><code>UndertaleGameObject menu =
+    context.RequireObject("obj_ctrl_main_menu");
+
+UndertaleCode draw =
+    context.RequireCodeEntry("gml_Object_obj_ctrl_main_menu_Draw_0");</code></pre>
+    <p>A failed requirement gives the loader and user a useful resource name. A null lookup followed by a random exception does not.</p>
+
+    <h2>Use file-backed GML</h2>
+    <pre><code>// C#
+context.AppendCodeFromFile(
+    "code/hooks/obj_example_Step_0.gml",
+    "gml_Object_obj_example_Step_0",
+    ("__MOD_ENABLED__", config.Enabled ? "true" : "false"));</code></pre>
+    <pre><code>// assets/code/hooks/obj_example_Step_0.gml
+if (__MOD_ENABLED__) {
+    // Keep injected globals uniquely prefixed.
+    global.betterboats_last_tick = current_time;
+}</code></pre>
+
+    <h2>Make text replacement defensive</h2>
+    <p><code>FindReplaceCode</code> expects its search text to exist. Prefer a distinctive, short anchor rather than copying an entire function body. For ordinary strings and loaded text, use <code>ReplaceTextOnce</code> or <code>ReplaceTextExact</code> so match counts are verified.</p>
+
+    <h2>Avoid shared-name conflicts</h2>
+    <ul>
+      <li>Prefix globals, scripts, objects, sprites, and sounds with a stable mod identifier.</li>
+      <li>Do not reuse CreatureProbe button index 68 in a published mod without checking other menu mods.</li>
+      <li>Do not replace the full main-menu event just to draw one label.</li>
+      <li>Read <code>mod_conflicts.json</code> after testing multiple mods.</li>
+    </ul>
+
+    <h2>Test after a game update</h2>
+    <p>Delete or clear the generated cache, launch with only your mod, and inspect the compatibility and resource reports. If a target changed, update the patch rather than weakening checks until it happens to run.</p>
+    <div class="callout tip">
+      <strong>Prefer an isolated object for a self-contained feature</strong>
+      <p>A new object with its own events and uniquely prefixed resources usually creates fewer conflicts than repeated edits to a central controller.</p>
+    </div>
+    <div class="next-links"><a href="assets.html"><- Assets</a><a href="api.html">Next: ModContext API -></a></div>
+  </article><aside class="toc" id="pageToc"></aside></main>
+  <footer class="footer"><p>Antenni Loader 1.0.0 modding documentation</p></footer>
+  <script src="../../assets/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ogre Chambers 2222 Modding | Antenni Wiki</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/styles.css">
+</head>
+<body data-root="../../" data-game="ogre" data-page="ogre-home">
+  <header id="siteHeader"></header>
+  <main class="docs-shell"><article class="doc-content">
+    <div class="page-hero">
+      <div class="breadcrumb"><a href="../../index.html">Games</a> / Ogre Chambers 2222</div>
+      <span class="page-meta">Ogre manual</span>
+      <h1>Modding Ogre Chambers 2222 With Mod Loader</h1>
+      <p class="lead">Use Antenni's shared C# and UndertaleModLib patching layer while treating Ogre as a separate GameMaker target with its own resources and compatibility rules.</p>
+    </div>
+
+    <div class="facts">
+      <div class="fact"><span>Game ID</span><strong>ogre-chambers-2222</strong></div>
+      <div class="fact"><span>Executable</span><strong>ogre chambers 2.exe</strong></div>
+      <div class="fact"><span>In-game menu</span><strong>Not installed</strong></div>
+    </div>
+
+    <h2>Current support</h2>
+    <p>Antenni 1.0.0 detects Ogre, scans compatible mod folders, patches its <code>data.win</code>, creates <code>ANTENNI_CACHE_data.win</code>, writes reports, and launches the generated cache.</p>
+    <div class="callout warning">
+      <strong>Lake examples are not Ogre patches</strong>
+      <p>The official CreatureProbe menu sample references Lake objects, scripts, and button logic. Do not run that patch unchanged against Ogre.</p>
+    </div>
+
+    <h2>Recommended first project</h2>
+    <ol class="step-list">
+      <li><strong>Start from the C# shell</strong><span>Reuse the project and <code>ModContext</code>, but remove every Lake menu patch.</span></li>
+      <li><strong>Set Ogre compatibility</strong><span>Use <code>supportedGames: ["ogre-chambers-2222"]</code>.</span></li>
+      <li><strong>Discover a real resource</strong><span>Inspect Ogre's current data and record the exact target name.</span></li>
+      <li><strong>Make one guarded patch</strong><span>Require the resource and change the smallest possible code or asset.</span></li>
+      <li><strong>Test from clean output</strong><span>Read Antenni's status, compatibility, conflict, and security reports.</span></li>
+    </ol>
+
+    <h2>Choose a guide</h2>
+    <div class="link-list">
+      <a href="installation.html"><strong>Install and first run</strong><span>Set up the proxy beside Ogre's executable.</span></a>
+      <a href="first-mod.html"><strong>Build your first Ogre mod</strong><span>Create a safe, game-specific starter.</span></a>
+      <a href="resources.html"><strong>Discover resources</strong><span>Find exact Ogre object, script, room, sprite, and sound names.</span></a>
+      <a href="patching.html"><strong>Patch Ogre</strong><span>Use guards and file-backed GML.</span></a>
+      <a href="api.html"><strong>Use ModContext</strong><span>Apply the shared helpers to Ogre resources.</span></a>
+    </div>
+    <div class="next-links"><span></span><a href="installation.html">Next: Install and first run -></a></div>
+  </article><aside class="toc" id="pageToc"></aside></main>
+  <footer class="footer"><p>Antenni Loader 1.0.0 modding documentation</p></footer>
+  <script src="../../assets/js/app.js"></script>
+</body>
+</html>

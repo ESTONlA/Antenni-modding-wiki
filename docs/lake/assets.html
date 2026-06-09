@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lake Assets and Config | Antenni Wiki</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/styles.css">
+</head>
+<body data-root="../../" data-game="lake" data-page="lake-assets">
+  <header id="siteHeader"></header>
+  <main class="docs-shell"><article class="doc-content">
+    <div class="page-hero">
+      <div class="breadcrumb"><a href="index.html">Lake</a> / Assets</div>
+      <span class="page-meta">Mod basics</span>
+      <h1>Keep code, config, and media organized</h1>
+      <p class="lead">The template copies everything under <code>assets/</code> into the built mod package while preserving subdirectories.</p>
+    </div>
+
+    <h2>Recommended layout</h2>
+    <pre><code>assets/
+|-- code/
+|   `-- hooks/
+|       `-- my_patch.gml
+|-- data/
+|   `-- mod-config.json
+|-- included/
+|   `-- defaults.json
+|-- sounds/
+|   `-- alert.wav
+`-- sprites/
+    `-- icon.png</code></pre>
+
+    <h2>Load typed config</h2>
+    <pre><code>public sealed class ModConfig
+{
+    public bool Enabled { get; set; } = true;
+    public int PriceMultiplier { get; set; } = 2;
+}
+
+ModConfig config =
+    context.LoadJson&lt;ModConfig&gt;("data/mod-config.json", required: false)
+    ?? new ModConfig();</code></pre>
+    <p>Paths passed to <code>ModContext</code> are relative to <code>assets/</code>. Optional config should have safe defaults so a missing user file does not crash the loader.</p>
+
+    <h2>Store GML in files</h2>
+    <p>Use <code>AppendCodeFromFile</code>, <code>HookCodeFromFile</code>, or <code>CreateFunctionFromFile</code> instead of embedding large GML strings in C#. This keeps syntax readable and makes token replacement explicit.</p>
+    <pre><code>context.AppendCodeFromFile(
+    "code/hooks/my_patch.gml",
+    "gml_Object_obj_example_Step_0",
+    ("__PRICE_MULTIPLIER__", config.PriceMultiplier.ToString()));</code></pre>
+
+    <h2>Sprites, sounds, and included files</h2>
+    <pre><code>context.AddSpriteFromPng(
+    "spr_better_boat_icon",
+    "sprites/icon.png");
+
+context.ReplaceSoundFromFile(
+    "snd_alert",
+    "sounds/alert.wav");
+
+string gamePath = context.AddIncludedFile(
+    "included/defaults.json");</code></pre>
+    <p>Use the exact overload required by your asset. Inspect <code>ModContext.cs</code> for origin, frame, audio-group, and format parameters rather than guessing them.</p>
+
+    <div class="callout warning">
+      <strong>Assets are part of the release</strong>
+      <p>A mod that works from the source tree can still fail for users if the release omits <code>assets/</code>. Test the exact folder you intend to publish.</p>
+    </div>
+
+    <h2>Common mistakes</h2>
+    <ul>
+      <li>Passing <code>assets/data/file.json</code> instead of the relative path <code>data/file.json</code>.</li>
+      <li>Using Windows-only separators in GML or stored game paths.</li>
+      <li>Replacing a sprite frame that does not exist.</li>
+      <li>Shipping a sound format the target GameMaker data does not expect.</li>
+      <li>Forgetting to copy the assets in a custom project file.</li>
+    </ul>
+    <div class="next-links"><a href="manifest.html"><- Manifest</a><a href="patching.html">Next: Patching Lake -></a></div>
+  </article><aside class="toc" id="pageToc"></aside></main>
+  <footer class="footer"><p>Antenni Loader 1.0.0 modding documentation</p></footer>
+  <script src="../../assets/js/app.js"></script>
+</body>
+</html>

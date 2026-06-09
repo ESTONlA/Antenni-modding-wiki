@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Build Your First Lake Mod | Antenni Wiki</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/styles.css">
+</head>
+<body data-root="../../" data-game="lake" data-page="lake-first-mod">
+  <header id="siteHeader"></header>
+  <main class="docs-shell"><article class="doc-content">
+    <div class="page-hero">
+      <div class="breadcrumb"><a href="index.html">Lake</a> / First mod</div>
+      <span class="page-meta">Tutorial</span>
+      <h1>Build a small Lake mod first</h1>
+      <p class="lead">Prove the complete load path with a renamed template and a log message before attempting a large gameplay patch.</p>
+    </div>
+
+    <h2>1. Copy and rename the project</h2>
+    <p>Copy <code>mod_template/</code> to a new working directory. Rename the project file, output folder, namespace, public class, and manifest. Keep <code>ModContext.cs</code> until you intentionally replace its helper layer.</p>
+    <pre><code>namespace BetterBoats;
+
+public class BetterBoats
+{
+    public void Load(int audiogroup, UndertaleData data)
+    {
+        if (audiogroup != 0)
+        {
+            return;
+        }
+
+        ModContext context = ModContext.Create(data);
+        context.Log("BetterBoats is patching Lake of Creatures.");
+    }
+}</code></pre>
+
+    <h2>2. Set the manifest</h2>
+    <pre><code>{
+  "modName": "Better Boats",
+  "authors": ["Your Name"],
+  "description": "A first Antenni test mod.",
+  "supportedGames": ["lake-of-creatures"],
+  "priority": 100
+}</code></pre>
+    <p>The loader discovers the public <code>Load</code> method. The <code>audiogroup != 0</code> guard prevents the same main patch logic from running for every audio group pass.</p>
+
+    <h2>3. Remove the sample menu patch</h2>
+    <p>If you only want to verify loading, remove the <code>InstallMainMenuTab</code> call and its method. This avoids claiming the sample button indexes and changing Lake menu code before your own feature needs it.</p>
+
+    <h2>4. Build and install</h2>
+    <pre><code>dotnet build .\BetterBoats.csproj -c Release</code></pre>
+    <p>Copy the generated <code>BetterBoats/</code> directory to <code>Lake of Creatures/antenni/mods/BetterBoats/</code>. Delete no original game files.</p>
+
+    <h2>5. Verify the load</h2>
+    <ol class="step-list">
+      <li><strong>Launch Lake</strong><span>Start through Steam so the proxy uses the expected executable.</span></li>
+      <li><strong>Read the console</strong><span>Find the mod name, hash, security result, and load duration.</span></li>
+      <li><strong>Read ANTENNI.log</strong><span>Confirm your <code>context.Log</code> message appears.</span></li>
+      <li><strong>Read mod_status.json</strong><span>Confirm the mod is loaded rather than failed, skipped, blocked, or disabled.</span></li>
+    </ol>
+
+    <h2>6. Add one guarded change</h2>
+    <p>Use a <code>Require...</code> helper for the target and make one narrow patch. If the resource name is wrong, fail with a useful message rather than silently producing a broken cache.</p>
+    <pre><code>UndertaleCode target = context.RequireCodeEntry(
+    "gml_Object_obj_ctrl_main_menu_Step_0");
+
+context.Log($"Found patch target: {target.Name.Content}");</code></pre>
+
+    <div class="callout tip">
+      <strong>Change one thing per test</strong>
+      <p>When the cache fails, a one-change build gives you a clear cause. Large first patches turn resource names, GML syntax, and loader behavior into one debugging problem.</p>
+    </div>
+
+    <h2>Common mistakes</h2>
+    <ul>
+      <li>The output folder and primary DLL do not have matching names.</li>
+      <li><code>supportedGames</code> is missing or contains the Ogre game ID.</li>
+      <li>Only the DLL was installed, leaving required assets or dependencies behind.</li>
+      <li>The old CreatureProbe namespace or class name remains in one source file.</li>
+      <li>The sample Lake menu indexes conflict with another installed mod.</li>
+    </ul>
+    <div class="next-links"><a href="template.html"><- Template</a><a href="manifest.html">Next: modinfo.json -></a></div>
+  </article><aside class="toc" id="pageToc"></aside></main>
+  <footer class="footer"><p>Antenni Loader 1.0.0 modding documentation</p></footer>
+  <script src="../../assets/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Release a Lake Mod | Antenni Wiki</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/styles.css">
+</head>
+<body data-root="../../" data-game="lake" data-page="lake-release">
+  <header id="siteHeader"></header>
+  <main class="docs-shell"><article class="doc-content">
+    <div class="page-hero">
+      <div class="breadcrumb"><a href="index.html">Lake</a> / Release</div>
+      <span class="page-meta">Building and release</span>
+      <h1>Ship the exact folder you tested</h1>
+      <p class="lead">A release is a complete Antenni mod directory, not a loose DLL and not the entire source repository.</p>
+    </div>
+
+    <h2>Build Release configuration</h2>
+    <pre><code>dotnet build .\YourMod.csproj -c Release</code></pre>
+    <p>Install the output into a clean <code>antenni/mods/</code> directory and test it before creating an archive.</p>
+
+    <h2>Expected package</h2>
+    <pre><code>YourMod/
+|-- YourMod.dll
+|-- YourMod.deps.json
+|-- modinfo.json
+|-- UndertaleModLib.dll
+|-- Underanalyzer.dll
+|-- GameSpecificData/
+`-- assets/
+    |-- code/
+    |-- data/
+    |-- included/
+    |-- sounds/
+    `-- sprites/</code></pre>
+    <p>Exact files depend on your project and used helpers. Debug symbols such as <code>.pdb</code> are optional for users but useful when you need actionable crash reports.</p>
+
+    <h2>Pre-release checks</h2>
+    <ol class="step-list">
+      <li><strong>Clean build</strong><span>Delete stale output and build Release again.</span></li>
+      <li><strong>Manifest check</strong><span>Confirm <code>supportedGames</code> contains only tested games.</span></li>
+      <li><strong>Clean install</strong><span>Test from the packaged folder, not source-relative files.</span></li>
+      <li><strong>Single-mod test</strong><span>Verify core behavior with no unrelated mods.</span></li>
+      <li><strong>Compatibility test</strong><span>Test likely combinations and inspect <code>mod_conflicts.json</code>.</span></li>
+      <li><strong>Archive root</strong><span>The ZIP should open directly to <code>YourMod/</code>, ready for <code>antenni/mods/</code>.</span></li>
+    </ol>
+
+    <h2>Release notes should state</h2>
+    <ul>
+      <li>Mod version and supported Antenni version.</li>
+      <li>Supported game and tested game build.</li>
+      <li>Install and update instructions.</li>
+      <li>Known conflicts and required load order.</li>
+      <li>Whether config formats changed.</li>
+      <li>Where users should send the <code>antenni/Logs/</code> folder.</li>
+    </ul>
+
+    <div class="callout important">
+      <strong>Do not publish your local cache</strong>
+      <p><code>ANTENNI_CACHE_data.win</code> is generated from the user's game and mod set. It is not part of a mod release.</p>
+    </div>
+    <div class="next-links"><a href="menu-modding.html"><- Menu mods</a><a href="troubleshooting.html">Next: Troubleshooting -></a></div>
+  </article><aside class="toc" id="pageToc"></aside></main>
+  <footer class="footer"><p>Antenni Loader 1.0.0 modding documentation</p></footer>
+  <script src="../../assets/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>How Antenni Works | Antenni Wiki</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/styles.css">
+</head>
+<body data-root="../../" data-game="shared" data-page="loader">
+  <header id="siteHeader"></header>
+  <main class="docs-shell"><article class="doc-content">
+    <div class="page-hero">
+      <div class="breadcrumb"><a href="../../index.html">Games</a> / Shared reference</div>
+      <span class="page-meta">Architecture</span>
+      <h1>How Antenni loads a modded game</h1>
+      <p class="lead">The native proxy starts the managed loader, which validates the installation, resolves compatible mods, patches a cache, and relaunches the selected GameMaker game.</p>
+    </div>
+
+    <h2>Launch flow</h2>
+    <ol class="step-list">
+      <li><strong>Proxy injection</strong><span>The x64 <code>version.dll</code> loads beside the supported game executable.</span></li>
+      <li><strong>Game detection</strong><span>Antenni maps the executable to <code>lake-of-creatures</code> or <code>ogre-chambers-2222</code>.</span></li>
+      <li><strong>Install validation</strong><span>The loader verifies paths, original <code>data.win</code>, runtime folders, and startup conditions.</span></li>
+      <li><strong>Mod planning</strong><span>It reads manifests, compatibility, dependencies, ordering, disabled state, and security results.</span></li>
+      <li><strong>Patch pass</strong><span>Compatible mod DLLs receive Undertale data through their public <code>Load</code> method.</span></li>
+      <li><strong>Cache write</strong><span>Antenni writes and validates <code>ANTENNI_CACHE_data.win</code>.</span></li>
+      <li><strong>Game launch</strong><span>The game is relaunched using the generated cache while the original file remains unchanged.</span></li>
+    </ol>
+
+    <h2>Mod entry point</h2>
+    <pre><code>public void Load(int audiogroup, UndertaleData data)</code></pre>
+    <p>The loader reflects over the mod DLL for a public method with this shape. Template mods apply their main patch during audio group zero.</p>
+
+    <h2>Cache invalidation</h2>
+    <p>The cache fingerprint accounts for loader/game/mod inputs. Changes to the original game data, loader injection version, mod files, metadata, or supported-build data can require regeneration.</p>
+
+    <h2>Game profiles</h2>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Profile</th><th>Executable</th><th>In-game Antenni menu</th></tr></thead>
+      <tbody>
+        <tr><td><code>lake-of-creatures</code></td><td><code>LakeOfCreatures.exe</code></td><td>Enabled</td></tr>
+        <tr><td><code>ogre-chambers-2222</code></td><td><code>ogre chambers 2.exe</code></td><td>Disabled</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2>Why mods need supportedGames</h2>
+    <p>The loader infrastructure is shared, but GameMaker resources are not. Explicit game compatibility prevents a mod designed around one data layout from being applied to another.</p>
+
+    <h2>Reports are part of the runtime</h2>
+    <p>Antenni writes human and machine-readable state under <code>antenni/Logs/</code>, including mod status, failures, conflicts, security results, cache state, and game compatibility information.</p>
+    <div class="next-links"><a href="../lake/index.html"><- Lake manual</a><a href="security.html">Next: Security scanning -></a></div>
+  </article><aside class="toc" id="pageToc"></aside></main>
+  <footer class="footer"><p>Antenni Loader 1.0.0 modding documentation</p></footer>
+  <script src="../../assets/js/app.js"></script>
+</body>
+</html>

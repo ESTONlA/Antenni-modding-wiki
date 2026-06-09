@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Install Antenni for Lake | Antenni Wiki</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/styles.css">
+</head>
+<body data-root="../../" data-game="lake" data-page="lake-install">
+  <header id="siteHeader"></header>
+  <main class="docs-shell"><article class="doc-content">
+    <div class="page-hero">
+      <div class="breadcrumb"><a href="../../index.html">Games</a> / <a href="index.html">Lake</a> / Installation</div>
+      <span class="page-meta">Getting started</span>
+      <h1>Install Antenni for Lake</h1>
+      <p class="lead">Put the proxy and loader directory beside the game executable, then launch Lake normally through Steam.</p>
+    </div>
+
+    <h2>Requirements</h2>
+    <div class="facts">
+      <div class="fact"><span>Platform</span><strong>Windows x64</strong></div>
+      <div class="fact"><span>Runtime</span><strong>.NET 10 Desktop Runtime x64</strong></div>
+      <div class="fact"><span>Game</span><strong>Steam installation</strong></div>
+    </div>
+    <p>The Microsoft Visual C++ x64 runtime may also be required by the native proxy. Install official Microsoft runtimes rather than downloading individual DLL files from third-party sites.</p>
+
+    <h2>Find the game directory</h2>
+    <p>In Steam, open Lake of Creatures, select <strong>Manage</strong>, then <strong>Browse local files</strong>. The folder must contain both <code>LakeOfCreatures.exe</code> and <code>data.win</code>.</p>
+    <div class="code-title">Expected installation</div>
+    <pre><code>Lake of Creatures/
+|-- LakeOfCreatures.exe
+|-- data.win
+|-- version.dll
+`-- antenni/
+    |-- antenni-loader.exe
+    |-- mods/
+    |-- disabled_mods/
+    |-- quarantine/
+    `-- Logs/</code></pre>
+
+    <h2>Install and launch</h2>
+    <ol class="step-list">
+      <li><strong>Copy the proxy</strong><span>Place <code>version.dll</code> beside <code>LakeOfCreatures.exe</code>.</span></li>
+      <li><strong>Copy the loader</strong><span>Place the complete <code>antenni/</code> directory in the same game folder.</span></li>
+      <li><strong>Start through Steam</strong><span>Use the normal Play button. The proxy starts Antenni before the patched game launch.</span></li>
+      <li><strong>Check the result</strong><span>Confirm <code>antenni/Logs/ANTENNI.log</code> exists and the Lake main menu has the Antenni button.</span></li>
+    </ol>
+
+    <h2>Generated files</h2>
+    <p>Antenni creates <code>ANTENNI_CACHE_data.win</code> in the game directory. Logs and JSON reports are written under <code>antenni/Logs/</code>. Do not rename or replace the original <code>data.win</code>.</p>
+    <div class="callout warning">
+      <strong>No loader log usually means the proxy never started</strong>
+      <p>Verify the file is named exactly <code>version.dll</code>, is x64, is not blocked by Windows, and is beside the supported executable.</p>
+    </div>
+
+    <h2>Install a mod</h2>
+    <pre><code>Lake of Creatures/
+`-- antenni/
+    `-- mods/
+        `-- MyMod/
+            |-- MyMod.dll
+            |-- modinfo.json
+            `-- assets/</code></pre>
+    <p>The mod folder and primary DLL should use the same name. Copy the whole built mod folder, not only the DLL.</p>
+    <div class="next-links"><a href="index.html"><- Lake overview</a><a href="template.html">Next: CreatureProbe template -></a></div>
+  </article><aside class="toc" id="pageToc"></aside></main>
+  <footer class="footer"><p>Antenni Loader 1.0.0 modding documentation</p></footer>
+  <script src="../../assets/js/app.js"></script>
+</body>
+</html>
