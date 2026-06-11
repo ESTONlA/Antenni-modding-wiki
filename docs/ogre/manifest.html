@@ -19,8 +19,8 @@
 
     <h2>Minimal Ogre manifest</h2>
     <pre><code>{
-  "modName": "Ogre Example",
-  "authors": ["Your Name"],
+  "name": "Ogre Example",
+  "author": "Your Name",
   "description": "An Ogre Chambers 2222 mod.",
   "enabled": true,
   "supportedGames": ["ogre-chambers-2222"],
@@ -30,8 +30,8 @@
     <h2>Cross-game manifest</h2>
     <p>Only declare both IDs if the same DLL branches by game and every patch has been tested in both data files.</p>
     <pre><code>{
-  "modName": "Shared Utility",
-  "authors": ["Your Name"],
+  "name": "Shared Utility",
+  "author": "Your Name",
   "description": "A deliberately cross-game Antenni mod.",
   "supportedGames": [
     "lake-of-creatures",
@@ -48,7 +48,7 @@
     <p>The current loader also reads <code>minLoaderVersion</code>, <code>maxLoaderVersion</code>, <code>supportedGameVersions</code>, <code>testedOn</code>, <code>dependencies</code>, <code>optionalDependencies</code>, <code>incompatibleWith</code>, <code>loadAfter</code>, and <code>loadBefore</code>.</p>
 
     <h2>Legacy manifests</h2>
-    <p>Do not rely on an old manifest with no <code>supportedGames</code> field for Ogre. New Ogre mods should always state the game ID so the loader can make a deterministic compatibility decision.</p>
+    <p>Antenni accepts the old <code>modName</code> and <code>authors</code> fields for compatibility, but new mods should use <code>name</code> and <code>author</code>. Do not rely on an old manifest with no <code>supportedGames</code> field for Ogre. New Ogre mods should always state the game ID so the loader can make a deterministic compatibility decision.</p>
 
     <h2>Common mistakes</h2>
     <ul>

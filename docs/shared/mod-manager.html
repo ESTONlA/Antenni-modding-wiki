@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>In-Game Mod Manager | Antenni Wiki</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/styles.css">
+</head>
+<body data-root="../../" data-game="shared" data-page="manager">
+  <header id="siteHeader"></header>
+  <main class="docs-shell"><article class="doc-content">
+    <div class="page-hero">
+      <div class="breadcrumb"><a href="../../index.html">Games</a> / Shared reference</div>
+      <span class="page-meta">In-game tools</span>
+      <h1>Manage mods from inside the game</h1>
+      <p class="lead">Antenni injects an independent persistent manager object into supported games. It draws its own interface and does not depend on either game's menu hierarchy.</p>
+    </div>
+
+    <h2>Opening the manager</h2>
+    <p>Press <code>F10</code> or select the <strong>ANTENNI</strong> tab in the top-right corner. The interface remains available after room changes because its controller object is persistent.</p>
+
+    <h2>Available actions</h2>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Action</th><th>Behavior</th></tr></thead>
+      <tbody>
+        <tr><td>Enable</td><td>Creates an Antenni enable override without modifying the mod manifest.</td></tr>
+        <tr><td>Disable</td><td>Skips the mod while leaving its package installed.</td></tr>
+        <tr><td>Move Up / Down</td><td>Changes user order while required dependency edges remain enforced.</td></tr>
+        <tr><td>Quarantine</td><td>Moves the complete package under <code>antenni/quarantine/mods/</code>.</td></tr>
+        <tr><td>Restore Disabled</td><td>Returns a package to <code>mods/</code> but leaves it disabled for safety.</td></tr>
+        <tr><td>Open Mods</td><td>Opens the main <code>antenni/mods/</code> directory.</td></tr>
+        <tr><td>Export Diagnostics</td><td>Creates a privacy-filtered support ZIP.</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2>Manager state</h2>
+    <pre><code>{
+  "order": [
+    "CoreLibrary",
+    "GameplayMod"
+  ],
+  "enabledOverrides": {
+    "GameplayMod": true,
+    "BrokenMod": false
+  }
+}</code></pre>
+    <p>The state is stored in <code>antenni/mod_manager.json</code> using an atomic write. Changes invalidate the cache and are applied on the next game launch.</p>
+    <div class="callout">
+      <strong>Restart required</strong>
+      <p>Mods cannot be safely added to or removed from the already-patched <code>data.win</code> while the game is running. The manager marks these actions as requiring a restart.</p>
+    </div>
+
+    <h2>Diagnostics ZIP</h2>
+    <pre><code>antenni/Logs/Diagnostics/
+`-- Antenni-diagnostics-YYYYMMDD-HHMMSS.zip</code></pre>
+    <p>The archive contains text logs and reports, loader configuration, mod manifests, DLL hashes, package file counts, runtime versions, and game hashes.</p>
+    <div class="callout">
+      <strong>Privacy filtering</strong>
+      <p>Raw game paths, Antenni paths, Windows user-profile paths, user names, and machine names are replaced with placeholders. Mod DLL contents and game data are not included.</p>
+    </div>
+
+    <h2>Local bridge</h2>
+    <p>The injected GML communicates with the managed loader through a loopback-only TCP bridge. Lake of Creatures uses port <code>38520</code>; Ogre Chambers 2222 uses <code>38521</code>. Remote addresses are rejected and GML never receives unrestricted filesystem access.</p>
+
+    <h2>Load-order rules</h2>
+    <p>The displayed order is a user preference. Antenni still honors required dependencies and explicit <code>loadBefore</code>/<code>loadAfter</code> relationships.</p>
+    <div class="next-links"><a href="how-loader-works.html"><- How Antenni works</a><a href="security.html">Next: Security scanning -></a></div>
+  </article><aside class="toc" id="pageToc"></aside></main>
+  <footer class="footer"><p>Antenni Loader modding documentation</p></footer>
+  <script src="../../assets/js/app.js"></script>
+</body>
+</html>

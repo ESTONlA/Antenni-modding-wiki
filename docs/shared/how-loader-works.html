@@ -21,6 +21,7 @@
     <ol class="step-list">
       <li><strong>Proxy injection</strong><span>The x64 <code>version.dll</code> loads beside the supported game executable.</span></li>
       <li><strong>Game detection</strong><span>Antenni maps the executable to <code>lake-of-creatures</code> or <code>ogre-chambers-2222</code>.</span></li>
+      <li><strong>External manager</strong><span>Antenni opens its own desktop mod manager before reading or patching game data.</span></li>
       <li><strong>Install validation</strong><span>The loader verifies paths, original <code>data.win</code>, runtime folders, and startup conditions.</span></li>
       <li><strong>Mod planning</strong><span>It reads manifests, compatibility, dependencies, ordering, disabled state, and security results.</span></li>
       <li><strong>Patch pass</strong><span>Compatible mod DLLs receive Undertale data through their public <code>Load</code> method.</span></li>
@@ -49,7 +50,7 @@
 
     <h2>Reports are part of the runtime</h2>
     <p>Antenni writes human and machine-readable state under <code>antenni/Logs/</code>, including mod status, failures, conflicts, security results, cache state, and game compatibility information.</p>
-    <div class="next-links"><a href="../lake/index.html"><- Lake manual</a><a href="security.html">Next: Security scanning -></a></div>
+    <div class="next-links"><a href="../lake/index.html"><- Lake manual</a><a href="mod-manager.html">Next: External mod manager -></a></div>
   </article><aside class="toc" id="pageToc"></aside></main>
   <footer class="footer"><p>Antenni Loader 1.0.0 modding documentation</p></footer>
   <script src="../../assets/js/app.js"></script>

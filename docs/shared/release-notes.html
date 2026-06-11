@@ -22,7 +22,7 @@
       <thead><tr><th>Game</th><th>Profile ID</th><th>Executable</th><th>Status</th></tr></thead>
       <tbody>
         <tr><td>Lake of Creatures</td><td><code>lake-of-creatures</code></td><td><code>LakeOfCreatures.exe</code></td><td>Core loading and in-game Antenni menu.</td></tr>
-        <tr><td>Ogre Chambers 2222</td><td><code>ogre-chambers-2222</code></td><td><code>ogre chambers 2.exe</code></td><td>Core loading and patching; no in-game Antenni menu.</td></tr>
+        <tr><td>Ogre Chambers 2222</td><td><code>ogre-chambers-2222</code></td><td><code>ogre chambers 2.exe</code></td><td>Core loading, patching, and independent in-game Mod Manager.</td></tr>
       </tbody>
     </table></div>
 
@@ -34,6 +34,12 @@
       <li>Main log: <code>antenni/Logs/ANTENNI.log</code></li>
       <li>Native proxy: <code>version.dll</code></li>
     </ul>
+
+    <h2>In-game mod manager</h2>
+    <p>Antenni injects its own persistent manager object and file-backed GML UI. Players can enable, disable, reorder, quarantine, restore, open the mods folder, and export diagnostics from inside either supported game. Changes are stored in <code>antenni/mod_manager.json</code> and applied after restart.</p>
+
+    <h2>Sanitized diagnostics</h2>
+    <p>The manager creates support ZIPs under <code>antenni/Logs/Diagnostics/</code>. They include logs, reports, configuration, versions, manifests, and hashes while replacing personal paths, user names, and machine names with placeholders.</p>
 
     <h2>Game compatibility</h2>
     <p>Mods can declare <code>supportedGames</code> in <code>modinfo.json</code>. New mods should use the exact profile ID and keep game-specific patches separate.</p>

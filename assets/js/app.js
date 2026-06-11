@@ -14,6 +14,7 @@ if (requestedGame === "lake" || requestedGame === "ogre") {
 
 const sharedLinks = [
   ["loader", "How Antenni works", "docs/shared/how-loader-works.html"],
+  ["manager", "External mod manager", "docs/shared/mod-manager.html"],
   ["security", "Security scanning", "docs/shared/security.html"],
   ["release-notes", "Release notes", "docs/shared/release-notes.html"],
 ];

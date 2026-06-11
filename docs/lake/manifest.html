@@ -19,8 +19,8 @@
 
     <h2>Recommended Lake manifest</h2>
     <pre><code>{
-  "modName": "Better Boats",
-  "authors": ["Your Name"],
+  "name": "Better Boats",
+  "author": "Your Name",
   "description": "Improves boat behavior in Lake of Creatures.",
   "enabled": true,
   "supportedGames": ["lake-of-creatures"],
@@ -40,8 +40,8 @@
     <div class="table-wrap"><table>
       <thead><tr><th>Field</th><th>Type</th><th>Meaning</th></tr></thead>
       <tbody>
-        <tr><td><code>modName</code></td><td>string</td><td>Human-readable mod name used in logs and reports.</td></tr>
-        <tr><td><code>authors</code></td><td>string[]</td><td>One or more author names.</td></tr>
+        <tr><td><code>name</code></td><td>string</td><td>Human-readable mod name used in logs and reports.</td></tr>
+        <tr><td><code>author</code></td><td>string</td><td>The mod author's name.</td></tr>
         <tr><td><code>description</code></td><td>string</td><td>Short explanation of the mod.</td></tr>
         <tr><td><code>priority</code></td><td>integer</td><td>Base load ordering value. Lower values load earlier.</td></tr>
         <tr><td><code>enabled</code></td><td>boolean</td><td>Set false to skip the mod without deleting it.</td></tr>
@@ -57,6 +57,11 @@
         <tr><td><code>loadBefore</code></td><td>string[]</td><td>Ordering hints that place this mod before named mods.</td></tr>
       </tbody>
     </table></div>
+
+    <div class="callout note">
+      <strong>Legacy manifests still load</strong>
+      <p>Antenni still accepts the old <code>modName</code> and <code>authors</code> fields for compatibility. New and updated mods should use <code>name</code> and the single-string <code>author</code> field.</p>
+    </div>
 
     <h2>Compatibility matters</h2>
     <div class="callout important">
