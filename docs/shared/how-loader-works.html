@@ -45,8 +45,8 @@
       </tbody>
     </table></div>
 
-    <h2>Why mods need supportedGames</h2>
-    <p>The loader infrastructure is shared, but GameMaker resources are not. Explicit game compatibility prevents a mod designed around one data layout from being applied to another.</p>
+    <h2>Optional game restrictions</h2>
+    <p><code>supportedGames</code> is optional. If omitted, the mod is allowed on either supported game. Game-specific mods should set it because GameMaker resources are not shared between games.</p>
 
     <h2>Reports are part of the runtime</h2>
     <p>Antenni writes human and machine-readable state under <code>antenni/Logs/</code>, including mod status, failures, conflicts, security results, cache state, and game compatibility information.</p>

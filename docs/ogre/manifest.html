@@ -48,7 +48,10 @@
     <p>The current loader also reads <code>minLoaderVersion</code>, <code>maxLoaderVersion</code>, <code>supportedGameVersions</code>, <code>testedOn</code>, <code>dependencies</code>, <code>optionalDependencies</code>, <code>incompatibleWith</code>, <code>loadAfter</code>, and <code>loadBefore</code>.</p>
 
     <h2>Legacy manifests</h2>
-    <p>Antenni accepts the old <code>modName</code> and <code>authors</code> fields for compatibility, but new mods should use <code>name</code> and <code>author</code>. Do not rely on an old manifest with no <code>supportedGames</code> field for Ogre. New Ogre mods should always state the game ID so the loader can make a deterministic compatibility decision.</p>
+    <p>Antenni accepts the old <code>modName</code> and <code>authors</code> fields for compatibility, but new mods should use <code>name</code> and <code>author</code>. The <code>supportedGames</code> field is optional: omitting it means the mod is unrestricted. Use the Ogre game ID when the mod should run only on Ogre.</p>
+
+    <h2>Package-only mods</h2>
+    <p>The matching mod DLL is optional. If it is absent, Antenni validates and scans the package, keeps it in load order and reports, and skips C# patch execution.</p>
 
     <h2>Common mistakes</h2>
     <ul>

@@ -47,7 +47,7 @@
         <tr><td><code>enabled</code></td><td>boolean</td><td>Set false to skip the mod without deleting it.</td></tr>
         <tr><td><code>minLoaderVersion</code></td><td>string</td><td>Oldest compatible Antenni version.</td></tr>
         <tr><td><code>maxLoaderVersion</code></td><td>string</td><td>Newest compatible Antenni version, or empty for no declared maximum.</td></tr>
-        <tr><td><code>supportedGames</code></td><td>string[]</td><td>Use <code>lake-of-creatures</code> for this manual.</td></tr>
+        <tr><td><code>supportedGames</code></td><td>string[]</td><td>Optional game restriction. Omit it for an unrestricted mod.</td></tr>
         <tr><td><code>supportedGameVersions</code></td><td>string[]</td><td>Accepted game version identifiers when your mod enforces them.</td></tr>
         <tr><td><code>testedOn</code></td><td>string[]</td><td>Build/hash identifiers the author tested.</td></tr>
         <tr><td><code>dependencies</code></td><td>string[]</td><td>Mods that must load for this mod to work.</td></tr>
@@ -63,10 +63,15 @@
       <p>Antenni still accepts the old <code>modName</code> and <code>authors</code> fields for compatibility. New and updated mods should use <code>name</code> and the single-string <code>author</code> field.</p>
     </div>
 
+    <div class="callout note">
+      <strong>The main DLL is optional</strong>
+      <p>A matching <code>FolderName.dll</code> is needed only when the mod runs C# patch code. Without it, Antenni loads the folder as a package-only mod, scans its files, and includes it in ordering and reports.</p>
+    </div>
+
     <h2>Compatibility matters</h2>
     <div class="callout important">
-      <strong>Always declare supportedGames</strong>
-      <p>Lake-specific GML patches can corrupt an Ogre cache. Use <code>["lake-of-creatures"]</code> unless you have separately tested the same DLL against both games.</p>
+      <strong>Restrict game-specific mods</strong>
+      <p>The field is optional. Omit it only when the mod is safe for both games. For Lake-specific GML patches, use <code>["lake-of-creatures"]</code>.</p>
     </div>
 
     <h2>Load order is not conflict resolution</h2>
@@ -76,7 +81,7 @@
     <ul>
       <li>Invalid JSON caused by a trailing comma or missing quote.</li>
       <li>Using a display name in one dependency field and a folder name in another without checking what the loader resolves.</li>
-      <li>Leaving <code>supportedGames</code> empty in a new cross-game ecosystem.</li>
+      <li>Omitting <code>supportedGames</code> even though the mod uses Lake-only resources.</li>
       <li>Using priority to hide a real resource conflict.</li>
     </ul>
     <div class="next-links"><a href="first-mod.html"><- First mod</a><a href="assets.html">Next: Assets and config -></a></div>

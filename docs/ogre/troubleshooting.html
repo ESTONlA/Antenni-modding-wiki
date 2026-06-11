@@ -33,7 +33,7 @@
     </div>
 
     <h2>Mod is skipped</h2>
-    <p>Open <code>antenni/Logs/mod_status.json</code>. Verify <code>enabled</code>, disabled markers, dependencies, loader version limits, and especially <code>supportedGames: ["ogre-chambers-2222"]</code>.</p>
+    <p>Open <code>antenni/Logs/mod_status.json</code>. Verify <code>enabled</code>, disabled markers, dependencies, loader version limits, and whether a populated <code>supportedGames</code> list excludes Ogre. A missing list does not block the mod.</p>
 
     <h2>Patch target is missing</h2>
     <p>Confirm you inspected Ogre's original <code>data.win</code> from the same installed build. Lake names and old Ogre names are not valid fallback targets.</p>

@@ -75,7 +75,7 @@ context.Log($"Found patch target: {target.Name.Content}");</code></pre>
     <h2>Common mistakes</h2>
     <ul>
       <li>The output folder and primary DLL do not have matching names.</li>
-      <li><code>supportedGames</code> is missing or contains the Ogre game ID.</li>
+      <li><code>supportedGames</code> explicitly contains only the Ogre game ID.</li>
       <li>Only the DLL was installed, leaving required assets or dependencies behind.</li>
       <li>The old CreatureProbe namespace or class name remains in one source file.</li>
       <li>The sample Lake menu indexes conflict with another installed mod.</li>

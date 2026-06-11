@@ -42,12 +42,12 @@
     <p>The manager creates support ZIPs under <code>antenni/Logs/Diagnostics/</code>. They include logs, reports, configuration, versions, manifests, and hashes while replacing personal paths, user names, and machine names with placeholders.</p>
 
     <h2>Game compatibility</h2>
-    <p>Mods can declare <code>supportedGames</code> in <code>modinfo.json</code>. New mods should use the exact profile ID and keep game-specific patches separate.</p>
+    <p>Mods can optionally declare <code>supportedGames</code> in <code>modinfo.json</code>. Omitted means unrestricted; game-specific mods should use the exact profile ID.</p>
 
     <h2>For existing Lake mod authors</h2>
     <ol class="step-list">
       <li><strong>Update names</strong><span>Replace old loader folder and cache references in documentation and scripts.</span></li>
-      <li><strong>Declare Lake</strong><span>Add <code>"supportedGames": ["lake-of-creatures"]</code>.</span></li>
+      <li><strong>Restrict Lake-only mods</strong><span>Add <code>"supportedGames": ["lake-of-creatures"]</code> when the mod uses Lake resources.</span></li>
       <li><strong>Rebuild</strong><span>Use the Antenni 1.0.0 template and dependencies.</span></li>
       <li><strong>Retest</strong><span>Verify cache generation, security scan, conflict reports, and menu behavior.</span></li>
     </ol>
